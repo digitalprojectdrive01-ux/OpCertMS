@@ -433,7 +433,7 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
         </div>
         <div id="print-area">
           <div class="cc" id="ccp">
-            <div class="ch"><div class="co">PT. MANUFACTURING EXCELLENCE</div><div class="ti">OPERATION CERTIFICATE</div><div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;letter-spacing:.5px">SERTIFIKAT OPERASI</div></div>
+            <div class="ch"><div class="co">TTI Group - AES</div><div class="ti">OPERATION CERTIFICATE</div><div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;letter-spacing:.5px">SERTIFIKAT OPERASI</div></div>
             <div class="cb"><div class="cp" id="cphoto">👤</div>
               <div class="cd"><div class="nm" id="cnm">— Chọn chứng chỉ —</div><div class="eid" id="ceid">ID: —</div><div class="cf">Quy trình</div><div class="cv" id="cproc">—</div></div>
             </div>
@@ -1597,15 +1597,14 @@ function bulkPrint(){
     <div style="text-align:center;padding:16px;color:#999;font-size:12px">
       Cài đặt in: Paper A4 · Margins: <strong>None</strong> · Scale: <strong>100%</strong>
     </div>
-    <script>
+    <scr`+`ipt>
       window.onload=function(){
-        // Đợi ảnh load xong mới cho phép in
         const imgs=Array.from(document.images);
         let done=0;
         const onDone=()=>{ done++; };
         imgs.forEach(img=>{ if(img.complete)onDone(); else{img.onload=onDone;img.onerror=onDone;} });
       };
-    <\/script>
+    </scr`+`ipt>
   </body></html>`);
   win.document.close();
 }
