@@ -287,7 +287,7 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
       <button class="login-btn" onclick="doLogin()">ĐĂNG NHẬP</button>
     </div>
     <div class="login-footer">
-      <small>PT. Manufacturing Excellence</small>
+      <small>PT. AES</small>
       <div style="display:flex;gap:6px;flex-wrap:wrap">
         <span class="role-badge admin">👑 Admin</span>
         <span class="role-badge trainer">✏ Trainer</span>
@@ -638,11 +638,30 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
       </div>
     </div>
 
+        <!-- DEPARTMENT MANAGEMENT -->
+    <div class="box" id="dept-mgmt-box">
+      <div class="box-hdr">
+        <div style="width:30px;height:30px;border-radius:7px;background:#2980B9;display:flex;align-items:center;justify-content:center;font-size:16px">🏭</div>
+        <div><h3 style="font-size:14px;font-weight:600">Quản lý bộ phận</h3>
+          <p style="font-size:11.5px;color:#999;margin-top:1px">Thêm / xóa bộ phận trong công ty</p></div>
+      </div>
+      <div class="box-body">
+        <div id="dept-list" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px"></div>
+        <div style="display:flex;gap:9px;align-items:end">
+          <div class="fl" style="flex:1">
+            <label>Tên bộ phận mới</label>
+            <input type="text" id="new-dept-name" placeholder="VD: R&D, Logistics, Sales..." onkeydown="if(event.key==='Enter')addDept()">
+          </div>
+          <button class="btn bp" onclick="addDept()" style="height:36px">+ Thêm</button>
+        </div>
+      </div>
+    </div>
+
         <div class="box">
       <div class="box-hdr"><h3 style="font-size:14px;font-weight:600">Cài đặt hệ thống</h3></div>
       <div class="box-body">
         <div class="fg" style="gap:12px">
-          <div class="fl"><label>Tên công ty</label><input type="text" id="sc" value="PT. Manufacturing Excellence"></div>
+          <div class="fl"><label>Tên công ty</label><input type="text" id="sc" value="TTI Group-AES"></div>
           <div class="fl"><label>Cảnh báo hết hạn (ngày)</label><input type="text" id="sw" value="30"></div>
           <div class="fl s2"><label>Tiêu đề hệ thống</label><input type="text" id="st" value="Operation Certificate Management System"></div>
         </div>
@@ -658,6 +677,9 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
   </div>
 </div>
 
+<!-- HIDDEN PHOTO INPUT -->
+<input type="file" id="change-photo-input" accept="image/*" style="display:none" onchange="handleChangePhoto(event)">
+
 <!-- MODALS -->
 <div class="mo" id="m-emp">
   <div class="md">
@@ -665,7 +687,7 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
     <div class="mb"><div class="fg">
       <div class="fl"><label>Mã nhân viên *</label><input type="text" id="fe-id"></div>
       <div class="fl"><label>Họ tên *</label><input type="text" id="fe-nm"></div>
-      <div class="fl"><label>Bộ phận</label><select id="fe-dp"><option value="Production">PRD — Production</option><option value="Quality Control">QC — Quality Control</option><option value="Maintenance">MNT — Maintenance</option><option value="Engineering">ENG — Engineering</option><option value="Warehouse">WHS — Warehouse</option><option value="HSE">HSE — Health Safety Env</option><option value="Training">TRN — Training</option><option value="Administration">ADM — Administration</option></select></div>
+      <div class="fl"><label>Bộ phận</label><select id="fe-dp"></select></div>
       <div class="fl"><label>Chức danh</label><input type="text" id="fe-po"></div>
       <div class="fl"><label>Ngày sinh</label><input type="date" id="fe-db"></div>
       <div class="fl"><label>Ngày vào làm</label><input type="date" id="fe-jn"></div>
@@ -727,34 +749,13 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
 <script>
 // ─── DATA ───────────────────────────────────────────────────────────────────
 const DB={
-  emps:[
-    {id:"EMP-001",name:"Ahmad Fauzi",dept:"Production",pos:"Operator",dob:"1990-05-12",join:"2015-03-01",status:"Active",phone:"+62811111111",email:"",photo:""},
-    {id:"EMP-002",name:"Budi Santoso",dept:"Quality Control",pos:"Inspector",dob:"1988-07-23",join:"2016-06-15",status:"Active",phone:"+62822222222",email:"",photo:""},
-    {id:"EMP-003",name:"Cahya Pratama",dept:"Maintenance",pos:"Technician",dob:"1992-11-30",join:"2018-01-20",status:"Active",phone:"+62833333333",email:"",photo:""},
-    {id:"EMP-004",name:"Dewi Rahayu",dept:"Engineering",pos:"Engineer",dob:"1991-03-17",join:"2017-09-10",status:"Active",phone:"+62844444444",email:"",photo:""},
-    {id:"EMP-005",name:"Eko Susilo",dept:"Production",pos:"Senior Operator",dob:"1985-08-05",join:"2010-04-01",status:"Active",phone:"+62855555555",email:"",photo:""},
-  ],
-  procs:[
-    {id:"PROC-001",name:"Formation Control Room",cat:"Operations",vl:12,desc:"Control room operation",status:"Active"},
-    {id:"PROC-002",name:"Electrolyte Injection",cat:"Production",vl:12,desc:"Electrolyte handling",status:"Active"},
-    {id:"PROC-003",name:"Cell Assembly",cat:"Production",vl:12,desc:"Battery cell assembly",status:"Active"},
-    {id:"PROC-004",name:"Quality Inspection",cat:"Quality",vl:6,desc:"Quality inspection",status:"Active"},
-    {id:"PROC-005",name:"Forklift Operation",cat:"Logistics",vl:12,desc:"Forklift certification",status:"Active"},
-    {id:"PROC-006",name:"Hot Work Permit",cat:"HSE",vl:12,desc:"Welding and hot work",status:"Active"},
-    {id:"PROC-007",name:"Chemical Handling",cat:"HSE",vl:6,desc:"Hazardous chemicals",status:"Active"},
-    {id:"PROC-008",name:"Overhead Crane",cat:"Maintenance",vl:12,desc:"Crane operation",status:"Active"},
-  ],
-  certs:[
-    {id:"CERT-2025-0001",eid:"EMP-001",enm:"Ahmad Fauzi",pid:"PROC-001",pnm:"Formation Control Room",lv:"Level 3 - Advanced",iss:"2025-01-15",exp:"2026-01-15",by:"Admin"},
-    {id:"CERT-2025-0002",eid:"EMP-002",enm:"Budi Santoso",pid:"PROC-004",pnm:"Quality Inspection",lv:"Level 2 - Intermediate",iss:"2025-03-01",exp:"2025-09-01",by:"Admin"},
-    {id:"CERT-2025-0003",eid:"EMP-003",enm:"Cahya Pratama",pid:"PROC-008",pnm:"Overhead Crane",lv:"Level 2 - Intermediate",iss:"2025-06-01",exp:"2026-06-01",by:"Admin"},
-    {id:"CERT-2025-0004",eid:"EMP-004",enm:"Dewi Rahayu",pid:"PROC-002",pnm:"Electrolyte Injection",lv:"Level 3 - Advanced",iss:"2025-07-10",exp:"2026-07-10",by:"Admin"},
-    {id:"CERT-2026-0001",eid:"EMP-005",enm:"Eko Susilo",pid:"PROC-003",pnm:"Cell Assembly",lv:"Level 4 - Expert",iss:"2026-01-05",exp:"2027-01-05",by:"Admin"},
-    {id:"CERT-2026-0002",eid:"EMP-001",enm:"Ahmad Fauzi",pid:"PROC-006",pnm:"Hot Work Permit",lv:"Level 1 - Basic",iss:"2026-04-20",exp:"2026-06-10",by:"Admin"},
-  ],
-  ctr:2,
-  sp:{url:"",nm:"id",ext:"jpg",cp:""},
-  cfg:{company:"PT. Manufacturing Excellence",warn:30},
+  emps:[],
+  procs:[],
+  certs:[],
+  depts:['Production','Quality Control','Maintenance','Engineering','Warehouse','HSE','Training','Administration'],
+  ctr:0,
+  sp:{url:"",nm:"id_dept_name",ext:"jpg",cp:""},
+  cfg:{company:"TTI Group-AES",warn:30},
   src:null
 };
 
@@ -805,17 +806,17 @@ function rPage(p){
 
 // ─── SHAREPOINT ─────────────────────────────────────────────────────────────
 // Bảng mã bộ phận
-const DEPT_CODES = {
-  'Production':       'PRD',
-  'Quality Control':  'QC',
-  'Maintenance':      'MNT',
-  'Engineering':      'ENG',
-  'Warehouse':        'WHS',
-  'HSE':              'HSE',
-  'Training':         'TRN',
-  'Administration':   'ADM',
+// Dept codes - dynamic từ DB.depts
+const DEPT_CODES_DEFAULT = {
+  'Production':'PRD','Quality Control':'QC','Maintenance':'MNT',
+  'Engineering':'ENG','Warehouse':'WHS','HSE':'HSE','Training':'TRN','Administration':'ADM',
 };
-function deptCode(dept){ return DEPT_CODES[dept] || (dept||'').toUpperCase().substring(0,3); }
+function deptCode(dept){
+  if(!dept) return '';
+  if(DEPT_CODES_DEFAULT[dept]) return DEPT_CODES_DEFAULT[dept];
+  // Auto-generate: lấy chữ cái đầu mỗi từ, tối đa 3 ký tự
+  return dept.split(/\s+/).map(w=>w[0]||'').join('').toUpperCase().substring(0,3)||dept.substring(0,3).toUpperCase();
+}
 
 // Bỏ dấu tiếng Việt → ASCII
 function removeDiacritics(str){
@@ -1092,7 +1093,16 @@ function rDash(){
   if(DB.src){bn.style.display='flex';bn.innerHTML=`<span class="tg">📊</span> <strong>${DB.src.name}</strong> — ${DB.emps.length} nhân viên${DB.sp.url?' | 🔷 SharePoint: '+DB.sp.url.substring(0,38)+'...':''}<button style="margin-left:auto;background:none;border:1px solid #b7e4c7;border-radius:4px;padding:2px 9px;font-size:11px;cursor:pointer;color:var(--green)" onclick="nav('import')">Cập nhật</button>`;}
   const alerts=DB.certs.filter(c=>cSt(c.exp)!=='Valid').sort((a,b)=>new Date(a.exp)-new Date(b.exp));
   const al=document.getElementById('alist');
-  if(!alerts.length){al.innerHTML='<div class="es" style="background:#fff;border-radius:7px;padding:24px">Không có cảnh báo</div>';return;}
+  if(!DB.emps.length){
+    al.innerHTML=`<div class="es" style="background:#fff;border-radius:7px;padding:24px;line-height:2">
+      Chưa có dữ liệu nhân viên.<br>
+      <button class="btn bp" onclick="nav('employees')" style="margin-top:8px">+ Thêm nhân viên</button>
+      &nbsp;
+      <button class="btn bs" onclick="nav('import')" style="margin-top:8px">📊 Import Excel</button>
+    </div>`;
+    return;
+  }
+  if(!alerts.length){al.innerHTML='<div class="es" style="background:#fff;border-radius:7px;padding:24px">✓ Không có cảnh báo hết hạn</div>';return;}
   al.innerHTML=alerts.slice(0,6).map(c=>{
     const s=cSt(c.exp),d=dL(c.exp);
     const em=DB.emps.find(e=>e.id===c.eid);
@@ -1127,7 +1137,12 @@ function rEmp(){
       <td style="color:#aaa;font-size:11.5px">${fD(e.join)}</td>
       <td>${sBadge(e.status)}</td>
       <td><span class="badge bv">${eCnt(e.id)}</span></td>
-      <td style="display:flex;gap:5px"><button class="ab" onclick="oEmp('${e.id}')">Sửa</button><button class="ab dx" onclick="delEmp('${e.id}')">Xóa</button></td>
+      <td style="display:flex;gap:5px;white-space:nowrap">
+        <button class="ab" onclick="oEmp('${e.id}')">Sửa</button>
+        <button class="ab" onclick="changePhoto('${e.id}')" title="Đổi ảnh">📷</button>
+        ${e.photo?`<button class="ab dx" onclick="removePhoto('${e.id}')" title="Xóa ảnh">🗑</button>`:''}
+        <button class="ab dx" onclick="delEmp('${e.id}')">Xóa NV</button>
+      </td>
     </tr>`).join(''):'<tr><td colspan="9" class="es">Không có dữ liệu</td></tr>';
 }
 function oEmp(id){
@@ -1136,7 +1151,11 @@ function oEmp(id){
   document.getElementById('fe-id').value=e?.id||autoId('EMP',DB.emps);
   document.getElementById('fe-id').readOnly=!!e;
   document.getElementById('fe-nm').value=e?.name||'';
-  document.getElementById('fe-dp').value=e?.dept||'Production';
+  // Populate dept options dynamically
+  const depts=DB.depts&&DB.depts.length?DB.depts:Object.keys(DEPT_CODES_DEFAULT);
+  const dSel=document.getElementById('fe-dp');
+  dSel.innerHTML=depts.map(d=>`<option value="${d}">${deptCode(d)} — ${d}</option>`).join('');
+  dSel.value=e?.dept||(depts[0]||'');
   document.getElementById('fe-po').value=e?.pos||'';
   document.getElementById('fe-db').value=e?.dob||'';
   document.getElementById('fe-jn').value=e?.join||today();
@@ -1452,7 +1471,7 @@ function buildEmpCard(emp){
     <div style="background:#C0392B;padding:2mm 3mm 1.5mm;flex-shrink:0;
       -webkit-print-color-adjust:exact;print-color-adjust:exact;">
       <div style="font-size:5pt;color:rgba(255,255,255,.6);letter-spacing:1px;text-transform:uppercase">OPERATION CERTIFICATE</div>
-      <div style="font-size:5pt;color:rgba(255,255,255,.45)">PT. Manufacturing Excellence</div>
+      <div style="font-size:5pt;color:rgba(255,255,255,.45)">TTI Group-AES</div>
     </div>
     <!-- INFO NV: ảnh + tên + mã + bộ phận -->
     <div style="background:#fff;padding:2mm 3mm;display:flex;gap:2mm;align-items:center;flex-shrink:0;border-bottom:0.3mm solid #eee">
@@ -1493,7 +1512,7 @@ function buildCardHtml(c, emp){
   const qrData = encodeURIComponent(c.id+'|'+c.eid);
   return `<div style="width:54mm;height:90mm;border-radius:2.5mm;overflow:hidden;border:0.3mm solid #bbb;font-family:Arial,sans-serif;display:flex;flex-direction:column;background:#fff">
     <div style="background:#C0392B;padding:2.5mm 3mm;flex-shrink:0;-webkit-print-color-adjust:exact;print-color-adjust:exact">
-      <div style="font-size:5pt;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px">PT. MANUFACTURING EXCELLENCE</div>
+      <div style="font-size:5pt;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px">TTI Group-AES</div>
       <div style="font-size:9pt;font-weight:900;color:#fff;line-height:1.2">OPERATION<br>CERTIFICATE</div>
     </div>
     <div style="background:#fff;padding:2mm 3mm;display:flex;gap:2mm;align-items:flex-start;flex-shrink:0">
@@ -1777,7 +1796,7 @@ async function pushToCloud(){
   const payload = {
     emps:  DB.emps.map(e=>({...e,photo:''})),
     procs: DB.procs, certs: DB.certs,
-    ctr:   DB.ctr, cfg: DB.cfg, src: DB.src,
+    ctr:   DB.ctr, cfg: DB.cfg, src: DB.src, depts: DB.depts,
     savedAt: new Date().toISOString(),
     savedBy: currentUser?.username||'?'
   };
@@ -1801,6 +1820,7 @@ async function pullFromCloud(){
     if(!res||!res.emps) return false;
     DB.emps=res.emps; DB.procs=res.procs; DB.certs=res.certs;
     DB.ctr=res.ctr||DB.ctr; DB.cfg=res.cfg||DB.cfg; DB.src=res.src||null;
+    if(res.depts&&res.depts.length)DB.depts=res.depts;
     DB._savedAt=res.savedAt; DB._savedBy=res.savedBy;
     // Pull photos
     for(const e of DB.emps){
@@ -1829,7 +1849,7 @@ async function autoSave(){
 // Local backup via localStorage
 function saveLocal(){
   try{
-    const d={emps:DB.emps.map(e=>({...e,photo:''})),procs:DB.procs,certs:DB.certs,ctr:DB.ctr,cfg:DB.cfg,src:DB.src};
+    const d={emps:DB.emps.map(e=>({...e,photo:''})),procs:DB.procs,certs:DB.certs,ctr:DB.ctr,cfg:DB.cfg,src:DB.src,depts:DB.depts};
     localStorage.setItem('opcertms_local',JSON.stringify(d));
     // photos in IndexedDB
     if(_idb) DB.emps.forEach(e=>{ if(e.photo) idbPut('ph_'+e.id,e.photo).catch(()=>{}); });
@@ -1843,6 +1863,7 @@ function loadLocal(){
     if(d.emps)DB.emps=d.emps; if(d.procs)DB.procs=d.procs;
     if(d.certs)DB.certs=d.certs; if(d.ctr!==undefined)DB.ctr=d.ctr;
     if(d.cfg)DB.cfg=d.cfg; if(d.src)DB.src=d.src;
+    if(d.depts&&d.depts.length)DB.depts=d.depts;
     return true;
   }catch(e){return false;}
 }
@@ -1893,6 +1914,92 @@ async function saveDB(){
 }
 async function deleteEmpPhoto(id){
   if(_idb) try{await idbDel('ph_'+id);}catch(e){}
+}
+
+
+// ─── DEPARTMENT MANAGEMENT ───────────────────────────────────────────────────
+function renderDepts(){
+  const el=document.getElementById('dept-list');
+  if(!el)return;
+  const depts=DB.depts||[];
+  el.innerHTML=depts.length
+    ? depts.map(d=>`
+        <div style="display:inline-flex;align-items:center;gap:5px;background:#f0f0f0;border-radius:20px;padding:4px 10px 4px 12px;font-size:12.5px;font-weight:500;color:#444">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#888;margin-right:2px">${deptCode(d)}</span>
+          ${d}
+          <button onclick="removeDept('${d}')" style="background:none;border:none;cursor:pointer;font-size:14px;color:#bbb;padding:0 0 0 4px;line-height:1" title="Xóa bộ phận">×</button>
+        </div>`).join('')
+    : '<span style="font-size:12.5px;color:#bbb;font-style:italic">Chưa có bộ phận nào</span>';
+}
+
+function addDept(){
+  if(!requireRole('admin'))return;
+  const inp=document.getElementById('new-dept-name');
+  const name=inp.value.trim();
+  if(!name){inp.focus();return;}
+  if(!DB.depts)DB.depts=[];
+  if(DB.depts.includes(name)){showToast('Bộ phận đã tồn tại','#E67E22');return;}
+  DB.depts.push(name);
+  inp.value='';
+  renderDepts();
+  saveDB();
+  showToast(`✓ Đã thêm bộ phận "${name}"`, '#27AE60');
+}
+
+function removeDept(name){
+  if(!requireRole('admin'))return;
+  // Check if any employee uses this dept
+  const inUse=DB.emps.some(e=>e.dept===name);
+  if(inUse){
+    if(!confirm(`Bộ phận "${name}" đang có nhân viên. Vẫn muốn xóa?`))return;
+  } else {
+    if(!confirm(`Xóa bộ phận "${name}"?`))return;
+  }
+  DB.depts=DB.depts.filter(d=>d!==name);
+  renderDepts();
+  saveDB();
+  showToast(`Đã xóa bộ phận "${name}"`, '#E67E22');
+}
+
+// ─── CHANGE EMPLOYEE PHOTO ────────────────────────────────────────────────────
+let _changePhotoEmpId = null;
+
+function changePhoto(empId){
+  if(!requireRole('admin'))return;
+  _changePhotoEmpId = empId;
+  document.getElementById('change-photo-input').click();
+}
+
+function handleChangePhoto(e){
+  const file=e.target.files[0];
+  if(!file||!_changePhotoEmpId)return;
+  const emp=DB.emps.find(e=>e.id===_changePhotoEmpId);
+  if(!emp){showToast('Không tìm thấy nhân viên','#C0392B');return;}
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    emp.photo=ev.target.result;
+    rEmp();
+    // Save photo to IndexedDB
+    if(_idb) idbPut('ph_'+emp.id, emp.photo).catch(()=>{});
+    saveDB();
+    showToast(`✓ Đã cập nhật ảnh: ${emp.name}`, '#27AE60', 2500);
+    _changePhotoEmpId=null;
+    // Reset input
+    document.getElementById('change-photo-input').value='';
+  };
+  reader.readAsDataURL(file);
+}
+
+function removePhoto(empId){
+  if(!requireRole('admin'))return;
+  const emp=DB.emps.find(e=>e.id===empId);
+  if(!emp)return;
+  if(!confirm(`Xóa ảnh của ${emp.name}?`))return;
+  emp.photo='';
+  if(_idb) idbDel('ph_'+empId).catch(()=>{});
+  rEmp();
+  saveDB();
+  showToast('Đã xóa ảnh nhân viên','#E67E22');
 }
 
 // ─── Role guard wrappers (applied once) ──────────────────────────────────────
@@ -1951,7 +2058,10 @@ rSet=function(){
   _rSet0();
   const box=document.getElementById('user-mgmt-box');
   if(box)box.style.display=currentUser?.role==='admin'?'':'none';
+  const dbox=document.getElementById('dept-mgmt-box');
+  if(dbox)dbox.style.display=currentUser?.role==='admin'?'':'none';
   renderUsers();
+  renderDepts();
   renderSyncSettings();
 };
 
