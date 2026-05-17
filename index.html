@@ -1,0 +1,2085 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpCertMS v2 — Operation Certificate Management</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#C0392B;--red2:#96281B;--dark:#1a1a1a;--white:#fff;--green:#27AE60;--orange:#E67E22;--blue:#2980B9;--sidebar:224px;}
+body{font-family:'DM Sans',sans-serif;background:#f2f2f2;color:#111;display:flex;height:100vh;overflow:hidden}
+/* SIDEBAR */
+#sidebar{width:var(--sidebar);background:var(--dark);display:flex;flex-direction:column;flex-shrink:0}
+.sb-logo{padding:18px 16px 14px;border-bottom:1px solid #2e2e2e}
+.sb-logo h1{font-family:'Bebas Neue',sans-serif;font-size:19px;color:#fff;letter-spacing:1px;line-height:1.2}
+.sb-logo span{font-size:9px;color:#666;letter-spacing:2px;text-transform:uppercase;display:block;margin-top:1px}
+.sb-nav{flex:1;padding:10px 0;overflow-y:auto}
+.nav-lnk{display:flex;align-items:center;gap:9px;padding:9px 16px;color:#999;font-size:12.5px;font-weight:500;cursor:pointer;border-left:3px solid transparent;transition:.13s}
+.nav-lnk:hover{color:#fff;background:#262626}
+.nav-lnk.active{color:#fff;background:#242424;border-left-color:var(--red)}
+.nav-lnk svg{width:15px;height:15px;flex-shrink:0}
+.sb-div{height:1px;background:#2a2a2a;margin:6px 16px}
+.sb-sec{padding:9px 16px 3px;font-size:9px;color:#4a4a4a;text-transform:uppercase;letter-spacing:1.5px;font-weight:600}
+.sb-foot{padding:12px 16px;border-top:1px solid #242424;font-size:11px;color:#4a4a4a;line-height:1.5}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px}
+.dot.ok{background:var(--green)}.dot.warn{background:var(--orange)}.dot.err{background:var(--red)}
+/* MAIN */
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#topbar{height:58px;background:#fff;border-bottom:1px solid #e4e4e4;display:flex;align-items:center;padding:0 22px;gap:9px;flex-shrink:0}
+#topbar h2{font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:1px;color:var(--dark);flex:1}
+.tbtn{border:none;padding:7px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;transition:.13s;white-space:nowrap}
+.tbtn.red{background:var(--red);color:#fff}.tbtn.red:hover{background:var(--red2)}
+.tbtn.green{background:#1D6F42;color:#fff}.tbtn.green:hover{background:#155233}
+.tbtn.blue{background:#0078d4;color:#fff}.tbtn.blue:hover{background:#106ebe}
+.tbtn.ghost{background:transparent;border:1px solid #ddd;color:#666}.tbtn.ghost:hover{border-color:var(--red);color:var(--red)}
+#content{flex:1;overflow-y:auto;padding:22px}
+.page{display:none}.page.active{display:block}
+/* COMPONENTS */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
+.kpi{background:#fff;border-radius:9px;padding:16px 18px;border-left:4px solid var(--red);position:relative;overflow:hidden}
+.kpi::after{content:attr(data-i);position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:34px;opacity:.06}
+.kpi-lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:.9px;color:#999;font-weight:600;margin-bottom:5px}
+.kpi-val{font-family:'Bebas Neue',sans-serif;font-size:38px;color:var(--dark);line-height:1}
+.kpi-sub{font-size:11px;color:#bbb;margin-top:3px}
+.kpi.g{border-left-color:var(--green)}.kpi.o{border-left-color:var(--orange)}.kpi.r{border-left-color:var(--red)}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sh h3{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:.5px}
+.tw{background:#fff;border-radius:9px;overflow:hidden;border:1px solid #e8e8e8}
+.tb{padding:10px 14px;display:flex;gap:9px;align-items:center;border-bottom:1px solid #f0f0f0;flex-wrap:wrap}
+.tb input[type=text]{border:1px solid #e0e0e0;border-radius:5px;padding:6px 11px;font-size:12.5px;font-family:inherit;outline:none;width:200px;transition:.13s}
+.tb input[type=text]:focus{border-color:var(--red)}
+.tb select{border:1px solid #e0e0e0;border-radius:5px;padding:6px 10px;font-size:12px;outline:none;background:#fff;cursor:pointer}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+thead tr{background:#f8f8f8;border-bottom:2px solid #ebebeb}
+th{padding:9px 13px;text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;color:#999;white-space:nowrap}
+td{padding:8px 13px;border-bottom:1px solid #f4f4f4;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafafa}
+.badge{display:inline-block;padding:2px 7px;border-radius:20px;font-size:10.5px;font-weight:600}
+.bv{background:#d4edda;color:#155724}.be{background:#fff3cd;color:#856404}.bx{background:#f8d7da;color:#721c24}
+.ab{background:none;border:1px solid #e0e0e0;border-radius:4px;padding:3px 9px;cursor:pointer;font-size:11.5px;color:#666;transition:.13s;font-family:inherit}
+.ab:hover{border-color:var(--red);color:var(--red)}.ab.dx:hover{border-color:#dc3545;color:#dc3545}
+.av{width:30px;height:30px;border-radius:50%;object-fit:cover;background:#e8f4fd;border:1.5px solid #d0e8f5;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#1565c0;vertical-align:middle;overflow:hidden;flex-shrink:0}
+/* MODAL */
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:999;align-items:center;justify-content:center}
+.mo.open{display:flex}
+.md{background:#fff;border-radius:11px;width:560px;max-width:95vw;max-height:91vh;overflow:hidden;display:flex;flex-direction:column}
+.md.w{width:700px}
+.mh{background:var(--dark);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.mh h3{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:.5px}
+.mh button{background:none;border:none;color:#888;font-size:19px;cursor:pointer}.mh button:hover{color:#fff}
+.mb{padding:18px;overflow-y:auto;flex:1}
+.mf{padding:12px 18px;border-top:1px solid #f0f0f0;display:flex;justify-content:flex-end;gap:9px;flex-shrink:0}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg .s2{grid-column:span 2}
+.fl{display:flex;flex-direction:column;gap:4px}
+label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#777}
+input[type=text],input[type=date],select,textarea{border:1px solid #e0e0e0;border-radius:5px;padding:7px 11px;font-size:12.5px;font-family:inherit;outline:none;width:100%;transition:.13s;background:#fff;color:#111}
+input:focus,select:focus{border-color:var(--red)}
+.btn{padding:8px 18px;border-radius:5px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;border:none;display:inline-flex;align-items:center;gap:5px;transition:.13s}
+.bp{background:var(--red);color:#fff}.bp:hover{background:var(--red2)}
+.bs{background:#f0f0f0;color:#555}.bs:hover{background:#e4e4e4}
+.bg{background:var(--green);color:#fff}
+.bw{background:var(--orange);color:#fff}
+.bsp{background:#0078d4;color:#fff}.bsp:hover{background:#106ebe}
+/* IMPORT PAGE */
+.dz{border:2px dashed #e0e0e0;border-radius:9px;padding:26px;text-align:center;cursor:pointer;transition:.18s;position:relative}
+.dz:hover,.dz.drag{border-color:var(--red);background:#fdf6f5}
+.dz input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.dz .di{font-size:30px;margin-bottom:7px}
+.cm{display:grid;grid-template-columns:1fr auto 1fr;gap:7px;align-items:center;margin-bottom:9px}
+.cm .fn{font-size:12px;font-weight:600;color:#666;padding:7px 11px;background:#f8f8f8;border-radius:5px;text-align:right}
+.cm .ar{color:#bbb;font-size:15px;text-align:center}
+.ib{background:#f8f9fa;border-radius:7px;padding:11px 13px;border-left:3px solid var(--blue);font-size:12px;color:#555;margin-bottom:12px;line-height:1.6}
+.ib.w{border-left-color:var(--orange);background:#fff9f3}.ib.s{border-left-color:var(--green);background:#f0fff4}
+.pb{height:4px;background:#f0f0f0;border-radius:2px;overflow:hidden;margin-top:6px}
+.pbf{height:100%;background:var(--green);border-radius:2px;transition:width .3s}
+/* CARD */
+.cc{width:204px;border-radius:6px;overflow:hidden;box-shadow:0 6px 28px rgba(0,0,0,.17);font-family:'DM Sans',sans-serif}
+/* 54mm=204px @96dpi, 90mm=340px — portrait card */
+.ch{background:var(--red);padding:9px 12px}
+.ch .co{font-size:9.5px;color:rgba(255,255,255,.65);letter-spacing:2px;text-transform:uppercase}
+.ch .ti{font-family:'Bebas Neue',sans-serif;font-size:21px;color:#fff;letter-spacing:1px;line-height:1.1;margin-top:2px}
+.cb{background:#fff;padding:9px 12px;display:flex;flex-direction:column;gap:8px}
+.cp{width:56px;height:56px;border-radius:5px;background:#f0f0f0;border:1.5px solid #e0e0e0;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;overflow:hidden}
+.cp img{width:100%;height:100%;object-fit:cover}
+.cd .nm{font-size:14.5px;font-weight:600;color:var(--dark)}
+.cd .eid{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#999;margin-bottom:7px}
+.cf{font-size:10.5px;color:#bbb;text-transform:uppercase;letter-spacing:.5px;margin-top:5px}
+.cv{font-size:12.5px;font-weight:600;color:var(--dark)}
+.cm2{background:#f7f7f7;padding:9px 17px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #eee;border-bottom:1px solid #eee}
+.cm2 .lv{font-family:'Bebas Neue',sans-serif;font-size:15px;color:var(--dark)}
+.cm2 .dt{text-align:right;font-size:10.5px;color:#aaa}
+.cm2 .dt strong{display:block;font-size:11.5px;color:var(--dark)}
+.qrb{width:50px;height:50px;background:#eee;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#aaa;text-align:center;overflow:hidden}
+.qrb img{width:100%;height:100%}
+.cf2{background:var(--dark);padding:7px 17px;display:flex;align-items:center;justify-content:space-between}
+.cf2 .st{font-size:10.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+.cf2 .st.v{color:#2ecc71}.cf2 .st.e{color:#f1c40f}.cf2 .st.x{color:#e74c3c}
+.cf2 small{font-size:9.5px;color:#555}
+/* MATRIX */
+.mxw{overflow-x:auto;background:#fff;border-radius:9px;border:1px solid #e8e8e8}
+.lc1{background:#d5e8d4;color:#27AE60}.lc2{background:#a9c4a0;color:#1a6b3a}
+.lc3{background:#7dad74;color:#0d3d1c}.lc4{background:#27AE60;color:#fff}.lc0{background:#f8f8f8;color:#ccc}
+.lv-cell{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;border-radius:4px;padding:4px 5px;min-width:68px}
+/* ALERTS */
+.ali{background:#fff;border-radius:7px;padding:11px 14px;display:flex;align-items:center;gap:12px;border-left:4px solid #e0e0e0;margin-bottom:7px}
+.ali.e2{border-left-color:var(--orange)}.ali.x2{border-left-color:var(--red)}
+/* MISC */
+.es{padding:36px;text-align:center;color:#ccc;font-size:13.5px}
+.pill{background:#f0f0f0;border-radius:20px;padding:2px 9px;font-size:11px;font-weight:500;color:#666;display:inline-block}
+.tr{color:var(--red)}.tg{color:var(--green)}.to{color:var(--orange)}
+.box{background:#fff;border-radius:9px;border:1px solid #e8e8e8;margin-bottom:18px}
+.box-hdr{padding:14px 18px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;gap:11px}
+.box-body{padding:18px}
+.step-num{width:26px;height:26px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;flex-shrink:0}
+
+/* ═══ LOGIN PAGE ═══════════════════════════════════════════════════════════ */
+#login-screen{
+  position:fixed;inset:0;z-index:10000;
+  background:linear-gradient(135deg,#1a1a1a 0%,#2c1010 50%,#1a1a1a 100%);
+  display:flex;align-items:center;justify-content:center;
+}
+#login-screen.hidden{display:none}
+.login-box{
+  background:#fff;border-radius:14px;width:400px;max-width:94vw;
+  overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.5);
+}
+.login-header{
+  background:var(--red);padding:28px 32px 24px;text-align:center;
+}
+.login-header h1{font-family:'Bebas Neue',sans-serif;font-size:26px;color:#fff;letter-spacing:2px;margin-bottom:4px}
+.login-header p{font-size:11.5px;color:rgba(255,255,255,.65);letter-spacing:1px;text-transform:uppercase}
+.login-body{padding:28px 32px 32px;display:flex;flex-direction:column;gap:16px}
+.login-field{display:flex;flex-direction:column;gap:6px}
+.login-field label{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#666}
+.login-field input{
+  border:1.5px solid #e0e0e0;border-radius:7px;
+  padding:10px 14px;font-size:14px;font-family:inherit;
+  outline:none;transition:.15s;background:#fff;
+}
+.login-field input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(192,57,43,.1)}
+.login-btn{
+  background:var(--red);color:#fff;border:none;
+  padding:12px;border-radius:7px;font-size:14px;font-weight:700;
+  cursor:pointer;font-family:inherit;transition:.15s;margin-top:4px;
+  letter-spacing:.5px;
+}
+.login-btn:hover{background:var(--red2)}
+.login-err{
+  background:#fdf2f2;border:1px solid #f8d7da;border-radius:6px;
+  padding:9px 14px;font-size:12.5px;color:#721c24;display:none;
+  text-align:center;
+}
+.login-err.show{display:block}
+.login-footer{
+  border-top:1px solid #f0f0f0;padding:14px 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:#fafafa;
+}
+.ms-login-btn{
+  width:100%;padding:11px 16px;
+  border:1.5px solid #e0e0e0;border-radius:7px;
+  background:#fff;cursor:pointer;font-family:inherit;
+  font-size:14px;font-weight:600;color:#333;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:.15s;
+}
+.ms-login-btn:hover{border-color:#0078d4;background:#f0f7ff;color:#0078d4}
+.ms-login-btn:disabled{opacity:.5;cursor:not-allowed}
+.login-divider{
+  display:flex;align-items:center;gap:10px;
+  color:#ccc;font-size:12px;
+}
+.login-divider::before,.login-divider::after{
+  content:'';flex:1;height:1px;background:#f0f0f0;
+}
+.ms-loading{
+  display:inline-block;width:16px;height:16px;
+  border:2px solid #ddd;border-top-color:#0078d4;
+  border-radius:50%;animation:spin .7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.login-footer small{font-size:11px;color:#aaa}
+.role-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;
+}
+.role-badge.admin{background:#fde8e8;color:var(--red)}
+.role-badge.viewer{background:#e8f4fd;color:#1565c0}
+.role-badge.trainer{background:#e8fdf0;color:#155724}
+/* Top-right user info bar */
+#user-bar{
+  display:flex;align-items:center;gap:10px;padding:0 4px;
+}
+#user-bar .uname{font-size:12.5px;font-weight:600;color:#444}
+#user-bar .urole{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:700}
+#user-bar .urole.admin{background:#fde8e8;color:var(--red)}
+#user-bar .urole.viewer{background:#e8f4fd;color:#1565c0}
+#user-bar .urole.trainer{background:#e8fdf0;color:#155724}
+#user-bar .logout-btn{
+  background:none;border:1px solid #ddd;border-radius:5px;
+  padding:4px 10px;font-size:12px;cursor:pointer;color:#888;
+  font-family:inherit;transition:.15s;
+}
+#user-bar .logout-btn:hover{border-color:var(--red);color:var(--red)}
+/* ── Role-based visibility ── */
+/* VIEWER: read-only */
+body.role-viewer .edit-only{display:none!important}
+body.role-viewer #mab{display:none!important}
+body.role-viewer .ab.dx{display:none!important}
+body.role-viewer .ab{display:none!important}
+body.role-viewer .tbtn.red{display:none!important}
+/* TRAINER: can cert+renew, no emp/proc/settings edit */
+body.role-trainer .ab.dx{display:none!important}
+body.role-trainer #page-employees .ab{display:none!important}
+body.role-trainer #page-processes .ab{display:none!important}
+body.role-trainer #page-employees #mab-emp{display:none!important}
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  #sidebar,#topbar,#page-dashboard,#page-employees,#page-processes,
+  #page-certs,#page-renewal,#page-matrix,#page-import,#page-settings,
+  .tb,.mo{display:none!important}
+  body{background:white;overflow:visible;height:auto;display:block;margin:0;padding:0}
+  #main{display:block;overflow:visible;height:auto;width:100%}
+  #content{padding:0;overflow:visible;display:block}
+  /* Single card print: hide everything except preview card */
+  #page-card{display:block!important}
+  #card-tab-bulk{display:none!important}
+  #card-tab-single > div > div:first-child{display:none!important}
+  #card-tab-single > div > div:last-child{display:block!important;width:100%}
+  .sh{display:none!important}
+  #print-area{display:flex!important;justify-content:center;padding:20mm 0 0}
+  .cc{box-shadow:none!important;width:340px;margin:0 auto;page-break-inside:avoid}
+  .ch{background:#C0392B!important}
+  .cf2{background:#1a1a1a!important}
+  .cm2{background:#f7f7f7!important}
+  @page{size:A5 landscape;margin:0}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGIN SCREEN ════════════════════════════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-header">
+      <h1>OpCertMS</h1>
+      <p>Operation Certificate Management</p>
+    </div>
+    <div class="login-body">
+      <!-- Login -->
+      <div class="login-field">
+        <label>Tên đăng nhập</label>
+        <input type="text" id="l-user" placeholder="admin / trainer / viewer"
+          autocomplete="username"
+          onkeydown="if(event.key==='Enter')document.getElementById('l-pass').focus()">
+      </div>
+      <div class="login-field">
+        <label>Mật khẩu</label>
+        <input type="password" id="l-pass" placeholder="Nhập mật khẩu..."
+          autocomplete="current-password"
+          onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div class="login-err" id="l-err">Tên đăng nhập hoặc mật khẩu không đúng!</div>
+      <button class="login-btn" onclick="doLogin()">ĐĂNG NHẬP</button>
+    </div>
+    <div class="login-footer">
+      <small>PT. Manufacturing Excellence</small>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span class="role-badge admin">👑 Admin</span>
+        <span class="role-badge trainer">✏ Trainer</span>
+        <span class="role-badge viewer">👁 Viewer</span>
+      </div>
+    </div>
+  </div>
+</div>
+<nav id="sidebar">
+  <div class="sb-logo"><h1>OpCertMS</h1><span>v2.0 — Excel + SharePoint</span></div>
+  <div class="sb-nav">
+    <a class="nav-lnk active" data-p="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard</a>
+    <div class="sb-sec">Quản lý</div>
+    <a class="nav-lnk" data-p="employees"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Nhân viên</a>
+    <a class="nav-lnk" data-p="processes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg>Quy trình</a>
+    <a class="nav-lnk" data-p="certs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Chứng chỉ</a>
+    <a class="nav-lnk" data-p="renewal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Gia hạn</a>
+    <a class="nav-lnk" data-p="matrix"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>Ma trận kỹ năng</a>
+    <div class="sb-div"></div>
+    <a class="nav-lnk" data-p="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>In thẻ chứng chỉ</a>
+    <div class="sb-sec">Dữ liệu</div>
+    <a class="nav-lnk" data-p="import"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Import Excel</a>
+    <a class="nav-lnk" data-p="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Cài đặt & SharePoint</a>
+  </div>
+  <div class="sb-foot" id="sbf"><span class="dot warn"></span>Chưa kết nối Excel</div>
+</nav>
+
+<div id="main">
+  <div id="topbar">
+    <h2 id="ptitle">DASHBOARD</h2>
+    <div id="user-bar">
+    <span class="uname" id="ub-name">—</span>
+    <span class="urole" id="ub-role">—</span>
+    <button class="logout-btn" onclick="doLogout()">Đăng xuất</button>
+  </div>
+  <div style="width:1px;height:24px;background:#eee"></div>
+  <button class="tbtn green" onclick="nav('import')">📊 Import Excel</button>
+    
+    <div id="sync-status-dot" style="width:9px;height:9px;border-radius:50%;background:#aaa;flex-shrink:0"></div>
+    <span id="sync-status-label" style="font-size:11.5px;color:#888;white-space:nowrap">○ Offline</span>
+    <button class="tbtn ghost" onclick="expData()">↓ Export JSON</button><button class="tbtn ghost" onclick="importJSON()" title="Khôi phục từ file JSON">↑ Import JSON</button>
+    <button class="tbtn red" id="mab" onclick="mAct()">+ Thêm mới</button>
+  </div>
+  <div id="content">
+
+<!-- DASHBOARD -->
+<div id="page-dashboard" class="page active">
+  <div class="kpi-grid" id="kgrid"></div>
+  <div id="src-banner" style="display:none;background:#f0fff4;border:1px solid #b7e4c7;border-radius:8px;padding:9px 14px;margin-bottom:16px;font-size:12.5px;display:flex;align-items:center;gap:9px"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+    <div><div class="sh"><h3>Cảnh báo hết hạn</h3></div><div id="alist"></div></div>
+    <div><div class="sh"><h3>Chứng chỉ gần đây</h3></div>
+      <div class="tw"><table><thead><tr><th>Mã CC</th><th>Nhân viên</th><th>Trạng thái</th></tr></thead><tbody id="rctb"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- EMPLOYEES -->
+<div id="page-employees" class="page">
+  <div class="tw">
+    <div class="tb">
+      <input type="text" placeholder="Tìm kiếm nhân viên..." id="esrch" oninput="rEmp()">
+      <select id="edept" onchange="rEmp()"><option value="">Tất cả bộ phận</option></select>
+      <span style="margin-left:auto;font-size:11.5px;color:#bbb" id="ecnt"></span>
+    </div>
+    <table><thead><tr><th>Ảnh</th><th>Mã NV</th><th>Họ tên</th><th>Bộ phận</th><th>Chức danh</th><th>Ngày vào</th><th>Trạng thái</th><th>Số CC</th><th></th></tr></thead>
+    <tbody id="etb"></tbody></table>
+  </div>
+</div>
+
+<!-- PROCESSES -->
+<div id="page-processes" class="page">
+  <div class="tw">
+    <div class="tb"><input type="text" placeholder="Tìm kiếm quy trình..." id="psrch" oninput="rProc()"></div>
+    <table><thead><tr><th>Mã QT</th><th>Tên quy trình</th><th>Danh mục</th><th>Hiệu lực</th><th>Mô tả</th><th>Trạng thái</th><th></th></tr></thead>
+    <tbody id="ptb"></tbody></table>
+  </div>
+</div>
+
+<!-- CERTS -->
+<div id="page-certs" class="page">
+  <div class="tw">
+    <div class="tb">
+      <input type="text" placeholder="Tìm kiếm chứng chỉ..." id="csrch" oninput="rCert()">
+      <select id="csflt" onchange="rCert()"><option value="">Tất cả trạng thái</option><option>Valid</option><option>Expiring Soon</option><option>Expired</option></select>
+    </div>
+    <table><thead><tr><th>Mã CC</th><th>Nhân viên</th><th>Quy trình</th><th>Cấp độ</th><th>Ngày cấp</th><th>Hết hạn</th><th>Trạng thái</th><th></th></tr></thead>
+    <tbody id="ctb"></tbody></table>
+  </div>
+</div>
+
+<!-- RENEWAL -->
+<div id="page-renewal" class="page">
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px">
+    <div class="kpi r" data-i="⚠"><div class="kpi-lbl">Đã hết hạn</div><div class="kpi-val" id="k-exp">0</div></div>
+    <div class="kpi o" data-i="⏰"><div class="kpi-lbl">Sắp hết hạn ≤30 ngày</div><div class="kpi-val" id="k-soon">0</div></div>
+    <div class="kpi g" data-i="✓"><div class="kpi-lbl">Còn hiệu lực</div><div class="kpi-val" id="k-valid">0</div></div>
+  </div>
+  <div class="tw">
+    <div class="tb"><input type="text" placeholder="Tìm..." id="rsrch" oninput="rRen()"></div>
+    <table><thead><tr><th>Mã CC</th><th>Nhân viên</th><th>Quy trình</th><th>Hết hạn</th><th>Còn lại</th><th>Trạng thái</th><th></th></tr></thead>
+    <tbody id="rtb"></tbody></table>
+  </div>
+</div>
+
+<!-- MATRIX -->
+<div id="page-matrix" class="page">
+  <div style="margin-bottom:12px;display:flex;gap:9px;align-items:center;flex-wrap:wrap">
+    <span style="font-size:12.5px;color:#999">Cấp độ:</span>
+    <span class="badge bv">L1 Cơ bản</span><span class="badge" style="background:#a9c4a0;color:#1a6b3a">L2 Trung cấp</span>
+    <span class="badge" style="background:#7dad74;color:#0d3d1c">L3 Nâng cao</span><span class="badge" style="background:#27AE60;color:#fff">L4 Chuyên gia</span>
+  </div>
+  <div class="mxw"><table style="min-width:580px;width:100%;border-collapse:collapse;font-size:12px">
+    <thead id="mxh"></thead><tbody id="mxb"></tbody>
+  </table></div>
+</div>
+
+<!-- CARD -->
+<div id="page-card" class="page">
+  <!-- Tabs -->
+  <div style="display:flex;gap:2px;margin-bottom:16px;background:#ebebeb;border-radius:8px;padding:3px;width:fit-content">
+    <button class="card-tab-btn active" onclick="switchCardTab('single')" id="tab-single" style="padding:7px 18px;border:none;background:#fff;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:#111;box-shadow:0 1px 4px rgba(0,0,0,.1)">🪪 In đơn</button>
+    <button class="card-tab-btn" onclick="switchCardTab('bulk')" id="tab-bulk" style="padding:7px 18px;border:none;background:none;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;color:#888">🖨 In hàng loạt</button>
+  </div>
+
+  <!-- TAB: SINGLE -->
+  <div id="card-tab-single">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start">
+      <div>
+        <div class="sh"><h3>Chọn chứng chỉ</h3></div>
+        <div class="tw">
+          <div class="tb"><input type="text" placeholder="Tìm..." id="cdsrch" oninput="rCardList()"></div>
+          <table style="font-size:12px"><thead><tr><th>Mã CC</th><th>Nhân viên</th><th>Quy trình</th><th></th></tr></thead>
+          <tbody id="cdtb"></tbody></table>
+        </div>
+      </div>
+      <div>
+        <div class="sh"><h3>Xem trước thẻ</h3>
+          <div style="display:flex;gap:7px">
+            <button class="btn bs" onclick="printCard()">🖨 In</button>
+            <button class="btn bp" onclick="dlCard()">↓ Lưu HTML</button>
+          </div>
+        </div>
+        <div id="print-area">
+          <div class="cc" id="ccp">
+            <div class="ch"><div class="co">PT. MANUFACTURING EXCELLENCE</div><div class="ti">OPERATION CERTIFICATE</div><div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;letter-spacing:.5px">SERTIFIKAT OPERASI</div></div>
+            <div class="cb"><div class="cp" id="cphoto">👤</div>
+              <div class="cd"><div class="nm" id="cnm">— Chọn chứng chỉ —</div><div class="eid" id="ceid">ID: —</div><div class="cf">Quy trình</div><div class="cv" id="cproc">—</div></div>
+            </div>
+            <div class="cm2">
+              <div><div style="font-size:9.5px;color:#bbb;text-transform:uppercase;letter-spacing:.5px">Cấp độ</div><div class="lv" id="clv">—</div></div>
+              <div class="dt"><div>Ngày cấp <strong id="ciss">—</strong></div><div>Hết hạn <strong id="cexp">—</strong></div></div>
+              <div class="qrb" id="cqr">QR<br>CODE</div>
+            </div>
+            <div class="cf2"><span class="st" id="cst">Chưa chọn</span><small id="ccno">CERT-XXXX</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: BULK PRINT -->
+  <div id="card-tab-bulk" style="display:none">
+    <div style="display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:start">
+      <!-- Filter panel -->
+      <div>
+        <div class="sh"><h3>Bộ lọc</h3></div>
+        <div class="box" style="margin-bottom:0">
+          <div class="box-body" style="display:flex;flex-direction:column;gap:12px">
+            <div class="fl">
+              <label>Lọc theo bộ phận</label>
+              <select id="bulk-dept" onchange="rBulkList()" style="padding:7px 10px;border:1px solid #e0e0e0;border-radius:5px;font-size:13px;outline:none">
+                <option value="">Tất cả bộ phận</option>
+              </select>
+            </div>
+            <div class="fl">
+              <label>Lọc theo trạng thái</label>
+              <select id="bulk-status" onchange="rBulkList()" style="padding:7px 10px;border:1px solid #e0e0e0;border-radius:5px;font-size:13px;outline:none">
+                <option value="">Tất cả</option>
+                <option value="Valid">Valid</option>
+                <option value="Expiring Soon">Sắp hết hạn</option>
+                <option value="Expired">Đã hết hạn</option>
+              </select>
+            </div>
+            <div class="fl">
+              <label>Lọc theo quy trình</label>
+              <select id="bulk-proc" onchange="rBulkList()" style="padding:7px 10px;border:1px solid #e0e0e0;border-radius:5px;font-size:13px;outline:none">
+                <option value="">Tất cả quy trình</option>
+              </select>
+            </div>
+            <div style="height:1px;background:#f0f0f0"></div>
+            <div style="font-size:12px;color:#888" id="bulk-count-label">0 chứng chỉ được chọn</div>
+            <button class="btn bg" style="width:100%;justify-content:center" onclick="selectAllBulk()">☑ Chọn tất cả</button>
+            <button class="btn bs" style="width:100%;justify-content:center" onclick="clearBulkSel()">☐ Bỏ chọn tất cả</button>
+            <div style="height:1px;background:#f0f0f0"></div>
+            <button class="btn bp" style="width:100%;justify-content:center;font-size:14px;padding:11px" onclick="bulkPrint()">
+              🖨 In hàng loạt (9 thẻ/trang A4)
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Cert list with checkboxes -->
+      <div>
+        <div class="sh"><h3>Danh sách chứng chỉ</h3></div>
+        <div class="tw">
+          <div class="tb"><input type="text" placeholder="Tìm..." id="bulk-search" oninput="rBulkList()"></div>
+          <table style="font-size:12px">
+            <thead><tr><th style="width:32px"><input type="checkbox" id="bulk-chk-all" onchange="toggleAllBulk(this.checked)"></th><th>Mã NV</th><th>Nhân viên</th><th>Bộ phận</th><th>Quy trình (gộp)</th><th>Số CC</th></tr></thead>
+            <tbody id="bulk-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT -->
+<div id="page-import" class="page">
+  <div style="max-width:720px">
+    <div class="box">
+      <div class="box-hdr"><div class="step-num">1</div><h3 style="font-size:14px;font-weight:600">Upload file Excel nhân viên</h3></div>
+      <div class="box-body">
+        <div class="dz" id="dz">
+          <input type="file" id="xfile" accept=".xlsx,.xls,.csv" onchange="handleXL(event)">
+          <div class="di">📊</div>
+          <p style="font-size:13.5px;color:#666;margin-bottom:3px">Kéo thả file Excel vào đây hoặc click để chọn</p>
+          <small style="font-size:11.5px;color:#bbb">Hỗ trợ .xlsx, .xls, .csv</small>
+        </div>
+        <div id="xinfo" style="display:none;margin-top:10px;padding:11px;background:#f0fff4;border-radius:7px;border:1px solid #b7e4c7;font-size:12.5px"></div>
+      </div>
+    </div>
+    <div id="s-sheet" style="display:none" class="box">
+      <div class="box-hdr"><div class="step-num">2</div><h3 style="font-size:14px;font-weight:600">Chọn sheet và xem trước</h3></div>
+      <div class="box-body">
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:12px">
+          <label style="font-size:12.5px;font-weight:600;color:#666;white-space:nowrap">Sheet:</label>
+          <select id="shsel" onchange="loadPreview()" style="padding:6px 11px;border:1px solid #e0e0e0;border-radius:5px;font-size:12.5px;outline:none"></select>
+          <span id="shcnt" style="font-size:11.5px;color:#bbb"></span>
+        </div>
+        <div id="pvcon" style="overflow-x:auto;max-height:200px;overflow-y:auto">
+          <table id="pvtbl" style="width:100%;border-collapse:collapse;font-size:11.5px"></table>
+        </div>
+      </div>
+    </div>
+    <div id="s-map" style="display:none" class="box">
+      <div class="box-hdr"><div class="step-num">3</div><h3 style="font-size:14px;font-weight:600">Map cột Excel → trường hệ thống</h3></div>
+      <div class="box-body">
+        <div class="ib">Chọn cột tương ứng trong file Excel cho mỗi trường. Trường nào không có thì để "(Bỏ qua)".</div>
+        <div id="mapform"></div>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid #f0f0f0;display:flex;gap:9px;justify-content:flex-end">
+          <button class="btn bg" onclick="doImport()">✓ Nhập dữ liệu nhân viên</button>
+        </div>
+      </div>
+    </div>
+    <div id="imp-res" style="display:none" class="box"><div class="box-body"></div></div>
+    <div style="background:#fff9f3;border-radius:9px;border:1px solid #fcd5a0;padding:14px 18px;display:flex;align-items:center;justify-content:space-between">
+      <div><div style="font-size:13px;font-weight:600;color:#b07000">Chưa có file Excel?</div><div style="font-size:11.5px;color:#999;margin-top:2px">Tải template mẫu với cấu trúc cột chuẩn</div></div>
+      <button class="btn bw" onclick="dlTpl()">↓ Tải template Excel</button>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div id="page-settings" class="page">
+  <div style="max-width:660px">
+
+    <div class="box" id="sync-config-box">
+      <div class="box-hdr">
+        <div style="width:30px;height:30px;border-radius:7px;background:#27AE60;display:flex;align-items:center;justify-content:center;font-size:16px">☁</div>
+        <div>
+          <h3 style="font-size:14px;font-weight:600">Đồng bộ dữ liệu (JSONBin.io)</h3>
+          <p style="font-size:11.5px;color:#999;margin-top:1px">Lưu & chia sẻ dữ liệu giữa các thiết bị — miễn phí</p>
+        </div>
+      </div>
+      <div class="box-body">
+        <div class="ib s" style="margin-bottom:14px">
+          <strong>Cách lấy API Key + Bin ID (3 phút):</strong><br>
+          1. Vào <a href="https://jsonbin.io" target="_blank" style="color:#27AE60">jsonbin.io</a> → Sign Up miễn phí<br>
+          2. Dashboard → <strong>API Keys</strong> → Copy <em>X-Master-Key</em><br>
+          3. Nhấn <strong>+ Create Bin</strong> → đặt tên "OpCertMS" → tạo với nội dung <code style="background:#f0f0f0;padding:1px 5px;border-radius:3px">{}</code><br>
+          4. Copy <strong>Bin ID</strong> từ URL (dạng: 64abc123...)<br>
+          5. Dán vào ô bên dưới → Lưu → Đẩy dữ liệu
+        </div>
+        <div class="fg" style="gap:12px">
+          <div class="fl">
+            <label>Bin ID</label>
+            <input type="text" id="sync-bin-id" placeholder="64abc123def456...">
+          </div>
+          <div class="fl">
+            <label>X-Master-Key (API Key)</label>
+            <input type="password" id="sync-api-key" placeholder="$2a$10$...">
+          </div>
+        </div>
+        <div style="margin-top:14px;display:flex;gap:9px;align-items:center;flex-wrap:wrap">
+          <button class="btn bg" onclick="saveSyncConfig()">💾 Lưu cấu hình</button>
+          <button class="btn bsp" onclick="manualPush()">☁ Đẩy dữ liệu lên</button>
+          <button class="btn bs"  onclick="manualPull()">↓ Kéo dữ liệu về</button>
+          <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
+            <div id="sync-status-dot2" style="width:8px;height:8px;border-radius:50%;background:#aaa"></div>
+            <span id="sync-status-label2" style="font-size:12px;color:#888">—</span>
+          </div>
+        </div>
+        <div class="ib w" style="margin-top:12px">
+          ⚡ <strong>Tự động sync:</strong> mọi thay đổi tự lưu cloud sau 3 giây. Khi mở app trên thiết bị khác → tự động kéo dữ liệu mới nhất.
+        </div>
+      </div>
+    </div>
+
+    <!-- USER MANAGEMENT — admin only -->
+    <div class="box" id="user-mgmt-box">
+      <div class="box-hdr">
+        <div style="width:30px;height:30px;border-radius:7px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:15px">👑</div>
+        <div><h3 style="font-size:14px;font-weight:600">Quản lý tài khoản</h3><p style="font-size:11.5px;color:#999;margin-top:1px">Thêm / sửa tài khoản đăng nhập</p></div>
+      </div>
+      <div class="box-body">
+        <div style="margin-bottom:14px">
+          <table style="width:100%;font-size:13px;border-collapse:collapse">
+            <thead><tr style="background:#f8f8f8;border-bottom:2px solid #ebebeb">
+              <th style="padding:8px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;color:#999">Username</th>
+              <th style="padding:8px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;color:#999">Mật khẩu</th>
+              <th style="padding:8px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;color:#999">Vai trò</th>
+              <th style="padding:8px 12px"></th>
+            </tr></thead>
+            <tbody id="users-tbody"></tbody>
+          </table>
+        </div>
+        <div style="background:#f8f9fa;border-radius:7px;padding:14px;border:1px solid #e8e8e8">
+          <div style="font-size:12px;font-weight:600;color:#555;margin-bottom:10px">+ Thêm / cập nhật tài khoản</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end">
+            <div class="fl"><label>Username</label><input type="text" id="nu-user" placeholder="username"></div>
+            <div class="fl"><label>Mật khẩu</label><input type="password" id="nu-pass" placeholder="password"></div>
+            <div class="fl"><label>Vai trò</label>
+              <select id="nu-role" style="padding:7px 10px;border:1px solid #e0e0e0;border-radius:5px;font-size:13px;outline:none">
+                <option value="admin">👑 Admin</option>
+                <option value="trainer">✏ Trainer</option>
+                <option value="viewer">👁 Viewer</option>
+              </select>
+            </div>
+            <button class="btn bp" onclick="saveUser()" style="height:36px">Lưu</button>
+          </div>
+        </div>
+        <div class="ib w" style="margin-top:12px">
+          <strong>Phân quyền:</strong><br>
+          👑 <strong>Admin</strong> — Toàn quyền: xem, thêm, sửa, xóa tất cả<br>
+          ✏ <strong>Trainer</strong> — Xem + cấp chứng chỉ + gia hạn (không sửa nhân viên/quy trình)<br>
+          👁 <strong>Viewer</strong> — Chỉ xem, không thể thay đổi dữ liệu
+        </div>
+      </div>
+    </div>
+
+        <div class="box">
+      <div class="box-hdr"><h3 style="font-size:14px;font-weight:600">Cài đặt hệ thống</h3></div>
+      <div class="box-body">
+        <div class="fg" style="gap:12px">
+          <div class="fl"><label>Tên công ty</label><input type="text" id="sc" value="PT. Manufacturing Excellence"></div>
+          <div class="fl"><label>Cảnh báo hết hạn (ngày)</label><input type="text" id="sw" value="30"></div>
+          <div class="fl s2"><label>Tiêu đề hệ thống</label><input type="text" id="st" value="Operation Certificate Management System"></div>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:9px;justify-content:flex-end">
+          <button class="btn bp" onclick="saveSet()">💾 Lưu</button>
+          <button class="btn bs" onclick="if(confirm('Reset về dữ liệu mẫu? Toàn bộ dữ liệu hiện tại sẽ bị xóa.')){indexedDB.deleteDatabase('opcertms_v2');localStorage.clear();location.reload()}">🗑 Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="mo" id="m-emp">
+  <div class="md">
+    <div class="mh"><h3 id="m-emp-t">THÊM NHÂN VIÊN</h3><button onclick="cM('m-emp')">✕</button></div>
+    <div class="mb"><div class="fg">
+      <div class="fl"><label>Mã nhân viên *</label><input type="text" id="fe-id"></div>
+      <div class="fl"><label>Họ tên *</label><input type="text" id="fe-nm"></div>
+      <div class="fl"><label>Bộ phận</label><select id="fe-dp"><option value="Production">PRD — Production</option><option value="Quality Control">QC — Quality Control</option><option value="Maintenance">MNT — Maintenance</option><option value="Engineering">ENG — Engineering</option><option value="Warehouse">WHS — Warehouse</option><option value="HSE">HSE — Health Safety Env</option><option value="Training">TRN — Training</option><option value="Administration">ADM — Administration</option></select></div>
+      <div class="fl"><label>Chức danh</label><input type="text" id="fe-po"></div>
+      <div class="fl"><label>Ngày sinh</label><input type="date" id="fe-db"></div>
+      <div class="fl"><label>Ngày vào làm</label><input type="date" id="fe-jn"></div>
+      <div class="fl"><label>Số điện thoại</label><input type="text" id="fe-ph"></div>
+      <div class="fl"><label>Trạng thái</label><select id="fe-st"><option>Active</option><option>Inactive</option><option>On Leave</option></select></div>
+    </div></div>
+    <div class="mf"><button class="btn bs" onclick="cM('m-emp')">Hủy</button><button class="btn bp" onclick="saveEmp()">Lưu</button></div>
+  </div>
+</div>
+
+<div class="mo" id="m-proc">
+  <div class="md">
+    <div class="mh"><h3 id="m-proc-t">THÊM QUY TRÌNH</h3><button onclick="cM('m-proc')">✕</button></div>
+    <div class="mb"><div class="fg">
+      <div class="fl"><label>Mã quy trình *</label><input type="text" id="fp-id"></div>
+      <div class="fl"><label>Tên quy trình *</label><input type="text" id="fp-nm"></div>
+      <div class="fl"><label>Danh mục</label><input type="text" id="fp-ct"></div>
+      <div class="fl"><label>Hiệu lực (tháng)</label><input type="text" id="fp-vl" value="12"></div>
+      <div class="fl s2"><label>Mô tả</label><input type="text" id="fp-ds"></div>
+      <div class="fl"><label>Trạng thái</label><select id="fp-st"><option>Active</option><option>Inactive</option></select></div>
+    </div></div>
+    <div class="mf"><button class="btn bs" onclick="cM('m-proc')">Hủy</button><button class="btn bp" onclick="saveProc()">Lưu</button></div>
+  </div>
+</div>
+
+<div class="mo" id="m-cert">
+  <div class="md">
+    <div class="mh"><h3>CẤP CHỨNG CHỈ MỚI</h3><button onclick="cM('m-cert')">✕</button></div>
+    <div class="mb"><div class="fg">
+      <div class="fl s2"><label>Nhân viên *</label><select id="fc-em"><option value="">— Chọn nhân viên —</option></select></div>
+      <div class="fl s2"><label>Quy trình *</label><select id="fc-pr" onchange="updExp()"><option value="">— Chọn quy trình —</option></select></div>
+      <div class="fl"><label>Cấp độ *</label><select id="fc-lv"><option>Level 1 - Basic</option><option>Level 2 - Intermediate</option><option>Level 3 - Advanced</option><option>Level 4 - Expert</option></select></div>
+      <div class="fl"><label>Ngày cấp *</label><input type="date" id="fc-dt"></div>
+      <div class="fl s2" id="exp-prev" style="display:none;background:#f8f8f8;border-radius:5px;padding:9px">
+        <div style="font-size:10.5px;color:#999;margin-bottom:2px">NGÀY HẾT HẠN</div>
+        <div style="font-size:14.5px;font-weight:600" id="exp-v">—</div>
+      </div>
+    </div></div>
+    <div class="mf"><button class="btn bs" onclick="cM('m-cert')">Hủy</button><button class="btn bp" onclick="saveCert()">Cấp chứng chỉ</button></div>
+  </div>
+</div>
+
+<div class="mo" id="m-renew">
+  <div class="md" style="width:400px">
+    <div class="mh"><h3>GIA HẠN CHỨNG CHỈ</h3><button onclick="cM('m-renew')">✕</button></div>
+    <div class="mb">
+      <div style="background:#f8f8f8;border-radius:7px;padding:11px;margin-bottom:14px">
+        <div style="font-size:10.5px;color:#999">CHỨNG CHỈ</div>
+        <div style="font-size:15.5px;font-weight:600;font-family:'JetBrains Mono',monospace" id="rno">—</div>
+        <div style="font-size:12.5px;color:#777;margin-top:3px" id="rinf">—</div>
+      </div>
+      <div class="fl"><label>Ngày gia hạn mới *</label><input type="date" id="fr-dt"></div>
+      <div style="margin-top:9px;background:#fff3cd;border-radius:5px;padding:9px;font-size:11.5px;color:#856404" id="rnexp"></div>
+    </div>
+    <div class="mf"><button class="btn bs" onclick="cM('m-renew')">Hủy</button><button class="btn bw" onclick="doRenew()">Gia hạn</button></div>
+  </div>
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+const DB={
+  emps:[
+    {id:"EMP-001",name:"Ahmad Fauzi",dept:"Production",pos:"Operator",dob:"1990-05-12",join:"2015-03-01",status:"Active",phone:"+62811111111",email:"",photo:""},
+    {id:"EMP-002",name:"Budi Santoso",dept:"Quality Control",pos:"Inspector",dob:"1988-07-23",join:"2016-06-15",status:"Active",phone:"+62822222222",email:"",photo:""},
+    {id:"EMP-003",name:"Cahya Pratama",dept:"Maintenance",pos:"Technician",dob:"1992-11-30",join:"2018-01-20",status:"Active",phone:"+62833333333",email:"",photo:""},
+    {id:"EMP-004",name:"Dewi Rahayu",dept:"Engineering",pos:"Engineer",dob:"1991-03-17",join:"2017-09-10",status:"Active",phone:"+62844444444",email:"",photo:""},
+    {id:"EMP-005",name:"Eko Susilo",dept:"Production",pos:"Senior Operator",dob:"1985-08-05",join:"2010-04-01",status:"Active",phone:"+62855555555",email:"",photo:""},
+  ],
+  procs:[
+    {id:"PROC-001",name:"Formation Control Room",cat:"Operations",vl:12,desc:"Control room operation",status:"Active"},
+    {id:"PROC-002",name:"Electrolyte Injection",cat:"Production",vl:12,desc:"Electrolyte handling",status:"Active"},
+    {id:"PROC-003",name:"Cell Assembly",cat:"Production",vl:12,desc:"Battery cell assembly",status:"Active"},
+    {id:"PROC-004",name:"Quality Inspection",cat:"Quality",vl:6,desc:"Quality inspection",status:"Active"},
+    {id:"PROC-005",name:"Forklift Operation",cat:"Logistics",vl:12,desc:"Forklift certification",status:"Active"},
+    {id:"PROC-006",name:"Hot Work Permit",cat:"HSE",vl:12,desc:"Welding and hot work",status:"Active"},
+    {id:"PROC-007",name:"Chemical Handling",cat:"HSE",vl:6,desc:"Hazardous chemicals",status:"Active"},
+    {id:"PROC-008",name:"Overhead Crane",cat:"Maintenance",vl:12,desc:"Crane operation",status:"Active"},
+  ],
+  certs:[
+    {id:"CERT-2025-0001",eid:"EMP-001",enm:"Ahmad Fauzi",pid:"PROC-001",pnm:"Formation Control Room",lv:"Level 3 - Advanced",iss:"2025-01-15",exp:"2026-01-15",by:"Admin"},
+    {id:"CERT-2025-0002",eid:"EMP-002",enm:"Budi Santoso",pid:"PROC-004",pnm:"Quality Inspection",lv:"Level 2 - Intermediate",iss:"2025-03-01",exp:"2025-09-01",by:"Admin"},
+    {id:"CERT-2025-0003",eid:"EMP-003",enm:"Cahya Pratama",pid:"PROC-008",pnm:"Overhead Crane",lv:"Level 2 - Intermediate",iss:"2025-06-01",exp:"2026-06-01",by:"Admin"},
+    {id:"CERT-2025-0004",eid:"EMP-004",enm:"Dewi Rahayu",pid:"PROC-002",pnm:"Electrolyte Injection",lv:"Level 3 - Advanced",iss:"2025-07-10",exp:"2026-07-10",by:"Admin"},
+    {id:"CERT-2026-0001",eid:"EMP-005",enm:"Eko Susilo",pid:"PROC-003",pnm:"Cell Assembly",lv:"Level 4 - Expert",iss:"2026-01-05",exp:"2027-01-05",by:"Admin"},
+    {id:"CERT-2026-0002",eid:"EMP-001",enm:"Ahmad Fauzi",pid:"PROC-006",pnm:"Hot Work Permit",lv:"Level 1 - Basic",iss:"2026-04-20",exp:"2026-06-10",by:"Admin"},
+  ],
+  ctr:2,
+  sp:{url:"",nm:"id",ext:"jpg",cp:""},
+  cfg:{company:"PT. Manufacturing Excellence",warn:30},
+  src:null
+};
+
+// ─── HELPERS ────────────────────────────────────────────────────────────────
+const today=()=>new Date().toISOString().split('T')[0];
+function cSt(e){const d=Math.round((new Date(e)-new Date())/86400000);return d<0?'Expired':d<=30?'Expiring Soon':'Valid';}
+function dL(e){return Math.round((new Date(e)-new Date())/86400000);}
+function aM(dt,m){const d=new Date(dt);d.setMonth(d.getMonth()+m);return d.toISOString().split('T')[0];}
+function fD(s){if(!s)return'—';return new Date(s).toLocaleDateString('vi-VN');}
+function sBadge(s){
+  const m={Valid:'bv','Expiring Soon':'be',Expired:'bx',Active:'bv',Inactive:'bx','On Leave':'be'};
+  const l={Valid:'Hiệu lực','Expiring Soon':'Sắp hết hạn',Expired:'Hết hạn',Active:'Active',Inactive:'Inactive','On Leave':'On Leave'};
+  return`<span class="badge ${m[s]||''}">${l[s]||s}</span>`;
+}
+function eCnt(id){return DB.certs.filter(c=>c.eid===id&&cSt(c.exp)==='Valid').length;}
+function nCId(){DB.ctr++;return`CERT-${new Date().getFullYear()}-${String(DB.ctr).padStart(4,'0')}`;}
+function ini(n){return n.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();}
+function avH(e,sz=30){
+  const s=`width:${sz}px;height:${sz}px`;
+  if(e.photo) return`<img class="av" src="${e.photo}" style="${s}" onerror="this.style.display='none'">`;
+  return`<div class="av" style="${s};font-size:${Math.round(sz*.37)}px;display:inline-flex">${ini(e.name)}</div>`;
+}
+function autoId(pfx,arr){
+  if(!arr.length)return`${pfx}-001`;
+  const n=Math.max(...arr.map(e=>parseInt(e.id.split('-').pop())||0));
+  return`${pfx}-${String(n+1).padStart(3,'0')}`;
+}
+
+// ─── NAVIGATION ─────────────────────────────────────────────────────────────
+const ptitles={dashboard:'Dashboard',employees:'Quản lý nhân viên',processes:'Quản lý quy trình',certs:'Chứng chỉ',renewal:'Theo dõi gia hạn',matrix:'Ma trận kỹ năng',card:'In thẻ chứng chỉ',import:'Import Excel',settings:'Cài đặt & SharePoint'};
+const addPages={employees:true,processes:true,certs:true};
+let curPage='dashboard';
+document.querySelectorAll('.nav-lnk').forEach(a=>a.addEventListener('click',()=>nav(a.dataset.p)));
+function nav(p){
+  curPage=p;
+  document.querySelectorAll('.nav-lnk').forEach(a=>a.classList.toggle('active',a.dataset.p===p));
+  document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id==='page-'+p));
+  document.getElementById('ptitle').textContent=(ptitles[p]||p).toUpperCase();
+  document.getElementById('mab').style.display=addPages[p]?'':'none';
+  rPage(p);
+}
+function mAct(){if(curPage==='employees')oEmp();else if(curPage==='processes')oProc();else if(curPage==='certs')oCert();}
+function rPage(p){
+  if(p==='dashboard')rDash();else if(p==='employees')rEmp();else if(p==='processes')rProc();
+  else if(p==='certs')rCert();else if(p==='renewal')rRen();else if(p==='matrix')rMatrix();
+  else if(p==='card')rCardList();else if(p==='settings')rSet();
+}
+
+// ─── SHAREPOINT ─────────────────────────────────────────────────────────────
+// Bảng mã bộ phận
+const DEPT_CODES = {
+  'Production':       'PRD',
+  'Quality Control':  'QC',
+  'Maintenance':      'MNT',
+  'Engineering':      'ENG',
+  'Warehouse':        'WHS',
+  'HSE':              'HSE',
+  'Training':         'TRN',
+  'Administration':   'ADM',
+};
+function deptCode(dept){ return DEPT_CODES[dept] || (dept||'').toUpperCase().substring(0,3); }
+
+// Bỏ dấu tiếng Việt → ASCII
+function removeDiacritics(str){
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\u0111/g,'d').replace(/\u0110/g,'D');
+}
+
+// Tạo danh sách tên file cần thử (có dấu + không dấu)
+function spFilenames(e){
+  const c=DB.sp;
+  const ext=c.ext||'jpg';
+  let base='';
+  if(c.nm==='id'){
+    return[`${e.id}.${ext}`];
+  } else if(c.nm==='id_dept_name'){
+    const dept=deptCode(e.dept);
+    const nameOrig=e.name;
+    const nameNoAcc=removeDiacritics(e.name);
+    const variants=[];
+    variants.push(`${e.id} - ${dept} - ${nameOrig}.${ext}`);
+    if(nameNoAcc!==nameOrig) variants.push(`${e.id} - ${dept} - ${nameNoAcc}.${ext}`);
+    return variants;
+  } else if(c.nm==='name'){
+    const nameOrig=e.name;
+    const nameNoAcc=removeDiacritics(e.name);
+    const variants=[nameOrig+'.'+ext];
+    if(nameNoAcc!==nameOrig) variants.push(nameNoAcc+'.'+ext);
+    return variants;
+  } else {
+    const pat=c.cp||'{id}.'+ext;
+    const nameOrig=e.name;
+    const nameNoAcc=removeDiacritics(e.name);
+    const v1=pat.replace('{id}',e.id).replace('{name}',nameOrig).replace('{dept}',e.dept||'');
+    const v2=pat.replace('{id}',e.id).replace('{name}',nameNoAcc).replace('{dept}',e.dept||'');
+    return v1===v2?[v1]:[v1,v2];
+  }
+}
+
+function spUrl(e){
+  const c=DB.sp;if(!c.url)return null;
+  const base=c.url.replace(/\/$/,'');
+  const filenames=spFilenames(e);
+  // Return first variant as default URL (loadPic tries all)
+  return`${base}/${encodeURIComponent(filenames[0])}`;
+}
+// Thử load 1 URL ảnh, trả về true nếu thành công
+function tryLoadImg(e, url){
+  return new Promise(r=>{
+    const img=new Image();img.crossOrigin='anonymous';
+    img.onload=()=>{
+      try{
+        const cv=document.createElement('canvas');
+        cv.width=img.width;cv.height=img.height;
+        cv.getContext('2d').drawImage(img,0,0);
+        e.photo=cv.toDataURL('image/jpeg',.85);
+      } catch(err){ e.photo=url; }
+      r(true);
+    };
+    img.onerror=()=>r(false);
+    img.src=url;
+  });
+}
+
+// Thử lần lượt các variant tên file (có dấu → không dấu)
+async function loadPic(e){
+  if(e.photo) return true;
+  const c=DB.sp;if(!c.url) return false;
+  const base=c.url.replace(/\/$/,'');
+  const filenames=spFilenames(e);
+  for(const fn of filenames){
+    const url=`${base}/${encodeURIComponent(fn)}`;
+    const ok=await tryLoadImg(e, url);
+    if(ok) return true;
+  }
+  return false;
+}
+async function loadAllPics(){
+  const pp=document.getElementById('pp'),fill=document.getElementById('ppfill'),lbl=document.getElementById('pplbl');
+  pp.style.display='block';
+  let loaded=0, failed=0;
+  for(let i=0;i<DB.emps.length;i++){
+    const emp=DB.emps[i];
+    lbl.textContent=`Đang tải ${i+1}/${DB.emps.length}: ${emp.name}`;
+    fill.style.width=`${Math.round(i/DB.emps.length*100)}%`;
+    const ok=await loadPic(emp);
+    if(ok) loaded++; else failed++;
+  }
+  fill.style.width='100%';
+  lbl.innerHTML=`✓ Tải xong: <strong>${loaded}</strong> ảnh${failed>0?` | <span style="color:#E67E22">${failed} không tìm thấy</span>`:''}`;
+  setTimeout(()=>{pp.style.display='none';},4000);
+  rEmp();
+}
+async function testSP(){
+  const url=document.getElementById('spurl').value.trim();
+  const res=document.getElementById('sp-tr');
+  if(!url){res.innerHTML='<span class="tr">Vui lòng nhập URL</span>';return;}
+  res.innerHTML='<span style="color:#aaa">Đang kiểm tra...</span>';
+  // Lưu config tạm để dùng spFilenames()
+  const origSP={...DB.sp};
+  DB.sp={url,nm:document.getElementById('spnm').value,ext:document.getElementById('spext').value,cp:document.getElementById('spcp').value};
+  const e=DB.emps[0];
+  const base=url.replace(/\/$/,'');
+  const filenames=spFilenames(e);
+  let found=false;
+  for(const fn of filenames){
+    const testUrl=`${base}/${encodeURIComponent(fn)}`;
+    const ok=await new Promise(r=>{
+      const img=new Image();img.crossOrigin='anonymous';
+      const to=setTimeout(()=>r(false),4000);
+      img.onload=()=>{clearTimeout(to);r(true);};
+      img.onerror=()=>{clearTimeout(to);r(false);};
+      img.src=testUrl;
+    });
+    if(ok){
+      res.innerHTML=`<span class="tg">✓ Tìm thấy ảnh: <code style="font-size:11px;background:#f0fff4;padding:2px 6px;border-radius:3px">${fn}</code></span>`;
+      found=true;break;
+    }
+  }
+  if(!found){
+    res.innerHTML=`<span class="tr">✕ Không tìm thấy. Đã thử: ${filenames.map(f=>`<code style="font-size:10px">${f}</code>`).join(', ')}</span>`;
+  }
+  DB.sp=origSP; // restore
+}
+function saveSP(){
+  DB.sp={url:document.getElementById('spurl').value.trim(),nm:document.getElementById('spnm').value,ext:document.getElementById('spext').value,cp:document.getElementById('spcp').value};
+  alert('Đã lưu cấu hình SharePoint!');updSbf();
+  updatePatternPreview();
+}
+function onNmChange(){
+  const v=document.getElementById('spnm').value;
+  document.getElementById('spcrow').style.display=v==='custom'?'':'none';
+  updatePatternPreview();
+}
+function updatePatternPreview(){
+  const e=DB.emps[0];if(!e)return;
+  const url=spUrl(e);
+  const prev=document.getElementById('sp-preview');
+  if(prev && url) prev.textContent='Ví dụ: '+url.split('/').pop();
+}
+document.getElementById('spnm').addEventListener('change', onNmChange);
+
+function handleManualPic(e){
+  const f=e.target.files[0];if(!f)return;
+  const id=document.getElementById('mpe').value;if(!id){alert('Chọn nhân viên trước!');return;}
+  const r=new FileReader();r.onload=ev=>{
+    const em=DB.emps.find(e=>e.id===id);if(!em)return;
+    em.photo=ev.target.result;
+    const pp=document.getElementById('mpp');pp.style.display='flex';
+    pp.innerHTML=`<img src="${em.photo}" style="width:72px;height:72px;border-radius:7px;object-fit:cover;border:2px solid #e0e0e0">
+      <div><div style="font-weight:600;font-size:13px">${em.name}</div><div style="font-size:12px;color:var(--green);margin-top:3px">✓ Ảnh đã cập nhật</div></div>`;
+    rEmp();
+  };r.readAsDataURL(f);
+}
+
+function rSet(){
+  document.getElementById('spurl').value=DB.sp.url||'';
+  document.getElementById('spnm').value=DB.sp.nm||'id';
+  document.getElementById('spext').value=DB.sp.ext||'jpg';
+  document.getElementById('spcp').value=DB.sp.cp||'';
+  document.getElementById('spcrow').style.display=DB.sp.nm==='custom'?'':'none';
+  setTimeout(updatePatternPreview, 100);
+  document.getElementById('sc').value=DB.cfg.company||'';
+  document.getElementById('sw').value=DB.cfg.warn||30;
+  const sel=document.getElementById('mpe');
+  sel.innerHTML='<option value="">— Chọn —</option>'+DB.emps.map(e=>`<option value="${e.id}">${e.id} — ${e.name}</option>`).join('');
+}
+function saveSet(){DB.cfg={company:document.getElementById('sc').value,warn:parseInt(document.getElementById('sw').value)||30};alert('Đã lưu!');}
+function updSbf(){
+  const el=document.getElementById('sbf');
+  const hX=!!DB.src,hS=!!DB.sp.url;
+  if(hX&&hS)el.innerHTML='<span class="dot ok"></span>Excel + SharePoint';
+  else if(hX)el.innerHTML='<span class="dot ok"></span>Excel đã kết nối';
+  else if(hS)el.innerHTML='<span class="dot warn"></span>SharePoint cấu hình';
+  else el.innerHTML='<span class="dot err"></span>Chưa kết nối dữ liệu';
+}
+
+// ─── EXCEL IMPORT ───────────────────────────────────────────────────────────
+let xWB=null,xCols=[];
+const dz=document.getElementById('dz');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag');});
+dz.addEventListener('dragleave',()=>dz.classList.remove('drag'));
+dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag');const f=e.dataTransfer.files[0];if(f)procXL(f);});
+function handleXL(e){const f=e.target.files[0];if(f)procXL(f);}
+function procXL(f){
+  const xi=document.getElementById('xinfo');xi.style.display='block';
+  xi.innerHTML=`<span class="tg">✓</span> <strong>${f.name}</strong> — ${(f.size/1024).toFixed(1)} KB`;
+  const r=new FileReader();r.onload=e=>{
+    try{
+      xWB=XLSX.read(new Uint8Array(e.target.result),{type:'array'});
+      const ss=document.getElementById('shsel');
+      ss.innerHTML=xWB.SheetNames.map(s=>`<option>${s}</option>`).join('');
+      document.getElementById('s-sheet').style.display='block';
+      loadPreview();DB.src={name:f.name,size:f.size};updSbf();
+    }catch(err){xi.innerHTML=`<span class="tr">✕ Lỗi: ${err.message}</span>`;}
+  };r.readAsArrayBuffer(f);
+}
+function loadPreview(){
+  if(!xWB)return;
+  const ws=xWB.Sheets[document.getElementById('shsel').value];
+  const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+  if(!rows.length)return;
+  xCols=rows[0].map(String);
+  document.getElementById('shcnt').textContent=`${rows.length-1} dòng`;
+  const tbl=document.getElementById('pvtbl');
+  tbl.innerHTML=`<thead><tr>${xCols.map(c=>`<th style="background:#f8f8f8;padding:5px 9px;border:1px solid #e8e8e8;font-size:10.5px;font-weight:600;color:#888">${c}</th>`).join('')}</tr></thead>
+    <tbody>${rows.slice(1,6).map(r=>`<tr>${xCols.map((_,i)=>`<td style="padding:5px 9px;border:1px solid #f0f0f0;color:#555">${r[i]||''}</td>`).join('')}</tr>`).join('')}</tbody>`;
+  document.getElementById('s-map').style.display='block';buildMap();
+}
+const FDEFS=[
+  {k:'id',l:'Mã nhân viên',req:true,h:['employee id','emp id','mã nv','mã nhân viên','id','employee_id']},
+  {k:'name',l:'Họ tên',req:true,h:['full name','họ tên','name','tên','fullname','ho ten']},
+  {k:'dept',l:'Bộ phận',req:false,h:['department','bộ phận','dept','bo phan']},
+  {k:'pos',l:'Chức danh',req:false,h:['position','chức danh','job title','title']},
+  {k:'dob',l:'Ngày sinh',req:false,h:['date of birth','dob','ngày sinh','ngay sinh','birthday']},
+  {k:'join',l:'Ngày vào làm',req:false,h:['join date','ngày vào','hire date','start date','ngay vao']},
+  {k:'phone',l:'Số điện thoại',req:false,h:['phone','số điện thoại','sdt','mobile','tel']},
+  {k:'status',l:'Trạng thái',req:false,h:['status','trạng thái','trang thai','active']},
+  {k:'email',l:'Email',req:false,h:['email','e-mail','mail']},
+];
+function autoMap(hints){
+  const lc=xCols.map(c=>c.toLowerCase().trim());
+  for(const h of hints){const i=lc.findIndex(c=>c===h||c.includes(h));if(i>=0)return xCols[i];}
+  return'';
+}
+function buildMap(){
+  document.getElementById('mapform').innerHTML=FDEFS.map(f=>{
+    const auto=autoMap(f.h);
+    const opts=`<option value="">(Bỏ qua)</option>`+xCols.map(c=>`<option${c===auto?' selected':''}>${c}</option>`).join('');
+    return`<div class="cm">
+      <div class="fn">${f.l}${f.req?'<span class="tr"> *</span>':''}</div>
+      <div class="ar">→</div>
+      <select id="mp-${f.k}" style="padding:6px 10px;border:1px solid #e0e0e0;border-radius:5px;font-size:12.5px;outline:none">${opts}</select>
+    </div>`;
+  }).join('');
+}
+function doImport(){
+  if(!xWB)return;
+  const ws=xWB.Sheets[document.getElementById('shsel').value];
+  const rows=XLSX.utils.sheet_to_json(ws,{defval:''});
+  const mp={};FDEFS.forEach(f=>{mp[f.k]=document.getElementById('mp-'+f.k).value;});
+  if(!mp.id||!mp.name){alert('Cần chọn cột Mã nhân viên và Họ tên!');return;}
+  let add=0,upd=0,skip=0;
+  rows.forEach(row=>{
+    const id=String(row[mp.id]||'').trim(),name=String(row[mp.name]||'').trim();
+    if(!id||!name){skip++;return;}
+    const em={id,name,dept:mp.dept?String(row[mp.dept]||''):'',pos:mp.pos?String(row[mp.pos]||''):'',dob:mp.dob?String(row[mp.dob]||''):'',join:mp.join?String(row[mp.join]||''):'',phone:mp.phone?String(row[mp.phone]||''):'',status:mp.status?String(row[mp.status]||'Active'):'Active',email:mp.email?String(row[mp.email]||''):'',photo:''};
+    const i=DB.emps.findIndex(e=>e.id===id);
+    if(i>=0){const p=DB.emps[i].photo;DB.emps[i]={...em,photo:p};upd++;}else{DB.emps.push(em);add++;}
+  });
+  const res=document.getElementById('imp-res');res.style.display='block';
+  res.querySelector('.box-body').innerHTML=`<div class="ib s">
+    <strong>✓ Import hoàn tất!</strong><br>
+    Thêm mới: <strong>${add}</strong> nhân viên &nbsp;|&nbsp; Cập nhật: <strong>${upd}</strong> &nbsp;|&nbsp; Bỏ qua: <strong>${skip}</strong>
+    ${DB.sp.url?`<br><br><button class="btn bsp" style="margin-top:7px" onclick="loadAllPics();nav('settings')">🖼 Tải ảnh từ SharePoint ngay</button>`:'<br><br><button class="btn bs" onclick="nav(\'settings\')" style="margin-top:7px">⚙ Cấu hình SharePoint để tải ảnh</button>'}
+  </div>`;
+  updSbf();rDash();
+}
+function dlTpl(){
+  const data=[['Employee ID','Full Name','Department','Position','Date of Birth','Join Date','Phone','Status','Email'],['EMP-001','Ahmad Fauzi','Production','Operator','1990-05-12','2015-03-01','+62811111111','Active','ahmad@co.com'],['EMP-002','Budi Santoso','Quality Control','Inspector','1988-07-23','2016-06-15','+62822222222','Active','budi@co.com']];
+  const ws=XLSX.utils.aoa_to_sheet(data);ws['!cols']=[{wch:14},{wch:22},{wch:18},{wch:18},{wch:14},{wch:12},{wch:16},{wch:10},{wch:24}];
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Employees');XLSX.writeFile(wb,'OpCertMS_Employee_Template.xlsx');
+}
+
+// ─── DASHBOARD ──────────────────────────────────────────────────────────────
+function rDash(){
+  const vl=DB.certs.filter(c=>cSt(c.exp)==='Valid').length;
+  const ex=DB.certs.filter(c=>cSt(c.exp)==='Expiring Soon').length;
+  const xp=DB.certs.filter(c=>cSt(c.exp)==='Expired').length;
+  document.getElementById('kgrid').innerHTML=`
+    <div class="kpi" data-i="👷"><div class="kpi-lbl">Tổng nhân viên</div><div class="kpi-val">${DB.emps.length}</div><div class="kpi-sub">${DB.emps.filter(e=>e.status==='Active').length} đang hoạt động</div></div>
+    <div class="kpi g" data-i="✓"><div class="kpi-lbl">Chứng chỉ hiệu lực</div><div class="kpi-val">${vl}</div></div>
+    <div class="kpi o" data-i="⏰"><div class="kpi-lbl">Sắp hết hạn</div><div class="kpi-val">${ex}</div><div class="kpi-sub">trong 30 ngày</div></div>
+    <div class="kpi r" data-i="⚠"><div class="kpi-lbl">Đã hết hạn</div><div class="kpi-val">${xp}</div></div>`;
+  const bn=document.getElementById('src-banner');
+  if(DB.src){bn.style.display='flex';bn.innerHTML=`<span class="tg">📊</span> <strong>${DB.src.name}</strong> — ${DB.emps.length} nhân viên${DB.sp.url?' | 🔷 SharePoint: '+DB.sp.url.substring(0,38)+'...':''}<button style="margin-left:auto;background:none;border:1px solid #b7e4c7;border-radius:4px;padding:2px 9px;font-size:11px;cursor:pointer;color:var(--green)" onclick="nav('import')">Cập nhật</button>`;}
+  const alerts=DB.certs.filter(c=>cSt(c.exp)!=='Valid').sort((a,b)=>new Date(a.exp)-new Date(b.exp));
+  const al=document.getElementById('alist');
+  if(!alerts.length){al.innerHTML='<div class="es" style="background:#fff;border-radius:7px;padding:24px">Không có cảnh báo</div>';return;}
+  al.innerHTML=alerts.slice(0,6).map(c=>{
+    const s=cSt(c.exp),d=dL(c.exp);
+    const em=DB.emps.find(e=>e.id===c.eid);
+    return`<div class="ali ${s==='Expired'?'x2':'e2'}">
+      ${em?avH(em,34):''}
+      <div style="flex:1"><strong style="font-size:12.5px">${c.enm}</strong><br><small style="font-size:11.5px;color:#aaa">${c.pnm} — ${c.id}</small></div>
+      <div style="text-align:right;margin-right:8px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;background:#f0f0f0;border-radius:20px;padding:2px 9px">${d<0?'Quá '+Math.abs(d)+'ng':'Còn '+d+'ng'}</div>
+        <div style="margin-top:3px">${sBadge(s)}</div>
+      </div>
+      <button class="ab" onclick="oRenew('${c.id}')" style="background:var(--orange);color:#fff;border:none;font-weight:600;padding:5px 11px">Gia hạn</button>
+    </div>`;
+  }).join('');
+  document.getElementById('rctb').innerHTML=[...DB.certs].reverse().slice(0,8).map(c=>`<tr><td style="font-family:'JetBrains Mono',monospace;font-size:11px">${c.id}</td><td>${c.enm}</td><td>${sBadge(cSt(c.exp))}</td></tr>`).join('');
+}
+
+// ─── EMPLOYEES ──────────────────────────────────────────────────────────────
+function rEmp(){
+  const depts=[...new Set(DB.emps.map(e=>e.dept))];
+  const sel=document.getElementById('edept'),cv=sel.value;
+  sel.innerHTML='<option value="">Tất cả bộ phận</option>'+depts.map(d=>`<option${d===cv?' selected':''}>${d}</option>`).join('');
+  const f=sel.value,s=document.getElementById('esrch').value.toLowerCase();
+  let em=DB.emps;if(f)em=em.filter(e=>e.dept===f);if(s)em=em.filter(e=>(e.id+e.name+e.dept+e.pos).toLowerCase().includes(s));
+  document.getElementById('ecnt').textContent=`${em.length}/${DB.emps.length}`;
+  document.getElementById('etb').innerHTML=em.length?em.map(e=>`
+    <tr>
+      <td>${avH(e,30)}</td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:500">${e.id}</td>
+      <td><strong>${e.name}</strong>${e.email?`<br><small style="color:#bbb;font-size:11px">${e.email}</small>`:''}</td>
+      <td><span class="pill" title="${e.dept}">${deptCode(e.dept)} — ${e.dept}</span></td>
+      <td style="color:#777;font-size:12px">${e.pos}</td>
+      <td style="color:#aaa;font-size:11.5px">${fD(e.join)}</td>
+      <td>${sBadge(e.status)}</td>
+      <td><span class="badge bv">${eCnt(e.id)}</span></td>
+      <td style="display:flex;gap:5px"><button class="ab" onclick="oEmp('${e.id}')">Sửa</button><button class="ab dx" onclick="delEmp('${e.id}')">Xóa</button></td>
+    </tr>`).join(''):'<tr><td colspan="9" class="es">Không có dữ liệu</td></tr>';
+}
+function oEmp(id){
+  const e=id?DB.emps.find(e=>e.id===id):null;
+  document.getElementById('m-emp-t').textContent=e?'SỬA NHÂN VIÊN':'THÊM NHÂN VIÊN';
+  document.getElementById('fe-id').value=e?.id||autoId('EMP',DB.emps);
+  document.getElementById('fe-id').readOnly=!!e;
+  document.getElementById('fe-nm').value=e?.name||'';
+  document.getElementById('fe-dp').value=e?.dept||'Production';
+  document.getElementById('fe-po').value=e?.pos||'';
+  document.getElementById('fe-db').value=e?.dob||'';
+  document.getElementById('fe-jn').value=e?.join||today();
+  document.getElementById('fe-ph').value=e?.phone||'';
+  document.getElementById('fe-st').value=e?.status||'Active';
+  document.getElementById('m-emp').classList.add('open');
+}
+function saveEmp(){
+  const id=document.getElementById('fe-id').value.trim(),nm=document.getElementById('fe-nm').value.trim();
+  if(!id||!nm){alert('Mã và tên là bắt buộc!');return;}
+  const obj={id,name:nm,dept:document.getElementById('fe-dp').value,pos:document.getElementById('fe-po').value,dob:document.getElementById('fe-db').value,join:document.getElementById('fe-jn').value,phone:document.getElementById('fe-ph').value,status:document.getElementById('fe-st').value,email:'',photo:''};
+  const i=DB.emps.findIndex(e=>e.id===id);if(i>=0){obj.photo=DB.emps[i].photo;DB.emps[i]=obj;}else DB.emps.push(obj);
+  cM('m-emp');rEmp();rDash();
+}
+function delEmp(id){if(!confirm(`Xóa ${id}?`))return;DB.emps=DB.emps.filter(e=>e.id!==id);rEmp();rDash();}
+
+// ─── PROCESSES ──────────────────────────────────────────────────────────────
+function rProc(){
+  const s=document.getElementById('psrch').value.toLowerCase();
+  let p=DB.procs;if(s)p=p.filter(x=>(x.id+x.name+x.cat).toLowerCase().includes(s));
+  document.getElementById('ptb').innerHTML=p.length?p.map(x=>`
+    <tr>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:500">${x.id}</td>
+      <td><strong>${x.name}</strong></td><td><span class="pill">${x.cat}</span></td>
+      <td style="text-align:center;font-weight:600;color:var(--red)">${x.vl}</td>
+      <td style="color:#aaa;font-size:12px">${x.desc}</td><td>${sBadge(x.status)}</td>
+      <td style="display:flex;gap:5px"><button class="ab" onclick="oProc('${x.id}')">Sửa</button><button class="ab dx" onclick="delProc('${x.id}')">Xóa</button></td>
+    </tr>`).join(''):'<tr><td colspan="7" class="es">Không có dữ liệu</td></tr>';
+}
+function oProc(id){
+  const p=id?DB.procs.find(p=>p.id===id):null;
+  document.getElementById('m-proc-t').textContent=p?'SỬA QUY TRÌNH':'THÊM QUY TRÌNH';
+  document.getElementById('fp-id').value=p?.id||autoId('PROC',DB.procs);
+  document.getElementById('fp-id').readOnly=!!p;
+  document.getElementById('fp-nm').value=p?.name||'';
+  document.getElementById('fp-ct').value=p?.cat||'';
+  document.getElementById('fp-vl').value=p?.vl||12;
+  document.getElementById('fp-ds').value=p?.desc||'';
+  document.getElementById('fp-st').value=p?.status||'Active';
+  document.getElementById('m-proc').classList.add('open');
+}
+function saveProc(){
+  const id=document.getElementById('fp-id').value.trim(),nm=document.getElementById('fp-nm').value.trim();
+  if(!id||!nm){alert('Mã và tên là bắt buộc!');return;}
+  const obj={id,name:nm,cat:document.getElementById('fp-ct').value,vl:parseInt(document.getElementById('fp-vl').value)||12,desc:document.getElementById('fp-ds').value,status:document.getElementById('fp-st').value};
+  const i=DB.procs.findIndex(p=>p.id===id);if(i>=0)DB.procs[i]=obj;else DB.procs.push(obj);
+  cM('m-proc');rProc();
+}
+function delProc(id){if(!confirm(`Xóa ${id}?`))return;DB.procs=DB.procs.filter(p=>p.id!==id);rProc();}
+
+// ─── CERTIFICATES ────────────────────────────────────────────────────────────
+function rCert(){
+  const s=document.getElementById('csrch').value.toLowerCase(),sf=document.getElementById('csflt').value;
+  let c=DB.certs;if(s)c=c.filter(x=>(x.id+x.enm+x.pnm).toLowerCase().includes(s));if(sf)c=c.filter(x=>cSt(x.exp)===sf);
+  document.getElementById('ctb').innerHTML=c.length?c.map(x=>{const st=cSt(x.exp);return`<tr>
+    <td style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:500">${x.id}</td>
+    <td><strong>${x.enm}</strong><br><small style="color:#bbb;font-size:11px">${x.eid}</small></td>
+    <td>${x.pnm}</td>
+    <td><span class="badge" style="background:#e8f4fd;color:#1565c0;font-size:10.5px">${x.lv}</span></td>
+    <td style="font-size:12px;color:#aaa">${fD(x.iss)}</td>
+    <td style="font-size:12px;font-weight:500;color:${st==='Expired'?'var(--red)':st==='Expiring Soon'?'var(--orange)':'#333'}">${fD(x.exp)}</td>
+    <td>${sBadge(st)}</td>
+    <td style="display:flex;gap:5px;white-space:nowrap">
+      <button class="ab" onclick="loadCard('${x.id}');nav('card')">🖨</button>
+      ${st!=='Valid'?`<button class="ab" onclick="oRenew('${x.id}')" style="border-color:var(--orange);color:var(--orange)">Gia hạn</button>`:''}
+      <button class="ab dx" onclick="delCert('${x.id}')">Xóa</button>
+    </td>
+  </tr>`;}).join(''):'<tr><td colspan="8" class="es">Không có dữ liệu</td></tr>';
+}
+function oCert(){
+  document.getElementById('fc-em').innerHTML='<option value="">— Chọn nhân viên —</option>'+DB.emps.map(e=>`<option value="${e.id}">${e.id} — ${e.name}</option>`).join('');
+  document.getElementById('fc-pr').innerHTML='<option value="">— Chọn quy trình —</option>'+DB.procs.filter(p=>p.status==='Active').map(p=>`<option value="${p.id}">${p.name} (${p.vl}th)</option>`).join('');
+  document.getElementById('fc-dt').value=today();
+  document.getElementById('exp-prev').style.display='none';
+  document.getElementById('m-cert').classList.add('open');
+}
+function updExp(){
+  const pid=document.getElementById('fc-pr').value,dt=document.getElementById('fc-dt').value;
+  if(pid&&dt){const p=DB.procs.find(p=>p.id===pid);if(p){document.getElementById('exp-v').textContent=fD(aM(dt,p.vl));document.getElementById('exp-prev').style.display='';}}
+}
+document.getElementById('fc-pr').addEventListener('change',updExp);
+document.getElementById('fc-dt').addEventListener('change',updExp);
+function saveCert(){
+  const eid=document.getElementById('fc-em').value,pid=document.getElementById('fc-pr').value,lv=document.getElementById('fc-lv').value,iss=document.getElementById('fc-dt').value;
+  if(!eid||!pid||!lv||!iss){alert('Vui lòng điền đầy đủ!');return;}
+  const em=DB.emps.find(e=>e.id===eid),pr=DB.procs.find(p=>p.id===pid);
+  const c={id:nCId(),eid,enm:em.name,pid,pnm:pr.name,lv,iss,exp:aM(iss,pr.vl),by:'Admin'};
+  DB.certs.push(c);cM('m-cert');rCert();rDash();
+  alert(`Đã cấp ${c.id}\nHết hạn: ${fD(c.exp)}`);
+}
+function delCert(id){if(!confirm(`Xóa ${id}?`))return;DB.certs=DB.certs.filter(c=>c.id!==id);rCert();rDash();}
+
+// ─── RENEWAL ────────────────────────────────────────────────────────────────
+function rRen(){
+  const s=document.getElementById('rsrch').value.toLowerCase();
+  let c=DB.certs;if(s)c=c.filter(x=>(x.id+x.enm+x.pnm).toLowerCase().includes(s));
+  document.getElementById('k-exp').textContent=DB.certs.filter(c=>cSt(c.exp)==='Expired').length;
+  document.getElementById('k-soon').textContent=DB.certs.filter(c=>cSt(c.exp)==='Expiring Soon').length;
+  document.getElementById('k-valid').textContent=DB.certs.filter(c=>cSt(c.exp)==='Valid').length;
+  const sorted=[...c].sort((a,b)=>new Date(a.exp)-new Date(b.exp));
+  document.getElementById('rtb').innerHTML=sorted.length?sorted.map(x=>{
+    const st=cSt(x.exp),d=dL(x.exp);
+    return`<tr>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:11.5px">${x.id}</td>
+      <td><strong>${x.enm}</strong></td><td>${x.pnm}</td>
+      <td style="font-size:12px;font-weight:500">${fD(x.exp)}</td>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:${d<0?'var(--red)':d<=30?'var(--orange)':'var(--green)'}">${d<0?'Quá '+Math.abs(d):'Còn '+d}ng</span></td>
+      <td>${sBadge(st)}</td>
+      <td>${st!=='Valid'?`<button class="ab" onclick="oRenew('${x.id}')" style="border-color:var(--orange);color:var(--orange);font-weight:600">Gia hạn</button>`:'<span style="color:#ddd;font-size:12px">—</span>'}</td>
+    </tr>`;}).join(''):'<tr><td colspan="7" class="es">Không có dữ liệu</td></tr>';
+}
+function oRenew(id){
+  const c=DB.certs.find(c=>c.id===id);if(!c)return;
+  document.getElementById('rno').textContent=c.id;
+  document.getElementById('rinf').textContent=`${c.enm} — ${c.pnm}`;
+  document.getElementById('fr-dt').value=today();
+  const p=DB.procs.find(p=>p.id===c.pid);
+  document.getElementById('rnexp').innerHTML=p?`Hết hạn mới: <strong>${fD(aM(today(),p.vl))}</strong> (+${p.vl} tháng)`:'';
+  document.getElementById('m-renew').dataset.cid=id;
+  document.getElementById('m-renew').classList.add('open');
+}
+document.getElementById('fr-dt').addEventListener('input',function(){
+  const c=DB.certs.find(c=>c.id===document.getElementById('m-renew').dataset.cid);if(!c)return;
+  const p=DB.procs.find(p=>p.id===c.pid);
+  if(p&&this.value)document.getElementById('rnexp').innerHTML=`Hết hạn mới: <strong>${fD(aM(this.value,p.vl))}</strong> (+${p.vl} tháng)`;
+});
+function doRenew(){
+  const id=document.getElementById('m-renew').dataset.cid,dt=document.getElementById('fr-dt').value;
+  if(!dt){alert('Chọn ngày!');return;}
+  const c=DB.certs.find(c=>c.id===id);if(!c)return;
+  const p=DB.procs.find(p=>p.id===c.pid);if(p){c.iss=dt;c.exp=aM(dt,p.vl);}
+  cM('m-renew');rRen();rDash();rCert();alert(`Đã gia hạn ${id}\nHết hạn mới: ${fD(c.exp)}`);
+}
+
+// ─── SKILL MATRIX ────────────────────────────────────────────────────────────
+function rMatrix(){
+  const procs=DB.procs.filter(p=>p.status==='Active').slice(0,8);
+  const emps=DB.emps.filter(e=>e.status==='Active');
+  const mx={};
+  DB.certs.forEach(c=>{if(!mx[c.eid])mx[c.eid]={};const n=parseInt(c.lv.charAt(6))||0;if(!mx[c.eid][c.pid]||n>mx[c.eid][c.pid])mx[c.eid][c.pid]=n;});
+  const lc=['lc0','lc1','lc2','lc3','lc4'],ll=['—','L1','L2','L3','L4'];
+  document.getElementById('mxh').innerHTML=`<tr>
+    <th style="min-width:150px;background:#f8f8f8;padding:9px 13px;font-size:10.5px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;color:#999">Nhân viên</th>
+    ${procs.map(p=>`<th style="background:#f8f8f8;padding:8px 5px;font-size:10px;text-align:center;line-height:1.3;max-width:80px;white-space:normal;font-weight:600;color:#999">${p.name}</th>`).join('')}
+  </tr>`;
+  document.getElementById('mxb').innerHTML=emps.map(e=>`
+    <tr>
+      <td style="padding:7px 13px;border-bottom:1px solid #f4f4f4;display:flex;align-items:center;gap:8px">${avH(e,26)}<span style="font-weight:600;font-size:12.5px">${e.name}</span></td>
+      ${procs.map(p=>{const lv=mx[e.id]?.[p.id]||0;return`<td style="padding:5px;text-align:center;border-bottom:1px solid #f4f4f4"><div class="lv-cell ${lc[lv]}">${ll[lv]}</div></td>`;}).join('')}
+    </tr>`).join('');
+}
+
+// ─── CARD ────────────────────────────────────────────────────────────────────
+// ─── BULK PRINT ──────────────────────────────────────────────────────────────
+let bulkSelected = new Set();
+
+function switchCardTab(tab){
+  document.getElementById('card-tab-single').style.display = tab==='single' ? '' : 'none';
+  document.getElementById('card-tab-bulk').style.display   = tab==='bulk'   ? '' : 'none';
+  document.getElementById('tab-single').style.cssText = tab==='single'
+    ? 'padding:7px 18px;border:none;background:#fff;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:#111;box-shadow:0 1px 4px rgba(0,0,0,.1)'
+    : 'padding:7px 18px;border:none;background:none;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;color:#888';
+  document.getElementById('tab-bulk').style.cssText = tab==='bulk'
+    ? 'padding:7px 18px;border:none;background:#fff;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:#111;box-shadow:0 1px 4px rgba(0,0,0,.1)'
+    : 'padding:7px 18px;border:none;background:none;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;color:#888';
+  if(tab==='bulk') rBulkList();
+}
+
+function rBulkList(){
+  const deptF  = document.getElementById('bulk-dept').value;
+  const statusF= document.getElementById('bulk-status').value;
+  const procF  = document.getElementById('bulk-proc').value;
+  const search = (document.getElementById('bulk-search').value||'').toLowerCase();
+
+  // Populate dept filter
+  const depts = [...new Set(DB.emps.map(e=>e.dept))];
+  const dSel = document.getElementById('bulk-dept');
+  const curD = dSel.value;
+  dSel.innerHTML = '<option value="">Tất cả bộ phận</option>' +
+    depts.map(d=>`<option value="${d}"${d===curD?' selected':''}>${deptCode(d)} — ${d}</option>`).join('');
+
+  // Populate proc filter
+  const pSel = document.getElementById('bulk-proc');
+  const curP = pSel.value;
+  pSel.innerHTML = '<option value="">Tất cả quy trình</option>' +
+    DB.procs.map(p=>`<option value="${p.id}"${p.id===curP?' selected':''}>${p.name}</option>`).join('');
+
+  let certs = DB.certs;
+  if(deptF)  certs = certs.filter(c=>{ const e=DB.emps.find(e=>e.id===c.eid); return e&&e.dept===deptF; });
+  if(statusF)certs = certs.filter(c=>cSt(c.exp)===statusF);
+  if(procF)  certs = certs.filter(c=>c.pid===procF);
+  if(search) certs = certs.filter(c=>(c.id+c.enm+c.pnm).toLowerCase().includes(search));
+
+  // Group certs by employee
+  const empMap = {};
+  certs.forEach(c=>{
+    if(!empMap[c.eid]) empMap[c.eid]={emp:DB.emps.find(e=>e.id===c.eid)||{id:c.eid,name:c.enm,dept:'',pos:''},certs:[]};
+    empMap[c.eid].certs.push(c);
+  });
+  const empGroups = Object.values(empMap);
+
+  const tbody = document.getElementById('bulk-tbody');
+  tbody.innerHTML = empGroups.map(({emp,certs:ec})=>{
+    const chk = bulkSelected.has(emp.id);
+    const validCnt   = ec.filter(c=>cSt(c.exp)==='Valid').length;
+    const expCnt     = ec.filter(c=>cSt(c.exp)==='Expiring Soon').length;
+    const procList   = ec.map(c=>{
+      const dot = cSt(c.exp)==='Valid'
+        ? '<span style="color:#27AE60">●</span>'
+        : '<span style="color:#E67E22">◐</span>';
+      return `${dot} ${c.pnm}`;
+    }).join('<br>');
+    return `<tr style="${chk?'background:#fff8f0':''}">
+      <td><input type="checkbox" value="${emp.id}" ${chk?'checked':''} onchange="toggleBulk('${emp.id}',this.checked)"></td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:11px;white-space:nowrap">${emp.id}</td>
+      <td><strong>${emp.name}</strong><br><small style="color:#aaa">${emp.pos||''}</small></td>
+      <td><span class="pill">${deptCode(emp.dept||'')} — ${emp.dept||''}</span></td>
+      <td style="font-size:11px;line-height:1.8">${procList}</td>
+      <td style="white-space:nowrap">
+        ${validCnt?`<span class="badge bv">${validCnt} valid</span><br>`:''}
+        ${expCnt?`<span class="badge be">${expCnt} expiring</span>`:''}
+      </td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="6" class="es">Không có nhân viên</td></tr>';
+
+  updateBulkCount();
+}
+
+function toggleBulk(id, checked){
+  if(checked) bulkSelected.add(id); else bulkSelected.delete(id);
+  updateBulkCount();
+}
+function toggleAllBulk(checked){
+  document.querySelectorAll('#bulk-tbody input[type=checkbox]').forEach(cb=>{
+    cb.checked = checked;
+    if(checked) bulkSelected.add(cb.value); else bulkSelected.delete(cb.value);
+  });
+  updateBulkCount();
+}
+function selectAllBulk(){
+  document.getElementById('bulk-chk-all').checked=true;
+  toggleAllBulk(true);
+}
+function clearBulkSel(){
+  bulkSelected.clear();
+  document.getElementById('bulk-chk-all').checked=false;
+  document.querySelectorAll('#bulk-tbody input[type=checkbox]').forEach(cb=>cb.checked=false);
+  updateBulkCount();
+}
+function updateBulkCount(){
+  const el = document.getElementById('bulk-count-label');
+  if(el) el.textContent = `${bulkSelected.size} nhân viên được chọn`;
+}
+
+// ─── CARD: 1 thẻ/nhân viên — gộp tất cả quy trình còn hiệu lực ─────────────
+// Card size: 54mm × 90mm portrait (chuẩn bao thẻ nhân viên)
+function buildEmpCard(emp){
+  // Lấy tất cả cert của nhân viên còn valid hoặc sắp hết hạn
+  const certs = DB.certs.filter(c =>
+    c.eid === emp.id && (cSt(c.exp)==='Valid' || cSt(c.exp)==='Expiring Soon')
+  ).sort((a,b)=>a.pnm.localeCompare(b.pnm));
+
+  const photo = emp.photo
+    ? `<img src="${emp.photo}" style="width:100%;height:100%;object-fit:cover;display:block">`
+    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:16px;color:#bbb">👤</div>`;
+
+  const dept = deptCode(emp.dept||'');
+
+  // Build cert rows — compact, tối đa hiển thị ~6 quy trình trong 54×90mm
+  const lvShort = lv => lv.replace('Level ','L').replace(' - Basic','').replace(' - Intermediate','').replace(' - Advanced','').replace(' - Expert','');
+  const stDot = st => st==='Valid'
+    ? '<span style="color:#27AE60;font-weight:900">●</span>'
+    : '<span style="color:#E67E22;font-weight:900">◐</span>';
+
+  const certRows = certs.length === 0
+    ? `<div style="font-size:6pt;color:#bbb;text-align:center;padding:3mm 0;font-style:italic">Không có chứng chỉ hiệu lực</div>`
+    : certs.map(c => {
+        const st  = cSt(c.exp);
+        const lv  = lvShort(c.lv);
+        const exp = fD(c.exp);
+        // Dùng mã quy trình ngắn (PROC-001) + tên viết tắt nếu quá dài
+        const procCode = c.pid || '';
+        const procShort = c.pnm.length > 22 ? c.pnm.substring(0,20)+'…' : c.pnm;
+        return `<div style="
+          display:grid; grid-template-columns:auto 1fr;
+          gap:1mm 1.5mm; align-items:start;
+          padding:1mm 0; border-bottom:0.2mm solid #f0f0f0;
+          font-size:5.5pt; line-height:1.35; color:#222;
+        ">
+          <span style="flex-shrink:0;margin-top:0.3mm">${stDot(st)}</span>
+          <div style="min-width:0">
+            <span style="
+              font-family:monospace; font-size:5pt;
+              background:#f0f0f0; color:#888;
+              border-radius:0.8mm; padding:0 1mm;
+              margin-right:1mm; white-space:nowrap;
+            ">${procCode}</span><span style="font-weight:700">${procShort}</span>
+            <div style="color:#aaa;font-size:4.8pt;margin-top:0.3mm">${lv} · HH: ${exp}</div>
+          </div>
+        </div>`;
+      }).join('');
+
+  return `<div style="
+      width:54mm; height:90mm;
+      border-radius:2.5mm; overflow:hidden;
+      border:0.3mm solid #bbb;
+      font-family:Arial,sans-serif;
+      page-break-inside:avoid; break-inside:avoid;
+      display:flex; flex-direction:column;
+      background:#fff;
+    ">
+    <!-- HEADER đỏ: logo + tên công ty -->
+    <div style="background:#C0392B;padding:2mm 3mm 1.5mm;flex-shrink:0;
+      -webkit-print-color-adjust:exact;print-color-adjust:exact;">
+      <div style="font-size:5pt;color:rgba(255,255,255,.6);letter-spacing:1px;text-transform:uppercase">OPERATION CERTIFICATE</div>
+      <div style="font-size:5pt;color:rgba(255,255,255,.45)">PT. Manufacturing Excellence</div>
+    </div>
+    <!-- INFO NV: ảnh + tên + mã + bộ phận -->
+    <div style="background:#fff;padding:2mm 3mm;display:flex;gap:2mm;align-items:center;flex-shrink:0;border-bottom:0.3mm solid #eee">
+      <div style="width:13mm;height:13mm;border-radius:1.5mm;overflow:hidden;
+        background:#f0f0f0;border:0.3mm solid #ddd;flex-shrink:0">${photo}</div>
+      <div style="flex:1;min-width:0;overflow:hidden">
+        <div style="font-size:7.5pt;font-weight:900;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2">${emp.name}</div>
+        <div style="font-size:5.5pt;color:#999;font-family:monospace;margin-top:0.5mm">${emp.id}</div>
+        <div style="margin-top:1mm;display:inline-block;background:#f0f0f0;border-radius:1mm;padding:0.5mm 1.5mm;font-size:5.5pt;font-weight:700;color:#555">${dept} · ${emp.pos||emp.dept||''}</div>
+      </div>
+    </div>
+    <!-- DANH SÁCH QUY TRÌNH -->
+    <div style="flex:1;padding:1.5mm 3mm;overflow:hidden;background:#fff">
+      <div style="font-size:5.5pt;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:1mm;font-weight:700">Quy trình được chứng nhận (${certs.length})</div>
+      ${certRows}
+    </div>
+    <!-- LEGEND + ID thẻ -->
+    <div style="background:#1a1a1a;padding:1.5mm 3mm;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+      -webkit-print-color-adjust:exact;print-color-adjust:exact;">
+      <span style="font-size:5pt;color:#aaa">
+        <span style="color:#27AE60">●</span> Valid &nbsp;
+        <span style="color:#E67E22">◐</span> Expiring
+      </span>
+      <span style="font-size:5pt;color:#555;font-family:monospace">${emp.id}</span>
+    </div>
+  </div>`;
+}
+
+// Backward compat — single cert card (dùng cho tab đơn)
+function buildCardHtml(c, emp){
+  // Vẫn giữ để dlCard() hoạt động, nhưng bulkPrint dùng buildEmpCard
+  const st = cSt(c.exp);
+  const stColor = st==='Valid'?'#2ecc71':st==='Expiring Soon'?'#f1c40f':'#e74c3c';
+  const stLabel = st==='Valid'?'✔ VALID':st==='Expiring Soon'?'⚠ EXPIRING':'✕ EXPIRED';
+  const photo = emp?.photo
+    ? `<img src="${emp.photo}" style="width:100%;height:100%;object-fit:cover;display:block">`
+    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:16px">👤</div>`;
+  const qrData = encodeURIComponent(c.id+'|'+c.eid);
+  return `<div style="width:54mm;height:90mm;border-radius:2.5mm;overflow:hidden;border:0.3mm solid #bbb;font-family:Arial,sans-serif;display:flex;flex-direction:column;background:#fff">
+    <div style="background:#C0392B;padding:2.5mm 3mm;flex-shrink:0;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+      <div style="font-size:5pt;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px">PT. MANUFACTURING EXCELLENCE</div>
+      <div style="font-size:9pt;font-weight:900;color:#fff;line-height:1.2">OPERATION<br>CERTIFICATE</div>
+    </div>
+    <div style="background:#fff;padding:2mm 3mm;display:flex;gap:2mm;align-items:flex-start;flex-shrink:0">
+      <div style="width:13mm;height:13mm;border-radius:1.5mm;overflow:hidden;background:#f0f0f0;border:0.3mm solid #ddd;flex-shrink:0">${photo}</div>
+      <div style="flex:1;overflow:hidden">
+        <div style="font-size:7.5pt;font-weight:900;color:#111;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.enm}</div>
+        <div style="font-size:5.5pt;color:#aaa;font-family:monospace">${c.eid}</div>
+        <div style="font-size:5.5pt;color:#bbb;text-transform:uppercase;letter-spacing:.3px;margin-top:1.5mm">Quy trình</div>
+        <div style="font-size:7pt;font-weight:700;color:#222;line-height:1.2">${c.pnm}</div>
+      </div>
+    </div>
+    <div style="background:#f8f8f8;padding:2mm 3mm;display:flex;justify-content:space-between;align-items:center;border-top:0.2mm solid #eee;border-bottom:0.2mm solid #eee;flex:1">
+      <div>
+        <div style="font-size:5pt;color:#bbb;text-transform:uppercase">Cấp độ</div>
+        <div style="font-size:8pt;font-weight:900;color:#111">${c.lv.replace('Level ','L').replace(' - ',' ')}</div>
+      </div>
+      <div style="text-align:right;font-size:6pt;color:#aaa">
+        <div>Cấp: <strong style="color:#333">${fD(c.iss)}</strong></div>
+        <div>Hết: <strong style="color:#333">${fD(c.exp)}</strong></div>
+      </div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${qrData}" style="width:11mm;height:11mm;border-radius:0.8mm" onerror="this.style.display='none'">
+    </div>
+    <div style="background:#1a1a1a;padding:1.5mm 3mm;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+      <span style="font-size:6.5pt;font-weight:700;text-transform:uppercase;color:${stColor}">${stLabel}</span>
+      <span style="font-size:5pt;color:#555;font-family:monospace">${c.id}</span>
+    </div>
+  </div>`;
+}
+
+function bulkPrint(){
+  if(bulkSelected.size===0){ alert('Vui lòng chọn ít nhất 1 nhân viên!'); return; }
+  // bulkSelected chứa empId (không phải certId)
+  const emps = [...bulkSelected].map(eid=>DB.emps.find(e=>e.id===eid)).filter(Boolean);
+
+  // Build 1 card per employee (shows all valid/expiring certs)
+  const cards = emps.map(emp=>buildEmpCard(emp)).filter(Boolean);
+  if(cards.length===0){ alert('Không có thẻ nào để in! Kiểm tra lại chứng chỉ của nhân viên đã chọn.'); return; }
+
+  // A4 portrait: 3 cols × 3 rows = 9 thẻ/trang
+  const PER_PAGE = 9;
+  const pages = [];
+  for(let i=0; i<cards.length; i+=PER_PAGE){
+    const batch = cards.slice(i, i+PER_PAGE);
+    while(batch.length < PER_PAGE)
+      batch.push('<div style="width:54mm;height:90mm;visibility:hidden"></div>');
+    pages.push(`<div class="page-wrap"><div class="card-grid">${batch.join('')}</div></div>`);
+  }
+
+  const total = emps.length;
+  const win = window.open('','_blank','width=960,height=760');
+  win.document.write(`<!DOCTYPE html><html><head>
+    <meta charset="UTF-8">
+    <title>In thẻ — ${total} nhân viên</title>
+    <style>
+      *{margin:0;padding:0;box-sizing:border-box}
+      body{background:#d8d8d8;font-family:Arial,sans-serif}
+      .info-bar{
+        position:sticky;top:0;z-index:99;
+        background:#1a1a1a;color:#fff;
+        padding:8px 20px;font-size:12px;
+        display:flex;align-items:center;justify-content:space-between;
+      }
+      .info-bar button{
+        background:#C0392B;color:#fff;border:none;
+        padding:6px 18px;border-radius:4px;font-size:12px;
+        font-weight:700;cursor:pointer;letter-spacing:.5px;
+      }
+      .info-bar button:hover{background:#96281B}
+      .page-wrap{
+        width:210mm;background:#fff;
+        margin:8mm auto;padding:8mm;
+        box-shadow:0 2px 16px rgba(0,0,0,.2);
+      }
+      .card-grid{
+        display:grid;
+        grid-template-columns:repeat(3,54mm);
+        grid-template-rows:repeat(3,90mm);
+        gap:5mm;
+        justify-content:center;
+        align-items:start;
+      }
+      @page{size:A4 portrait;margin:0}
+      @media print{
+        *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+        body{background:white}
+        .info-bar{display:none!important}
+        .page-wrap{
+          margin:0;box-shadow:none;
+          page-break-after:always;break-after:page;
+          width:210mm;height:297mm;overflow:hidden;padding:8mm;
+        }
+        .page-wrap:last-child{page-break-after:avoid;break-after:avoid}
+      }
+    </style>
+  </head><body>
+    <div class="info-bar">
+      <span>📋 ${total} nhân viên &nbsp;·&nbsp; ${pages.length} trang A4 &nbsp;·&nbsp; 3×3 = 9 thẻ/trang &nbsp;·&nbsp; 54×90mm</span>
+      <button onclick="window.print()">🖨 In ngay (Ctrl+P)</button>
+    </div>
+    ${pages.join('')}
+    <div style="text-align:center;padding:16px;color:#999;font-size:12px">
+      Cài đặt in: Paper A4 · Margins: <strong>None</strong> · Scale: <strong>100%</strong>
+    </div>
+    <script>
+      window.onload=function(){
+        // Đợi ảnh load xong mới cho phép in
+        const imgs=Array.from(document.images);
+        let done=0;
+        const onDone=()=>{ done++; };
+        imgs.forEach(img=>{ if(img.complete)onDone(); else{img.onload=onDone;img.onerror=onDone;} });
+      };
+    <\/script>
+  </body></html>`);
+  win.document.close();
+}
+
+function rCardList(){
+  const s=document.getElementById('cdsrch').value.toLowerCase();
+  let c=DB.certs;if(s)c=c.filter(x=>(x.id+x.enm+x.pnm).toLowerCase().includes(s));
+  document.getElementById('cdtb').innerHTML=c.map(x=>`
+    <tr>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:11px">${x.id}</td>
+      <td>${x.enm}</td>
+      <td style="font-size:11.5px;color:#aaa">${x.pnm}</td>
+      <td><button class="ab" onclick="loadCard('${x.id}')" style="background:var(--red);color:#fff;border:none;font-weight:600">Xem</button></td>
+    </tr>`).join('');
+}
+function loadCard(id){
+  const c=DB.certs.find(c=>c.id===id);if(!c)return;
+  const st=cSt(c.exp),em=DB.emps.find(e=>e.id===c.eid);
+  document.getElementById('cnm').textContent=c.enm;
+  document.getElementById('ceid').textContent='ID: '+c.eid;
+  document.getElementById('cproc').textContent=c.pnm;
+  document.getElementById('clv').textContent=c.lv;
+  document.getElementById('ciss').textContent=fD(c.iss);
+  document.getElementById('cexp').textContent=fD(c.exp);
+  document.getElementById('ccno').textContent=c.id;
+  const ph=document.getElementById('cphoto');
+  ph.innerHTML=em?.photo?`<img src="${em.photo}" style="width:100%;height:100%;object-fit:cover">`:'👤';
+  const sel=document.getElementById('cst');
+  sel.textContent=st==='Valid'?'✔ VALID':st==='Expiring Soon'?'⚠ EXPIRING':'✕ EXPIRED';
+  sel.className='st '+({Valid:'v','Expiring Soon':'e',Expired:'x'}[st]||'');
+  document.getElementById('cqr').innerHTML=`<img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(c.id+'|'+c.eid)}" style="width:50px;height:50px" onerror="this.parentElement.textContent='QR CODE'">`;
+}
+function printCard(){
+  // Ẩn cột trái tạm thời khi in
+  const leftCol = document.querySelector('#page-card > div > div:first-child');
+  const rightCol = document.querySelector('#page-card > div > div:last-child');
+  const grid = document.querySelector('#page-card > div');
+  const origGridStyle = grid ? grid.style.cssText : '';
+  if(leftCol) leftCol.style.display = 'none';
+  if(grid) { grid.style.display = 'block'; grid.style.width = '100%'; }
+  if(rightCol) { rightCol.style.width = '100%'; }
+  // Ẩn nút In/Lưu HTML trong khi print
+  const btnRow = rightCol ? rightCol.querySelector('.sh') : null;
+  if(btnRow) btnRow.style.display = 'none';
+  window.print();
+  // Khôi phục sau khi đóng hộp in
+  setTimeout(() => {
+    if(leftCol) leftCol.style.display = '';
+    if(grid) grid.style.cssText = origGridStyle;
+    if(rightCol) rightCol.style.width = '';
+    if(btnRow) btnRow.style.display = '';
+  }, 500);
+}
+
+function dlCard(){
+  const h=document.getElementById('ccp').outerHTML;
+  const blob=new Blob([`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f2f2f2}.cc{width:336px;border-radius:9px;overflow:hidden;box-shadow:0 6px 28px rgba(0,0,0,.17)}.ch{background:#C0392B;padding:13px 17px;color:white}.ch .co{font-size:9.5px;opacity:.65;letter-spacing:2px;text-transform:uppercase}.ch .ti{font-size:21px;font-weight:700;letter-spacing:1px;line-height:1.1;margin-top:2px}.cb{background:#fff;padding:9px 12px;display:flex;flex-direction:column;gap:8px}.cp{width:68px;height:68px;border-radius:7px;background:#f0f0f0;border:2px solid #e0e0e0;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px}.cp img{width:100%;height:100%;object-fit:cover}.nm{font-size:14.5px;font-weight:600}.eid{font-size:10.5px;color:#999;font-family:monospace;margin-bottom:7px}.cf{font-size:10.5px;color:#bbb;text-transform:uppercase;letter-spacing:.5px;margin-top:5px}.cv{font-size:12.5px;font-weight:600}.cm2{background:#f7f7f7;padding:9px 17px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #eee;border-bottom:1px solid #eee}.lv{font-size:15px;font-weight:700;letter-spacing:.5px}.dt{text-align:right;font-size:10.5px;color:#aaa}.dt strong{display:block;font-size:11.5px;color:#111}.qrb{width:50px;height:50px;background:#eee;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#aaa;text-align:center;overflow:hidden}.qrb img{width:100%;height:100%}.cf2{background:#1a1a1a;padding:7px 17px;display:flex;align-items:center;justify-content:space-between}.st{font-size:10.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}.st.v{color:#2ecc71}.st.e{color:#f1c40f}.st.x{color:#e74c3c}.cf2 small{font-size:9.5px;color:#555}</style></head><body>${h}</body></html>`],{type:'text/html'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=document.getElementById('ccno').textContent+'.html';a.click();
+}
+
+// ─── UTILS ───────────────────────────────────────────────────────────────────
+function cM(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.mo').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
+function expData(){
+  const out={...DB,emps:DB.emps.map(e=>({...e,photo:e.photo?'[base64_omitted]':''}))};
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)],{type:'application/json'}));
+  a.download='opcertms_backup.json';a.click();
+}
+
+function importJSON(){
+  const inp=document.createElement('input');inp.type='file';inp.accept='.json';
+  inp.onchange=e=>{
+    const f=e.target.files[0];if(!f)return;
+    const r=new FileReader();r.onload=ev=>{
+      try{
+        const d=JSON.parse(ev.target.result);
+        if(d.emps)DB.emps=d.emps.map(e=>({...e,photo:''}));
+        if(d.procs)DB.procs=d.procs;
+        if(d.certs)DB.certs=d.certs;
+        if(d.ctr!==undefined)DB.ctr=d.ctr;
+        if(d.sp)DB.sp=d.sp;
+        if(d.cfg)DB.cfg=d.cfg;
+        if(d.src)DB.src=d.src;
+        saveLS();rDash();updSbf();
+        alert(`✓ Đã import dữ liệu!\n${DB.emps.length} nhân viên, ${DB.certs.length} chứng chỉ`);
+      }catch(err){alert('Lỗi đọc file JSON: '+err.message);}
+    };r.readAsText(f);
+  };inp.click();
+}
+
+
+// ═══ UTILS ════════════════════════════════════════════════════════════════════
+function showToast(msg, color='#27AE60', dur=2200){
+  const t=document.createElement('div');
+  t.style.cssText=`position:fixed;bottom:20px;right:20px;background:${color};color:#fff;padding:9px 16px;border-radius:7px;font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 14px rgba(0,0,0,.22);transition:opacity .3s`;
+  t.innerHTML=msg; document.body.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300)},dur);
+}
+
+// ═══ AUTH ═════════════════════════════════════════════════════════════════════
+const USERS = {
+  admin:   {pass:'admin123',  role:'admin',   label:'Administrator'},
+  trainer: {pass:'trainer123',role:'trainer', label:'Trainer'},
+  viewer:  {pass:'viewer123', role:'viewer',  label:'Viewer'},
+};
+let currentUser = null;
+
+function doLogin(){
+  const u=document.getElementById('l-user').value.trim().toLowerCase();
+  const p=document.getElementById('l-pass').value;
+  const err=document.getElementById('l-err');
+  const user=USERS[u];
+  if(!user||user.pass!==p){
+    err.classList.add('show');
+    document.getElementById('l-pass').value='';
+    document.getElementById('l-pass').focus();
+    return;
+  }
+  err.classList.remove('show');
+  currentUser={username:u,role:user.role,label:user.label};
+  try{sessionStorage.setItem('opcertms_sess',JSON.stringify(currentUser));}catch(e){}
+  applyRole();
+  document.getElementById('login-screen').classList.add('hidden');
+  showToast(`Xin chào, ${user.label}!`,'#27AE60',3000);
+  initSync();
+}
+
+function doLogout(){
+  if(!confirm('Đăng xuất?'))return;
+  currentUser=null;
+  try{sessionStorage.removeItem('opcertms_sess');}catch(e){}
+  document.getElementById('l-user').value='';
+  document.getElementById('l-pass').value='';
+  document.getElementById('login-screen').classList.remove('hidden');
+  document.body.className=document.body.className.replace(/role-\S+/g,'').trim();
+  setTimeout(()=>document.getElementById('l-user').focus(),100);
+}
+
+function applyRole(){
+  if(!currentUser)return;
+  const r=currentUser.role;
+  document.body.className=document.body.className.replace(/role-\S+/g,'').trim();
+  document.body.classList.add('role-'+r);
+  document.getElementById('ub-name').textContent=currentUser.label;
+  const re=document.getElementById('ub-role');
+  re.textContent=r==='admin'?'👑 Admin':r==='trainer'?'✏ Trainer':'👁 Viewer';
+  re.className='urole '+r;
+  const importLink=document.querySelector('.nav-lnk[data-p="import"]');
+  const settingsLink=document.querySelector('.nav-lnk[data-p="settings"]');
+  if(importLink) importLink.style.display=r==='admin'?'':'none';
+  if(settingsLink) settingsLink.style.display=r!=='viewer'?'':'none';
+  document.querySelectorAll('.tbtn.green').forEach(b=>b.style.display=r==='admin'?'':'none');
+}
+
+function requireRole(...roles){
+  if(!currentUser){alert('Vui lòng đăng nhập!');return false;}
+  if(!roles.includes(currentUser.role)){
+    alert(`Bạn không có quyền thực hiện thao tác này.\nYêu cầu: ${roles.join(' hoặc ')}`);
+    return false;
+  }
+  return true;
+}
+
+// ═══ JSONBIN SYNC ══════════════════════════════════════════════════════════════
+// Config — điền sau khi tạo tài khoản JSONBin.io (miễn phí)
+let SYNC_CFG = {
+  binId:  '',   // bin ID từ JSONBin.io  (VD: "64abc123...")
+  apiKey: '',   // X-Master-Key từ JSONBin.io
+};
+let _syncTimer = null;
+let _dirty = false;
+
+function isSyncConfigured(){ return !!(SYNC_CFG.binId && SYNC_CFG.apiKey); }
+
+// Gọi API Vercel serverless — proxy tránh CORS
+async function apiCall(method, path, body){
+  const opts = {
+    method,
+    headers:{'Content-Type':'application/json'},
+  };
+  if(body!==undefined) opts.body = JSON.stringify(body);
+  const r = await fetch('/api'+path, opts);
+  if(!r.ok){
+    const txt = await r.text().catch(()=>'');
+    throw new Error(`API ${r.status}: ${txt}`);
+  }
+  return r.json().catch(()=>({}));
+}
+
+async function pushToCloud(){
+  if(!isSyncConfigured()) return false;
+  const payload = {
+    emps:  DB.emps.map(e=>({...e,photo:''})),
+    procs: DB.procs, certs: DB.certs,
+    ctr:   DB.ctr, cfg: DB.cfg, src: DB.src,
+    savedAt: new Date().toISOString(),
+    savedBy: currentUser?.username||'?'
+  };
+  try{
+    await apiCall('PUT','/sync',{binId:SYNC_CFG.binId,apiKey:SYNC_CFG.apiKey,data:payload});
+    // Push photos separately (base64)
+    for(const e of DB.emps){
+      if(e.photo && e.photo.startsWith('data:')){
+        await apiCall('PUT','/photo',{binId:SYNC_CFG.binId+'_photo_'+e.id,apiKey:SYNC_CFG.apiKey,data:e.photo}).catch(()=>{});
+      }
+    }
+    _dirty=false;
+    return true;
+  }catch(err){console.warn('pushToCloud:',err);return false;}
+}
+
+async function pullFromCloud(){
+  if(!isSyncConfigured()) return false;
+  try{
+    const res = await apiCall('GET',`/sync?binId=${SYNC_CFG.binId}&apiKey=${encodeURIComponent(SYNC_CFG.apiKey)}`);
+    if(!res||!res.emps) return false;
+    DB.emps=res.emps; DB.procs=res.procs; DB.certs=res.certs;
+    DB.ctr=res.ctr||DB.ctr; DB.cfg=res.cfg||DB.cfg; DB.src=res.src||null;
+    DB._savedAt=res.savedAt; DB._savedBy=res.savedBy;
+    // Pull photos
+    for(const e of DB.emps){
+      try{
+        const pr=await apiCall('GET',`/photo?binId=${SYNC_CFG.binId+'_photo_'+e.id}&apiKey=${encodeURIComponent(SYNC_CFG.apiKey)}`);
+        if(pr&&typeof pr==='string'&&pr.startsWith('data:')) e.photo=pr;
+      }catch(er){}
+    }
+    return true;
+  }catch(err){console.warn('pullFromCloud:',err);return false;}
+}
+
+// Auto-save debounced
+function markDirty(){
+  _dirty=true;
+  if(_syncTimer) clearTimeout(_syncTimer);
+  _syncTimer=setTimeout(autoSave,3000);
+}
+async function autoSave(){
+  if(!_dirty||!isSyncConfigured()) return;
+  saveLocal();
+  const ok=await pushToCloud();
+  updateSyncStatus(ok?'saved':'error');
+}
+
+// Local backup via localStorage
+function saveLocal(){
+  try{
+    const d={emps:DB.emps.map(e=>({...e,photo:''})),procs:DB.procs,certs:DB.certs,ctr:DB.ctr,cfg:DB.cfg,src:DB.src};
+    localStorage.setItem('opcertms_local',JSON.stringify(d));
+    // photos in IndexedDB
+    if(_idb) DB.emps.forEach(e=>{ if(e.photo) idbPut('ph_'+e.id,e.photo).catch(()=>{}); });
+  }catch(e){}
+}
+function loadLocal(){
+  try{
+    const raw=localStorage.getItem('opcertms_local');
+    if(!raw)return false;
+    const d=JSON.parse(raw);
+    if(d.emps)DB.emps=d.emps; if(d.procs)DB.procs=d.procs;
+    if(d.certs)DB.certs=d.certs; if(d.ctr!==undefined)DB.ctr=d.ctr;
+    if(d.cfg)DB.cfg=d.cfg; if(d.src)DB.src=d.src;
+    return true;
+  }catch(e){return false;}
+}
+async function loadLocalPhotos(){
+  if(!_idb)return;
+  for(const e of DB.emps){
+    try{const ph=await idbGet('ph_'+e.id);if(ph)e.photo=ph;}catch(er){}
+  }
+}
+
+// Sync config stored in localStorage
+function saveSyncCfg(){
+  try{localStorage.setItem('opcertms_sync_cfg',JSON.stringify(SYNC_CFG));}catch(e){}
+}
+function loadSyncCfg(){
+  try{const raw=localStorage.getItem('opcertms_sync_cfg');if(raw)SYNC_CFG=JSON.parse(raw);}catch(e){}
+}
+
+function updateSyncStatus(state){
+  const el=document.getElementById('sync-status-dot');
+  const lb=document.getElementById('sync-status-label');
+  if(!el)return;
+  const map={saved:['#27AE60','☁ Đã đồng bộ'],pulling:['#0078d4','⟳ Đang tải...'],pushing:['#0078d4','⟳ Đang lưu...'],error:['#E67E22','⚠ Lỗi sync'],offline:['#aaa','○ Offline (local)'],ok:['#27AE60','✓ Kết nối OK']};
+  const [color,label]=map[state]||['#aaa','—'];
+  el.style.background=color; if(lb)lb.textContent=label;
+}
+
+// ─── IndexedDB (for photos only) ─────────────────────────────────────────────
+const IDB_NAME='opcertms_v2',IDB_VER=1,IDB_STORE='kv';
+let _idb=null;
+function openIDB(){
+  return new Promise((res,rej)=>{
+    const req=indexedDB.open(IDB_NAME,IDB_VER);
+    req.onupgradeneeded=e=>e.target.result.createObjectStore(IDB_STORE);
+    req.onsuccess=e=>{_idb=e.target.result;res();};
+    req.onerror=()=>rej(req.error);
+  });
+}
+function idbPut(key,val){return new Promise((res,rej)=>{const tx=_idb.transaction(IDB_STORE,'readwrite');tx.objectStore(IDB_STORE).put(val,key);tx.oncomplete=res;tx.onerror=()=>rej(tx.error);});}
+function idbGet(key){return new Promise((res,rej)=>{const tx=_idb.transaction(IDB_STORE,'readonly');const req=tx.objectStore(IDB_STORE).get(key);req.onsuccess=()=>res(req.result??null);req.onerror=()=>rej(req.error);});}
+function idbDel(key){return new Promise((res,rej)=>{const tx=_idb.transaction(IDB_STORE,'readwrite');tx.objectStore(IDB_STORE).delete(key);tx.oncomplete=res;tx.onerror=()=>rej(tx.error);});}
+
+// ─── Unified saveDB / loadDB called by all mutating functions ─────────────────
+async function saveDB(){
+  markDirty();
+  saveLocal();
+  showToast('💾 Đã lưu','#27AE60',1500);
+}
+async function deleteEmpPhoto(id){
+  if(_idb) try{await idbDel('ph_'+id);}catch(e){}
+}
+
+// ─── Role guard wrappers (applied once) ──────────────────────────────────────
+const _saveEmp0=saveEmp; saveEmp=function(){if(!requireRole('admin'))return;_saveEmp0();};
+const _delEmp0=delEmp;   delEmp=async function(id){if(!requireRole('admin'))return;await _delEmp0(id);};
+const _saveProc0=saveProc;saveProc=function(){if(!requireRole('admin'))return;_saveProc0();};
+const _delProc0=delProc; delProc=function(id){if(!requireRole('admin'))return;_delProc0(id);};
+const _saveCert0=saveCert;saveCert=function(){if(!requireRole('admin','trainer'))return;_saveCert0();};
+const _delCert0=delCert; delCert=function(id){if(!requireRole('admin'))return;_delCert0(id);};
+const _doRenew0=doRenew; doRenew=function(){if(!requireRole('admin','trainer'))return;_doRenew0();};
+const _saveSP0=saveSP;   saveSP=function(){if(!requireRole('admin'))return;_saveSP0();};
+const _saveSet0=saveSet; saveSet=function(){if(!requireRole('admin'))return;_saveSet0();};
+const _doImport0=doImport;doImport=function(){if(!requireRole('admin'))return;_doImport0();};
+const _oEmp0=oEmp;       oEmp=function(id){if(!requireRole('admin'))return;_oEmp0(id);};
+const _oProc0=oProc;     oProc=function(id){if(!requireRole('admin'))return;_oProc0(id);};
+const _oCert0=oCert;     oCert=function(){if(!requireRole('admin','trainer'))return;_oCert0();};
+
+// ─── User management ─────────────────────────────────────────────────────────
+function renderUsers(){
+  const el=document.getElementById('users-tbody');if(!el)return;
+  el.innerHTML=Object.entries(USERS).map(([u,info])=>`
+    <tr>
+      <td style="padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600">${u}</td>
+      <td style="padding:8px 12px;font-size:13px;color:#aaa">••••••••</td>
+      <td style="padding:8px 12px"><span class="role-badge ${info.role}">${info.role==='admin'?'👑 Admin':info.role==='trainer'?'✏ Trainer':'👁 Viewer'}</span></td>
+      <td style="padding:8px 12px">${u!=='admin'?`<button class="ab dx" onclick="deleteUser('${u}')">Xóa</button>`:'<span style="font-size:11px;color:#ccc">mặc định</span>'}</td>
+    </tr>`).join('');
+}
+function saveUser(){
+  if(!requireRole('admin'))return;
+  const u=document.getElementById('nu-user').value.trim().toLowerCase();
+  const p=document.getElementById('nu-pass').value;
+  const r=document.getElementById('nu-role').value;
+  if(!u||!p){alert('Vui lòng nhập đầy đủ!');return;}
+  USERS[u]={pass:p,role:r,label:{admin:'Administrator',trainer:'Trainer',viewer:'Viewer'}[r]};
+  try{localStorage.setItem('opcertms_users',JSON.stringify(USERS));}catch(e){}
+  renderUsers();
+  document.getElementById('nu-user').value='';
+  document.getElementById('nu-pass').value='';
+  showToast('✓ Đã lưu tài khoản','#27AE60');
+}
+function deleteUser(u){
+  if(!requireRole('admin'))return;
+  if(u==='admin'){alert('Không thể xóa admin!');return;}
+  if(!confirm(`Xóa tài khoản "${u}"?`))return;
+  delete USERS[u];
+  try{localStorage.setItem('opcertms_users',JSON.stringify(USERS));}catch(e){}
+  renderUsers();
+}
+function loadUsers(){
+  try{const raw=localStorage.getItem('opcertms_users');if(raw)Object.assign(USERS,JSON.parse(raw));}catch(e){}
+}
+
+const _rSet0=rSet;
+rSet=function(){
+  _rSet0();
+  const box=document.getElementById('user-mgmt-box');
+  if(box)box.style.display=currentUser?.role==='admin'?'':'none';
+  renderUsers();
+  renderSyncSettings();
+};
+
+// ─── Sync settings UI ────────────────────────────────────────────────────────
+function renderSyncSettings(){
+  const binEl=document.getElementById('sync-bin-id');
+  const keyEl=document.getElementById('sync-api-key');
+  if(binEl)binEl.value=SYNC_CFG.binId||'';
+  if(keyEl)keyEl.value=SYNC_CFG.apiKey||'';
+  updateSyncStatus(isSyncConfigured()?'saved':'offline');
+}
+function saveSyncConfig(){
+  if(!requireRole('admin'))return;
+  SYNC_CFG.binId=document.getElementById('sync-bin-id').value.trim();
+  SYNC_CFG.apiKey=document.getElementById('sync-api-key').value.trim();
+  saveSyncCfg();
+  showToast('✓ Đã lưu cấu hình sync','#27AE60');
+  updateSyncStatus(isSyncConfigured()?'ok':'offline');
+}
+async function manualPull(){
+  updateSyncStatus('pulling');
+  const ok=await pullFromCloud();
+  if(ok){rDash();rEmp();updSbf();showToast('✓ Đã tải dữ liệu mới nhất','#0078d4',3000);updateSyncStatus('saved');}
+  else{showToast('✗ Không thể tải — kiểm tra cấu hình','#C0392B',3500);updateSyncStatus('error');}
+}
+async function manualPush(){
+  updateSyncStatus('pushing');
+  saveLocal();
+  const ok=await pushToCloud();
+  if(ok){showToast('☁ Đã đẩy dữ liệu lên cloud','#0078d4',3000);updateSyncStatus('saved');}
+  else{showToast('✗ Không thể lưu — kiểm tra cấu hình','#C0392B',3500);updateSyncStatus('error');}
+}
+
+// ─── Export / Import JSON (offline backup) ───────────────────────────────────
+function expData(){
+  const out={...DB,emps:DB.emps.map(e=>({...e,photo:''}))};
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)],{type:'application/json'}));
+  a.download='opcertms_backup.json';a.click();
+}
+function importJSON(){
+  const inp=document.createElement('input');inp.type='file';inp.accept='.json';
+  inp.onchange=e=>{
+    const f=e.target.files[0];if(!f)return;
+    const r=new FileReader();r.onload=ev=>{
+      try{
+        const d=JSON.parse(ev.target.result);
+        if(d.emps)DB.emps=d.emps.map(e=>({...e,photo:''}));
+        if(d.procs)DB.procs=d.procs;if(d.certs)DB.certs=d.certs;
+        if(d.ctr!==undefined)DB.ctr=d.ctr;if(d.cfg)DB.cfg=d.cfg;if(d.src)DB.src=d.src;
+        saveDB();rDash();updSbf();
+        alert(`✓ Đã import!\n${DB.emps.length} NV, ${DB.certs.length} CC`);
+      }catch(err){alert('Lỗi: '+err.message);}
+    };r.readAsText(f);
+  };inp.click();
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+async function initSync(){
+  if(!isSyncConfigured())return;
+  updateSyncStatus('pulling');
+  const ok=await pullFromCloud();
+  if(ok){rDash();rEmp();updSbf();updateSyncStatus('saved');showToast('☁ Đồng bộ từ cloud thành công','#0078d4',3000);}
+  else updateSyncStatus('offline');
+}
+
+openIDB().then(async()=>{
+  loadUsers();
+  loadSyncCfg();
+  // Restore session
+  try{
+    const sess=sessionStorage.getItem('opcertms_sess');
+    if(sess){
+      currentUser=JSON.parse(sess);
+      applyRole();
+      document.getElementById('login-screen').classList.add('hidden');
+    }
+  }catch(e){}
+  // Load local data first (fast)
+  loadLocal();
+  await loadLocalPhotos();
+  rDash();
+  document.getElementById('mab').style.display='';
+  updSbf();
+  if(!currentUser){
+    setTimeout(()=>document.getElementById('l-user').focus(),100);
+  } else {
+    // Try to pull fresh data from cloud
+    initSync();
+  }
+}).catch(err=>{
+  console.warn('IDB error:',err);
+  loadUsers();loadSyncCfg();loadLocal();
+  rDash();document.getElementById('mab').style.display='';updSbf();
+  setTimeout(()=>{ if(!currentUser){ const f=document.getElementById('l-user');if(f)f.focus(); }},100);
+});
+
+// Safety net
+setTimeout(()=>{
+  if(!currentUser){
+    const ls=document.getElementById('login-screen');
+    if(ls)ls.classList.remove('hidden');
+    const f=document.getElementById('l-user');if(f)f.focus();
+  }
+},2000);
+</script>
+</body>
+</html>
