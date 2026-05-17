@@ -433,7 +433,7 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
         </div>
         <div id="print-area">
           <div class="cc" id="ccp">
-            <div class="ch"><div class="co">TTI Group|AES</div><div class="ti">OPERATION CERTIFICATE</div><div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;letter-spacing:.5px">SERTIFIKAT OPERASI</div></div>
+            <div class="ch"><div class="co">TTI Group-AES</div><div class="ti">OPERATION CERTIFICATE</div><div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;letter-spacing:.5px">SERTIFIKAT OPERASI</div></div>
             <div class="cb"><div class="cp" id="cphoto">👤</div>
               <div class="cd"><div class="nm" id="cnm">— Chọn chứng chỉ —</div><div class="eid" id="ceid">ID: —</div><div class="cf">Quy trình</div><div class="cv" id="cproc">—</div></div>
             </div>
@@ -954,7 +954,7 @@ function updatePatternPreview(){
   const prev=document.getElementById('sp-preview');
   if(prev && url) prev.textContent='Ví dụ: '+url.split('/').pop();
 }
-document.getElementById('spnm').addEventListener('change', onNmChange);
+const _spnm=document.getElementById('spnm');if(_spnm)_spnm.addEventListener('change', onNmChange);
 
 function handleManualPic(e){
   const f=e.target.files[0];if(!f)return;
@@ -1217,8 +1217,8 @@ function updExp(){
   const pid=document.getElementById('fc-pr').value,dt=document.getElementById('fc-dt').value;
   if(pid&&dt){const p=DB.procs.find(p=>p.id===pid);if(p){document.getElementById('exp-v').textContent=fD(aM(dt,p.vl));document.getElementById('exp-prev').style.display='';}}
 }
-document.getElementById('fc-pr').addEventListener('change',updExp);
-document.getElementById('fc-dt').addEventListener('change',updExp);
+const _fcpr=document.getElementById('fc-pr');if(_fcpr)_fcpr.addEventListener('change',updExp);
+const _fcdt=document.getElementById('fc-dt');if(_fcdt)_fcdt.addEventListener('change',updExp);
 function saveCert(){
   const eid=document.getElementById('fc-em').value,pid=document.getElementById('fc-pr').value,lv=document.getElementById('fc-lv').value,iss=document.getElementById('fc-dt').value;
   if(!eid||!pid||!lv||!iss){alert('Vui lòng điền đầy đủ!');return;}
@@ -1258,7 +1258,7 @@ function oRenew(id){
   document.getElementById('m-renew').dataset.cid=id;
   document.getElementById('m-renew').classList.add('open');
 }
-document.getElementById('fr-dt').addEventListener('input',function(){
+const _frdt=document.getElementById('fr-dt');if(_frdt)_frdt.addEventListener('input',function(){
   const c=DB.certs.find(c=>c.id===document.getElementById('m-renew').dataset.cid);if(!c)return;
   const p=DB.procs.find(p=>p.id===c.pid);
   if(p&&this.value)document.getElementById('rnexp').innerHTML=`Hết hạn mới: <strong>${fD(aM(this.value,p.vl))}</strong> (+${p.vl} tháng)`;
@@ -1669,32 +1669,9 @@ function dlCard(){
 // ─── UTILS ───────────────────────────────────────────────────────────────────
 function cM(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.mo').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
-function expData(){
-  const out={...DB,emps:DB.emps.map(e=>({...e,photo:e.photo?'[base64_omitted]':''}))};
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)],{type:'application/json'}));
-  a.download='opcertms_backup.json';a.click();
-}
 
-function importJSON(){
-  const inp=document.createElement('input');inp.type='file';inp.accept='.json';
-  inp.onchange=e=>{
-    const f=e.target.files[0];if(!f)return;
-    const r=new FileReader();r.onload=ev=>{
-      try{
-        const d=JSON.parse(ev.target.result);
-        if(d.emps)DB.emps=d.emps.map(e=>({...e,photo:''}));
-        if(d.procs)DB.procs=d.procs;
-        if(d.certs)DB.certs=d.certs;
-        if(d.ctr!==undefined)DB.ctr=d.ctr;
-        if(d.sp)DB.sp=d.sp;
-        if(d.cfg)DB.cfg=d.cfg;
-        if(d.src)DB.src=d.src;
-        saveLS();rDash();updSbf();
-        alert(`✓ Đã import dữ liệu!\n${DB.emps.length} nhân viên, ${DB.certs.length} chứng chỉ`);
-      }catch(err){alert('Lỗi đọc file JSON: '+err.message);}
-    };r.readAsText(f);
-  };inp.click();
-}
+
+
 
 
 // ═══ UTILS ════════════════════════════════════════════════════════════════════
