@@ -1,0 +1,7 @@
+{
+  "name": "opcertms",
+  "version": "1.0.0",
+  "description": "Operation Certificate Management System",
+  "private": true,
+  "engines": { "node": ">=18" }
+}
