@@ -287,7 +287,7 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
       <button class="login-btn" onclick="doLogin()">ĐĂNG NHẬP</button>
     </div>
     <div class="login-footer">
-      <small>TTI Group-AES</small>
+      <small>TTI Group - AES</small>
       <div style="display:flex;gap:6px;flex-wrap:wrap">
         <span class="role-badge admin">👑 Admin</span>
         <span class="role-badge trainer">✏ Trainer</span>
@@ -302,6 +302,7 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
     <a class="nav-lnk active" data-p="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard</a>
     <div class="sb-sec">Quản lý</div>
     <a class="nav-lnk" data-p="employees"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Nhân viên</a>
+    <a class="nav-lnk" data-p="depts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Bộ phận</a>
     <a class="nav-lnk" data-p="processes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg>Quy trình</a>
     <a class="nav-lnk" data-p="certs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Chứng chỉ</a>
     <a class="nav-lnk" data-p="renewal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Gia hạn</a>
@@ -355,6 +356,52 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
     </div>
     <table><thead><tr><th>Ảnh</th><th>Mã NV</th><th>Họ tên</th><th>Bộ phận</th><th>Chức danh</th><th>Ngày vào</th><th>Trạng thái</th><th>Số CC</th><th></th></tr></thead>
     <tbody id="etb"></tbody></table>
+  </div>
+</div>
+
+<!-- DEPTS -->
+<div id="page-depts" class="page">
+  <div style="max-width:700px">
+    <!-- Add dept card -->
+    <div class="box" style="margin-bottom:18px">
+      <div class="box-hdr">
+        <div style="width:30px;height:30px;border-radius:7px;background:#2980B9;display:flex;align-items:center;justify-content:center;font-size:16px">🏭</div>
+        <h3 style="font-size:14px;font-weight:600">Thêm bộ phận mới</h3>
+      </div>
+      <div class="box-body">
+        <div style="display:flex;gap:10px;align-items:end">
+          <div class="fl" style="flex:1">
+            <label>Tên bộ phận</label>
+            <input type="text" id="dept-name-inp" placeholder="VD: Production, Quality Control, R&D..."
+              onkeydown="if(event.key==='Enter')addDept()">
+          </div>
+          <div class="fl" style="width:140px">
+            <label>Mã (tùy chọn)</label>
+            <input type="text" id="dept-code-inp" placeholder="VD: PRD, QC..." maxlength="5"
+              style="text-transform:uppercase">
+          </div>
+          <button class="btn bp" onclick="addDept()" style="height:36px;white-space:nowrap">+ Thêm bộ phận</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dept list -->
+    <div class="tw">
+      <div class="tb">
+        <span style="font-size:12.5px;font-weight:600;color:#666">Danh sách bộ phận</span>
+        <span id="dept-total-label" style="margin-left:auto;font-size:12px;color:#aaa"></span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>Mã</th>
+          <th>Tên bộ phận</th>
+          <th>Số nhân viên</th>
+          <th>Số CC hiệu lực</th>
+          <th></th>
+        </tr></thead>
+        <tbody id="dept-tbody"></tbody>
+      </table>
+    </div>
   </div>
 </div>
 
@@ -432,17 +479,49 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
           </div>
         </div>
         <div id="print-area">
-          <div class="cc" id="ccp">
-            <div class="ch"><div class="co">TTI Group-AES</div><div class="ti">OPERATION CERTIFICATE</div><div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;letter-spacing:.5px">SERTIFIKAT OPERASI</div></div>
-            <div class="cb"><div class="cp" id="cphoto">👤</div>
-              <div class="cd"><div class="nm" id="cnm">— Chọn chứng chỉ —</div><div class="eid" id="ceid">ID: —</div><div class="cf">Quy trình</div><div class="cv" id="cproc">—</div></div>
+          <div id="ccp" style="width:204px;border-radius:4px;overflow:hidden;border:0.5px solid #ccc;font-family:Arial,sans-serif;display:flex;flex-direction:column;background:#fff;box-shadow:0 4px 20px rgba(0,0,0,.15)">
+            <div style="background:#C8102E;padding:6px 10px 5px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+              <div style="font-size:11pt;font-weight:900;color:#fff;font-style:italic;text-transform:uppercase;letter-spacing:.5px;line-height:1">Milwaukee</div>
+              <div style="font-size:7pt;font-weight:900;color:#fff;letter-spacing:1px;text-transform:uppercase;margin-top:2px;line-height:1">CERTIFICATE CARD</div>
+              <div style="font-size:5.5pt;color:rgba(255,255,255,.85);margin-top:1px">CHỨNG NHẬN THAO TÁC</div>
             </div>
-            <div class="cm2">
-              <div><div style="font-size:9.5px;color:#bbb;text-transform:uppercase;letter-spacing:.5px">Cấp độ</div><div class="lv" id="clv">—</div></div>
-              <div class="dt"><div>Ngày cấp <strong id="ciss">—</strong></div><div>Hết hạn <strong id="cexp">—</strong></div></div>
-              <div class="qrb" id="cqr">QR<br>CODE</div>
+            <div id="cphoto" style="height:72px;background:#d0d0d0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:28px">👤</div>
+            <div style="padding:4px 8px 3px;text-align:center;border-bottom:0.5px solid #eee;flex-shrink:0">
+              <div style="font-size:9pt;font-weight:900;color:#111;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="cnm">— Chọn chứng chỉ —</div>
+              <div style="font-size:6.5pt;color:#999;font-family:monospace" id="ceid">ID: —</div>
             </div>
-            <div class="cf2"><span class="st" id="cst">Chưa chọn</span><small id="ccno">CERT-XXXX</small></div>
+            <div style="flex:1;overflow:hidden">
+              <table style="width:100%;border-collapse:collapse;font-size:6pt">
+                <tr>
+                  <td style="border:0.5px solid #ccc;padding:3px 4px;background:#f0f0f0;font-size:5.5pt;white-space:nowrap">
+                    <div style="font-weight:900">Process</div><div style="color:#888">Quy Trình</div>
+                  </td>
+                  <td style="border:0.5px solid #ccc;padding:3px 4px;text-align:center;font-size:5.5pt;font-weight:600" id="cproc">—</td>
+                </tr>
+                <tr>
+                  <td style="border:0.5px solid #ccc;padding:3px 4px;background:#f0f0f0;font-size:5.5pt;white-space:nowrap">
+                    <div style="font-weight:900">Level</div><div style="color:#888">Cấp Bậc</div>
+                  </td>
+                  <td style="border:0.5px solid #ccc;padding:4px;text-align:center;font-size:12pt;font-weight:900" id="clv">—</td>
+                </tr>
+                <tr>
+                  <td style="border:0.5px solid #ccc;padding:3px 4px;background:#f0f0f0;font-size:5.5pt;white-space:nowrap">
+                    <div style="font-weight:900">Expiry Date</div><div style="color:#888">Ngày Hết Hạn</div>
+                  </td>
+                  <td style="border:0.5px solid #ccc;padding:3px 4px;text-align:center;font-size:6pt;font-weight:700" id="cexp">—</td>
+                </tr>
+              </table>
+            </div>
+            <div style="background:#1a1a1a;padding:4px 6px;flex-shrink:0;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div style="font-size:4pt;color:#fff;font-weight:700;line-height:1.7">
+                  <div>SORT. SET IN ORDER.</div><div>SHINE. STANDARDIZE.</div><div>SUSTAIN. SAFETY.</div>
+                </div>
+                <div style="font-size:4pt;color:#ccc;line-height:1.7;text-align:right">
+                  <div>SÀNG LỌC. SẮP XẾP.</div><div>SẠCH SẼ. SẴN SÓC.</div><div>SẴN SÀNG. AN TOÀN.</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -661,7 +740,7 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
       <div class="box-hdr"><h3 style="font-size:14px;font-weight:600">Cài đặt hệ thống</h3></div>
       <div class="box-body">
         <div class="fg" style="gap:12px">
-          <div class="fl"><label>Tên công ty</label><input type="text" id="sc" value="TTI Group-AES"></div>
+          <div class="fl"><label>Tên công ty</label><input type="text" id="sc" value="TTI Group - AES"></div>
           <div class="fl"><label>Cảnh báo hết hạn (ngày)</label><input type="text" id="sw" value="30"></div>
           <div class="fl s2"><label>Tiêu đề hệ thống</label><input type="text" id="st" value="Operation Certificate Management System"></div>
         </div>
@@ -674,6 +753,28 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
   </div>
 </div>
 
+  </div>
+</div>
+
+<!-- MODAL: EDIT DEPT -->
+<div class="mo" id="m-dept">
+  <div class="md" style="width:420px">
+    <div class="mh"><h3>SỬA BỘ PHẬN</h3><button onclick="cM('m-dept')">✕</button></div>
+    <div class="mb">
+      <div class="fl" style="margin-bottom:14px">
+        <label>Tên bộ phận *</label>
+        <input type="text" id="fd-name" placeholder="Tên bộ phận">
+      </div>
+      <div class="fl">
+        <label>Mã bộ phận (tùy chọn, tối đa 5 ký tự)</label>
+        <input type="text" id="fd-code" placeholder="VD: PRD" maxlength="5" style="text-transform:uppercase">
+        <small style="font-size:11px;color:#aaa;margin-top:3px">Để trống = tự sinh từ tên bộ phận</small>
+      </div>
+    </div>
+    <div class="mf">
+      <button class="btn bs" onclick="cM('m-dept')">Hủy</button>
+      <button class="btn bp" onclick="saveDeptEdit()">Lưu</button>
+    </div>
   </div>
 </div>
 
@@ -755,7 +856,7 @@ const DB={
   depts:['Production','Quality Control','Maintenance','Engineering','Warehouse','HSE','Training','Administration'],
   ctr:0,
   sp:{url:"",nm:"id_dept_name",ext:"jpg",cp:""},
-  cfg:{company:"TTI Group-AES",warn:30},
+  cfg:{company:"TTI Group - AES",warn:30},
   src:null
 };
 
@@ -785,8 +886,8 @@ function autoId(pfx,arr){
 }
 
 // ─── NAVIGATION ─────────────────────────────────────────────────────────────
-const ptitles={dashboard:'Dashboard',employees:'Quản lý nhân viên',processes:'Quản lý quy trình',certs:'Chứng chỉ',renewal:'Theo dõi gia hạn',matrix:'Ma trận kỹ năng',card:'In thẻ chứng chỉ',import:'Import Excel',settings:'Cài đặt & SharePoint'};
-const addPages={employees:true,processes:true,certs:true};
+const ptitles={dashboard:'Dashboard',employees:'Quản lý nhân viên',depts:'Quản lý bộ phận',processes:'Quản lý quy trình',certs:'Chứng chỉ',renewal:'Theo dõi gia hạn',matrix:'Ma trận kỹ năng',card:'In thẻ chứng chỉ',import:'Import Excel',settings:'Cài đặt & SharePoint'};
+const addPages={employees:true,depts:true,processes:true,certs:true};
 let curPage='dashboard';
 document.querySelectorAll('.nav-lnk').forEach(a=>a.addEventListener('click',()=>nav(a.dataset.p)));
 function nav(p){
@@ -797,11 +898,16 @@ function nav(p){
   document.getElementById('mab').style.display=addPages[p]?'':'none';
   rPage(p);
 }
-function mAct(){if(curPage==='employees')oEmp();else if(curPage==='processes')oProc();else if(curPage==='certs')oCert();}
+function mAct(){
+  if(curPage==='employees')oEmp();
+  else if(curPage==='depts'){document.getElementById('dept-name-inp').focus();}
+  else if(curPage==='processes')oProc();
+  else if(curPage==='certs')oCert();
+}
 function rPage(p){
-  if(p==='dashboard')rDash();else if(p==='employees')rEmp();else if(p==='processes')rProc();
-  else if(p==='certs')rCert();else if(p==='renewal')rRen();else if(p==='matrix')rMatrix();
-  else if(p==='card')rCardList();else if(p==='settings')rSet();
+  if(p==='dashboard')rDash();else if(p==='employees')rEmp();else if(p==='depts')rDeptsPage();
+  else if(p==='processes')rProc();else if(p==='certs')rCert();else if(p==='renewal')rRen();
+  else if(p==='matrix')rMatrix();else if(p==='card')rCardList();else if(p==='settings')rSet();
 }
 
 // ─── SHAREPOINT ─────────────────────────────────────────────────────────────
@@ -941,7 +1047,7 @@ async function testSP(){
 }
 function saveSP(){
   DB.sp={url:document.getElementById('spurl').value.trim(),nm:document.getElementById('spnm').value,ext:document.getElementById('spext').value,cp:document.getElementById('spcp').value};
-  alert('Đã lưu cấu hình SharePoint!');updSbf();
+  saveDB();alert('Đã lưu cấu hình SharePoint!');updSbf();
   updatePatternPreview();
 }
 function onNmChange(){
@@ -982,7 +1088,7 @@ function rSet(){
   const sel=document.getElementById('mpe');
   sel.innerHTML='<option value="">— Chọn —</option>'+DB.emps.map(e=>`<option value="${e.id}">${e.id} — ${e.name}</option>`).join('');
 }
-function saveSet(){DB.cfg={company:document.getElementById('sc').value,warn:parseInt(document.getElementById('sw').value)||30};alert('Đã lưu!');}
+function saveSet(){DB.cfg={company:document.getElementById('sc').value,warn:parseInt(document.getElementById('sw').value)||30};saveDB();alert('Đã lưu!');}
 function updSbf(){
   const el=document.getElementById('sbf');
   const hX=!!DB.src,hS=!!DB.sp.url;
@@ -1071,7 +1177,7 @@ function doImport(){
     Thêm mới: <strong>${add}</strong> nhân viên &nbsp;|&nbsp; Cập nhật: <strong>${upd}</strong> &nbsp;|&nbsp; Bỏ qua: <strong>${skip}</strong>
     ${DB.sp.url?`<br><br><button class="btn bsp" style="margin-top:7px" onclick="loadAllPics();nav('settings')">🖼 Tải ảnh từ SharePoint ngay</button>`:'<br><br><button class="btn bs" onclick="nav(\'settings\')" style="margin-top:7px">⚙ Cấu hình SharePoint để tải ảnh</button>'}
   </div>`;
-  updSbf();rDash();
+  updSbf();rDash();saveDB();
 }
 function dlTpl(){
   const data=[['Employee ID','Full Name','Department','Position','Date of Birth','Join Date','Phone','Status','Email'],['EMP-001','Ahmad Fauzi','Production','Operator','1990-05-12','2015-03-01','+62811111111','Active','ahmad@co.com'],['EMP-002','Budi Santoso','Quality Control','Inspector','1988-07-23','2016-06-15','+62822222222','Active','budi@co.com']];
@@ -1168,9 +1274,9 @@ function saveEmp(){
   if(!id||!nm){alert('Mã và tên là bắt buộc!');return;}
   const obj={id,name:nm,dept:document.getElementById('fe-dp').value,pos:document.getElementById('fe-po').value,dob:document.getElementById('fe-db').value,join:document.getElementById('fe-jn').value,phone:document.getElementById('fe-ph').value,status:document.getElementById('fe-st').value,email:'',photo:''};
   const i=DB.emps.findIndex(e=>e.id===id);if(i>=0){obj.photo=DB.emps[i].photo;DB.emps[i]=obj;}else DB.emps.push(obj);
-  cM('m-emp');rEmp();rDash();
+  cM('m-emp');rEmp();rDash();saveDB();
 }
-function delEmp(id){if(!confirm(`Xóa ${id}?`))return;DB.emps=DB.emps.filter(e=>e.id!==id);rEmp();rDash();}
+function delEmp(id){if(!confirm(`Xóa ${id}?`))return;DB.emps=DB.emps.filter(e=>e.id!==id);rEmp();rDash();saveDB();}
 
 // ─── PROCESSES ──────────────────────────────────────────────────────────────
 function rProc(){
@@ -1202,9 +1308,9 @@ function saveProc(){
   if(!id||!nm){alert('Mã và tên là bắt buộc!');return;}
   const obj={id,name:nm,cat:document.getElementById('fp-ct').value,vl:parseInt(document.getElementById('fp-vl').value)||12,desc:document.getElementById('fp-ds').value,status:document.getElementById('fp-st').value};
   const i=DB.procs.findIndex(p=>p.id===id);if(i>=0)DB.procs[i]=obj;else DB.procs.push(obj);
-  cM('m-proc');rProc();
+  cM('m-proc');rProc();saveDB();
 }
-function delProc(id){if(!confirm(`Xóa ${id}?`))return;DB.procs=DB.procs.filter(p=>p.id!==id);rProc();}
+function delProc(id){if(!confirm(`Xóa ${id}?`))return;DB.procs=DB.procs.filter(p=>p.id!==id);rProc();saveDB();}
 
 // ─── CERTIFICATES ────────────────────────────────────────────────────────────
 function rCert(){
@@ -1243,10 +1349,10 @@ function saveCert(){
   if(!eid||!pid||!lv||!iss){alert('Vui lòng điền đầy đủ!');return;}
   const em=DB.emps.find(e=>e.id===eid),pr=DB.procs.find(p=>p.id===pid);
   const c={id:nCId(),eid,enm:em.name,pid,pnm:pr.name,lv,iss,exp:aM(iss,pr.vl),by:'Admin'};
-  DB.certs.push(c);cM('m-cert');rCert();rDash();
+  DB.certs.push(c);cM('m-cert');rCert();rDash();saveDB();
   alert(`Đã cấp ${c.id}\nHết hạn: ${fD(c.exp)}`);
 }
-function delCert(id){if(!confirm(`Xóa ${id}?`))return;DB.certs=DB.certs.filter(c=>c.id!==id);rCert();rDash();}
+function delCert(id){if(!confirm(`Xóa ${id}?`))return;DB.certs=DB.certs.filter(c=>c.id!==id);rCert();rDash();saveDB();}
 
 // ─── RENEWAL ────────────────────────────────────────────────────────────────
 function rRen(){
@@ -1287,7 +1393,7 @@ function doRenew(){
   if(!dt){alert('Chọn ngày!');return;}
   const c=DB.certs.find(c=>c.id===id);if(!c)return;
   const p=DB.procs.find(p=>p.id===c.pid);if(p){c.iss=dt;c.exp=aM(dt,p.vl);}
-  cM('m-renew');rRen();rDash();rCert();alert(`Đã gia hạn ${id}\nHết hạn mới: ${fD(c.exp)}`);
+  cM('m-renew');rRen();rDash();rCert();saveDB();alert(`Đã gia hạn ${id}\nHết hạn mới: ${fD(c.exp)}`);
 }
 
 // ─── SKILL MATRIX ────────────────────────────────────────────────────────────
@@ -1410,92 +1516,127 @@ function updateBulkCount(){
   if(el) el.textContent = `${bulkSelected.size} nhân viên được chọn`;
 }
 
-// ─── CARD: 1 thẻ/nhân viên — gộp tất cả quy trình còn hiệu lực ─────────────
-// Card size: 54mm × 90mm portrait (chuẩn bao thẻ nhân viên)
+// ─── CARD: Milwaukee style — 54×90mm portrait ────────────────────────────────
 function buildEmpCard(emp){
-  // Lấy tất cả cert của nhân viên còn valid hoặc sắp hết hạn
   const certs = DB.certs.filter(c =>
     c.eid === emp.id && (cSt(c.exp)==='Valid' || cSt(c.exp)==='Expiring Soon')
   ).sort((a,b)=>a.pnm.localeCompare(b.pnm));
 
   const photo = emp.photo
     ? `<img src="${emp.photo}" style="width:100%;height:100%;object-fit:cover;display:block">`
-    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:16px;color:#bbb">👤</div>`;
+    : `<div style="width:100%;height:100%;background:#d0d0d0;display:flex;align-items:center;justify-content:center">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+      </div>`;
 
-  const dept = deptCode(emp.dept||'');
+  // Table rows for processes — max 4 cols fit nicely
+  const MAX_PROC = 4;
+  const showCerts = certs.slice(0, MAX_PROC);
+  const colW = showCerts.length > 0 ? Math.floor(100/showCerts.length) : 100;
 
-  // Build cert rows — compact, tối đa hiển thị ~6 quy trình trong 54×90mm
-  const lvShort = lv => lv.replace('Level ','L').replace(' - Basic','').replace(' - Intermediate','').replace(' - Advanced','').replace(' - Expert','');
-  const stDot = st => st==='Valid'
-    ? '<span style="color:#27AE60;font-weight:900">●</span>'
-    : '<span style="color:#E67E22;font-weight:900">◐</span>';
+  // Header cols
+  const procCols = showCerts.map(c=>`
+    <td style="border:0.3mm solid #ccc;padding:1.2mm 1mm;text-align:center;
+      font-size:5.5pt;font-weight:600;color:#111;line-height:1.3;
+      width:${colW}%">${c.pnm.length>18?c.pnm.substring(0,16)+'…':c.pnm}</td>`).join('');
 
-  const certRows = certs.length === 0
-    ? `<div style="font-size:6pt;color:#bbb;text-align:center;padding:3mm 0;font-style:italic">Không có chứng chỉ hiệu lực</div>`
-    : certs.map(c => {
-        const st  = cSt(c.exp);
-        const lv  = lvShort(c.lv);
-        const exp = fD(c.exp);
-        // Dùng mã quy trình ngắn (PROC-001) + tên viết tắt nếu quá dài
-        const procCode = c.pid || '';
-        const procShort = c.pnm.length > 22 ? c.pnm.substring(0,20)+'…' : c.pnm;
-        return `<div style="
-          display:grid; grid-template-columns:auto 1fr;
-          gap:1mm 1.5mm; align-items:start;
-          padding:1mm 0; border-bottom:0.2mm solid #f0f0f0;
-          font-size:5.5pt; line-height:1.35; color:#222;
-        ">
-          <span style="flex-shrink:0;margin-top:0.3mm">${stDot(st)}</span>
-          <div style="min-width:0">
-            <span style="
-              font-family:monospace; font-size:5pt;
-              background:#f0f0f0; color:#888;
-              border-radius:0.8mm; padding:0 1mm;
-              margin-right:1mm; white-space:nowrap;
-            ">${procCode}</span><span style="font-weight:700">${procShort}</span>
-            <div style="color:#aaa;font-size:4.8pt;margin-top:0.3mm">${lv} · HH: ${exp}</div>
-          </div>
-        </div>`;
-      }).join('');
+  // Level row
+  const lvNum = lv => {
+    const m=lv.match(/Level\s*(\d)/i); return m?m[1]:lv.replace('Level ','').substring(0,1);
+  };
+  const levelCols = showCerts.map(c=>`
+    <td style="border:0.3mm solid #ccc;padding:1.5mm 1mm;text-align:center;
+      font-size:10pt;font-weight:900;color:#111">${lvNum(c.lv)}</td>`).join('');
+
+  // Expiry row
+  const expiryCols = showCerts.map(c=>{
+    const st=cSt(c.exp);
+    const color=st==='Expired'?'#C0392B':st==='Expiring Soon'?'#E67E22':'#111';
+    return`<td style="border:0.3mm solid #ccc;padding:1.2mm 1mm;text-align:center;
+      font-size:5.5pt;font-weight:600;color:${color}">${fD(c.exp)}</td>`;
+  }).join('');
+
+  const tableSection = showCerts.length === 0
+    ? `<div style="padding:2mm 3mm;font-size:6pt;color:#aaa;text-align:center;font-style:italic">Không có chứng chỉ hiệu lực</div>`
+    : `<table style="width:100%;border-collapse:collapse;font-size:5.5pt">
+        <tr>
+          <td style="border:0.3mm solid #ccc;padding:1.5mm 1.5mm;background:#f0f0f0;
+            font-size:5pt;font-weight:700;color:#333;line-height:1.5;white-space:nowrap">
+            <div style="font-weight:900">Process</div>
+            <div style="color:#777">Quy Trình</div>
+          </td>
+          ${procCols}
+        </tr>
+        <tr>
+          <td style="border:0.3mm solid #ccc;padding:1.5mm 1.5mm;background:#f0f0f0;
+            font-size:5pt;font-weight:700;color:#333;white-space:nowrap">
+            <div style="font-weight:900">Level</div>
+            <div style="color:#777">Cấp Bậc</div>
+          </td>
+          ${levelCols}
+        </tr>
+        <tr>
+          <td style="border:0.3mm solid #ccc;padding:1.5mm 1.5mm;background:#f0f0f0;
+            font-size:5pt;font-weight:700;color:#333;white-space:nowrap">
+            <div style="font-weight:900">Expiry Date</div>
+            <div style="color:#777">Ngày Hết Hạn</div>
+          </td>
+          ${expiryCols}
+        </tr>
+      </table>`;
 
   return `<div style="
       width:54mm; height:90mm;
-      border-radius:2.5mm; overflow:hidden;
-      border:0.3mm solid #bbb;
+      border-radius:1.5mm; overflow:hidden;
+      border:0.3mm solid #ccc;
       font-family:Arial,sans-serif;
       page-break-inside:avoid; break-inside:avoid;
       display:flex; flex-direction:column;
       background:#fff;
     ">
-    <!-- HEADER đỏ: logo + tên công ty -->
-    <div style="background:#C0392B;padding:2mm 3mm 1.5mm;flex-shrink:0;
-      -webkit-print-color-adjust:exact;print-color-adjust:exact;">
-      <div style="font-size:5pt;color:rgba(255,255,255,.6);letter-spacing:1px;text-transform:uppercase">OPERATION CERTIFICATE</div>
-      <div style="font-size:5pt;color:rgba(255,255,255,.45)">TTI Group-AES</div>
+    <!-- HEADER: Milwaukee red + logo text -->
+    <div style="background:#C8102E;padding:2mm 3mm 1.5mm;flex-shrink:0;
+      -webkit-print-color-adjust:exact;print-color-adjust:exact;
+      text-align:center;">
+      <!-- Milwaukee logo text style -->
+      <div style="font-size:9pt;font-weight:900;color:#fff;letter-spacing:0.5px;
+        font-style:italic;text-transform:uppercase;line-height:1">Milwaukee</div>
+      <div style="font-size:7.5pt;font-weight:900;color:#fff;letter-spacing:1px;
+        text-transform:uppercase;margin-top:0.8mm;line-height:1">CERTIFICATE CARD</div>
+      <div style="font-size:5.5pt;color:rgba(255,255,255,.85);letter-spacing:.5px;
+        margin-top:0.5mm">CHỨNG NHẬN THAO TÁC</div>
     </div>
-    <!-- INFO NV: ảnh + tên + mã + bộ phận -->
-    <div style="background:#fff;padding:2mm 3mm;display:flex;gap:2mm;align-items:center;flex-shrink:0;border-bottom:0.3mm solid #eee">
-      <div style="width:13mm;height:13mm;border-radius:1.5mm;overflow:hidden;
-        background:#f0f0f0;border:0.3mm solid #ddd;flex-shrink:0">${photo}</div>
-      <div style="flex:1;min-width:0;overflow:hidden">
-        <div style="font-size:7.5pt;font-weight:900;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2">${emp.name}</div>
-        <div style="font-size:5.5pt;color:#999;font-family:monospace;margin-top:0.5mm">${emp.id}</div>
-        <div style="margin-top:1mm;display:inline-block;background:#f0f0f0;border-radius:1mm;padding:0.5mm 1.5mm;font-size:5.5pt;font-weight:700;color:#555">${dept} · ${emp.pos||emp.dept||''}</div>
+    <!-- PHOTO: large square -->
+    <div style="flex-shrink:0;background:#e0e0e0;overflow:hidden;
+      height:26mm;width:100%">${photo}</div>
+    <!-- NAME + ID -->
+    <div style="padding:1.5mm 3mm 1mm;flex-shrink:0;text-align:center;
+      border-bottom:0.3mm solid #eee">
+      <div style="font-size:8.5pt;font-weight:900;color:#111;line-height:1.2;
+        white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${emp.name}</div>
+      <div style="font-size:6pt;color:#888;font-family:monospace">${emp.id}</div>
+    </div>
+    <!-- PROCESS TABLE -->
+    <div style="flex:1;overflow:hidden;padding:1mm 0">
+      ${tableSection}
+    </div>
+    <!-- FOOTER: 5S slogan -->
+    <div style="background:#1a1a1a;padding:1.5mm 2mm;flex-shrink:0;
+      -webkit-print-color-adjust:exact;print-color-adjust:exact;">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-size:4.2pt;color:#fff;font-weight:700;letter-spacing:.2px;line-height:1.6">
+          <div>SORT. SET IN ORDER.</div>
+          <div>SHINE. STANDARDIZE.</div>
+          <div>SUSTAIN. SAFETY.</div>
+        </div>
+        <div style="width:0.2mm;background:#555;height:6mm;margin:0 1.5mm"></div>
+        <div style="font-size:4.2pt;color:#ccc;font-weight:600;line-height:1.6;text-align:right">
+          <div>SÀNG LỌC. SẮP XẾP.</div>
+          <div>SẠCH SẼ. SẴN SÓC.</div>
+          <div>SẴN SÀNG. AN TOÀN.</div>
+        </div>
       </div>
-    </div>
-    <!-- DANH SÁCH QUY TRÌNH -->
-    <div style="flex:1;padding:1.5mm 3mm;overflow:hidden;background:#fff">
-      <div style="font-size:5.5pt;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:1mm;font-weight:700">Quy trình được chứng nhận (${certs.length})</div>
-      ${certRows}
-    </div>
-    <!-- LEGEND + ID thẻ -->
-    <div style="background:#1a1a1a;padding:1.5mm 3mm;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
-      -webkit-print-color-adjust:exact;print-color-adjust:exact;">
-      <span style="font-size:5pt;color:#aaa">
-        <span style="color:#27AE60">●</span> Valid &nbsp;
-        <span style="color:#E67E22">◐</span> Expiring
-      </span>
-      <span style="font-size:5pt;color:#555;font-family:monospace">${emp.id}</span>
     </div>
   </div>`;
 }
@@ -1512,7 +1653,7 @@ function buildCardHtml(c, emp){
   const qrData = encodeURIComponent(c.id+'|'+c.eid);
   return `<div style="width:54mm;height:90mm;border-radius:2.5mm;overflow:hidden;border:0.3mm solid #bbb;font-family:Arial,sans-serif;display:flex;flex-direction:column;background:#fff">
     <div style="background:#C0392B;padding:2.5mm 3mm;flex-shrink:0;-webkit-print-color-adjust:exact;print-color-adjust:exact">
-      <div style="font-size:5pt;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px">TTI Group-AES</div>
+      <div style="font-size:5pt;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px">TTI Group - AES</div>
       <div style="font-size:9pt;font-weight:900;color:#fff;line-height:1.2">OPERATION<br>CERTIFICATE</div>
     </div>
     <div style="background:#fff;padding:2mm 3mm;display:flex;gap:2mm;align-items:flex-start;flex-shrink:0">
@@ -1641,20 +1782,25 @@ function rCardList(){
 }
 function loadCard(id){
   const c=DB.certs.find(c=>c.id===id);if(!c)return;
-  const st=cSt(c.exp),em=DB.emps.find(e=>e.id===c.eid);
+  const emp=DB.emps.find(e=>e.id===c.eid);
   document.getElementById('cnm').textContent=c.enm;
-  document.getElementById('ceid').textContent='ID: '+c.eid;
+  document.getElementById('ceid').textContent=c.eid;
   document.getElementById('cproc').textContent=c.pnm;
-  document.getElementById('clv').textContent=c.lv;
-  document.getElementById('ciss').textContent=fD(c.iss);
-  document.getElementById('cexp').textContent=fD(c.exp);
-  document.getElementById('ccno').textContent=c.id;
+  // Level number only
+  const lvM=c.lv.match(/Level\s*(\d)/i);
+  document.getElementById('clv').textContent=lvM?lvM[1]:c.lv;
+  const st=cSt(c.exp);
+  const expEl=document.getElementById('cexp');
+  expEl.textContent=fD(c.exp);
+  expEl.style.color=st==='Expired'?'#C8102E':st==='Expiring Soon'?'#E67E22':'#111';
+  // Photo
   const ph=document.getElementById('cphoto');
-  ph.innerHTML=em?.photo?`<img src="${em.photo}" style="width:100%;height:100%;object-fit:cover">`:'👤';
-  const sel=document.getElementById('cst');
-  sel.textContent=st==='Valid'?'✔ VALID':st==='Expiring Soon'?'⚠ EXPIRING':'✕ EXPIRED';
-  sel.className='st '+({Valid:'v','Expiring Soon':'e',Expired:'x'}[st]||'');
-  document.getElementById('cqr').innerHTML=`<img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(c.id+'|'+c.eid)}" style="width:50px;height:50px" onerror="this.parentElement.textContent='QR CODE'">`;
+  if(emp?.photo){
+    ph.innerHTML=`<img src="${emp.photo}" style="width:100%;height:100%;object-fit:cover;display:block">`;
+    ph.style.fontSize='0';
+  } else {
+    ph.innerHTML='👤'; ph.style.fontSize='28px';
+  }
 }
 function printCard(){
   // Ẩn cột trái tạm thời khi in
@@ -1796,7 +1942,7 @@ async function pushToCloud(){
   const payload = {
     emps:  DB.emps.map(e=>({...e,photo:''})),
     procs: DB.procs, certs: DB.certs,
-    ctr:   DB.ctr, cfg: DB.cfg, src: DB.src, depts: DB.depts,
+    ctr:   DB.ctr, cfg: DB.cfg, src: DB.src, depts: DB.depts, deptCodes: DEPT_CUSTOM_CODES,
     savedAt: new Date().toISOString(),
     savedBy: currentUser?.username||'?'
   };
@@ -1821,6 +1967,7 @@ async function pullFromCloud(){
     DB.emps=res.emps; DB.procs=res.procs; DB.certs=res.certs;
     DB.ctr=res.ctr||DB.ctr; DB.cfg=res.cfg||DB.cfg; DB.src=res.src||null;
     if(res.depts&&res.depts.length)DB.depts=res.depts;
+    if(res.deptCodes)Object.assign(DEPT_CUSTOM_CODES,res.deptCodes);
     DB._savedAt=res.savedAt; DB._savedBy=res.savedBy;
     // Pull photos
     for(const e of DB.emps){
@@ -1849,7 +1996,7 @@ async function autoSave(){
 // Local backup via localStorage
 function saveLocal(){
   try{
-    const d={emps:DB.emps.map(e=>({...e,photo:''})),procs:DB.procs,certs:DB.certs,ctr:DB.ctr,cfg:DB.cfg,src:DB.src,depts:DB.depts};
+    const d={emps:DB.emps.map(e=>({...e,photo:''})),procs:DB.procs,certs:DB.certs,ctr:DB.ctr,cfg:DB.cfg,src:DB.src,depts:DB.depts,deptCodes:DEPT_CUSTOM_CODES};
     localStorage.setItem('opcertms_local',JSON.stringify(d));
     // photos in IndexedDB
     if(_idb) DB.emps.forEach(e=>{ if(e.photo) idbPut('ph_'+e.id,e.photo).catch(()=>{}); });
@@ -1864,6 +2011,7 @@ function loadLocal(){
     if(d.certs)DB.certs=d.certs; if(d.ctr!==undefined)DB.ctr=d.ctr;
     if(d.cfg)DB.cfg=d.cfg; if(d.src)DB.src=d.src;
     if(d.depts&&d.depts.length)DB.depts=d.depts;
+    if(d.deptCodes)Object.assign(DEPT_CUSTOM_CODES,d.deptCodes);
     return true;
   }catch(e){return false;}
 }
@@ -1918,6 +2066,43 @@ async function deleteEmpPhoto(id){
 
 
 // ─── DEPARTMENT MANAGEMENT ───────────────────────────────────────────────────
+// Custom codes map (key=deptName, value=customCode)
+let DEPT_CUSTOM_CODES = {};
+
+function deptEmpCount(name){ return DB.emps.filter(e=>e.dept===name).length; }
+function deptCertCount(name){
+  const ids=DB.emps.filter(e=>e.dept===name).map(e=>e.id);
+  return DB.certs.filter(c=>ids.includes(c.eid)&&cSt(c.exp)==='Valid').length;
+}
+
+function rDeptsPage(){
+  const depts=DB.depts||[];
+  document.getElementById('dept-total-label').textContent=`${depts.length} bộ phận`;
+  const tbody=document.getElementById('dept-tbody');
+  if(!tbody)return;
+  if(!depts.length){
+    tbody.innerHTML='<tr><td colspan="5" class="es">Chưa có bộ phận nào. Thêm bộ phận ở trên.</td></tr>';
+    return;
+  }
+  tbody.innerHTML=depts.map(d=>{
+    const code=DEPT_CUSTOM_CODES[d]||deptCode(d);
+    const empCnt=deptEmpCount(d);
+    const ccCnt=deptCertCount(d);
+    return`<tr>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+        background:#e8f4fd;color:#1565c0;padding:3px 8px;border-radius:4px">${code}</span></td>
+      <td><strong style="font-size:13px">${d}</strong></td>
+      <td><span class="badge bv">${empCnt} NV</span></td>
+      <td><span class="badge" style="background:#e8f4fd;color:#1565c0">${ccCnt} CC</span></td>
+      <td style="display:flex;gap:6px">
+        <button class="ab" onclick="oEditDept('${d}')">Sửa</button>
+        <button class="ab dx" onclick="removeDept('${d}')">Xóa</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// Also render dept list in settings
 function renderDepts(){
   const el=document.getElementById('dept-list');
   if(!el)return;
@@ -1925,40 +2110,78 @@ function renderDepts(){
   el.innerHTML=depts.length
     ? depts.map(d=>`
         <div style="display:inline-flex;align-items:center;gap:5px;background:#f0f0f0;border-radius:20px;padding:4px 10px 4px 12px;font-size:12.5px;font-weight:500;color:#444">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#888;margin-right:2px">${deptCode(d)}</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#888;margin-right:2px">${DEPT_CUSTOM_CODES[d]||deptCode(d)}</span>
           ${d}
-          <button onclick="removeDept('${d}')" style="background:none;border:none;cursor:pointer;font-size:14px;color:#bbb;padding:0 0 0 4px;line-height:1" title="Xóa bộ phận">×</button>
+          <button onclick="removeDept('${d}')" style="background:none;border:none;cursor:pointer;font-size:14px;color:#bbb;padding:0 0 0 4px;line-height:1">×</button>
         </div>`).join('')
     : '<span style="font-size:12.5px;color:#bbb;font-style:italic">Chưa có bộ phận nào</span>';
 }
 
 function addDept(){
   if(!requireRole('admin'))return;
-  const inp=document.getElementById('new-dept-name');
-  const name=inp.value.trim();
-  if(!name){inp.focus();return;}
+  // Support both page input (dept-name-inp) and settings input (new-dept-name)
+  const inp=document.getElementById('dept-name-inp')||document.getElementById('new-dept-name');
+  const codeInp=document.getElementById('dept-code-inp');
+  const name=(inp?.value||'').trim();
+  const customCode=(codeInp?.value||'').trim().toUpperCase();
+  if(!name){inp?.focus();return;}
   if(!DB.depts)DB.depts=[];
   if(DB.depts.includes(name)){showToast('Bộ phận đã tồn tại','#E67E22');return;}
   DB.depts.push(name);
-  inp.value='';
+  if(customCode) DEPT_CUSTOM_CODES[name]=customCode;
+  if(inp)inp.value='';
+  if(codeInp)codeInp.value='';
   renderDepts();
+  rDeptsPage();
   saveDB();
   showToast(`✓ Đã thêm bộ phận "${name}"`, '#27AE60');
 }
 
 function removeDept(name){
   if(!requireRole('admin'))return;
-  // Check if any employee uses this dept
-  const inUse=DB.emps.some(e=>e.dept===name);
-  if(inUse){
-    if(!confirm(`Bộ phận "${name}" đang có nhân viên. Vẫn muốn xóa?`))return;
+  const empCnt=deptEmpCount(name);
+  if(empCnt>0){
+    if(!confirm(`Bộ phận "${name}" đang có ${empCnt} nhân viên. Vẫn muốn xóa?`))return;
   } else {
     if(!confirm(`Xóa bộ phận "${name}"?`))return;
   }
   DB.depts=DB.depts.filter(d=>d!==name);
+  delete DEPT_CUSTOM_CODES[name];
   renderDepts();
+  rDeptsPage();
   saveDB();
   showToast(`Đã xóa bộ phận "${name}"`, '#E67E22');
+}
+
+let _editDeptOrig='';
+function oEditDept(name){
+  if(!requireRole('admin'))return;
+  _editDeptOrig=name;
+  document.getElementById('fd-name').value=name;
+  document.getElementById('fd-code').value=DEPT_CUSTOM_CODES[name]||'';
+  document.getElementById('m-dept').classList.add('open');
+}
+function saveDeptEdit(){
+  const newName=document.getElementById('fd-name').value.trim();
+  const newCode=document.getElementById('fd-code').value.trim().toUpperCase();
+  if(!newName){alert('Tên bộ phận không được trống!');return;}
+  if(newName!==_editDeptOrig && DB.depts.includes(newName)){
+    showToast('Tên bộ phận đã tồn tại','#E67E22');return;
+  }
+  // Update dept name in depts array
+  const idx=DB.depts.indexOf(_editDeptOrig);
+  if(idx>=0)DB.depts[idx]=newName;
+  // Update custom code
+  delete DEPT_CUSTOM_CODES[_editDeptOrig];
+  if(newCode)DEPT_CUSTOM_CODES[newName]=newCode;
+  // Update all employees with old dept name
+  DB.emps.forEach(e=>{if(e.dept===_editDeptOrig)e.dept=newName;});
+  cM('m-dept');
+  renderDepts();
+  rDeptsPage();
+  rEmp();
+  saveDB();
+  showToast(`✓ Đã cập nhật bộ phận "${newName}"`, '#27AE60');
 }
 
 // ─── CHANGE EMPLOYEE PHOTO ────────────────────────────────────────────────────
@@ -2064,6 +2287,8 @@ rSet=function(){
   renderDepts();
   renderSyncSettings();
 };
+// Expose rDeptsPage globally so nav works before it's defined
+
 
 // ─── Sync settings UI ────────────────────────────────────────────────────────
 function renderSyncSettings(){
