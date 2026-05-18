@@ -481,20 +481,20 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
         <div id="print-area">
           <div id="ccp" style="position:relative;width:204px;height:340px;overflow:hidden;font-family:Arial,sans-serif;box-shadow:0 4px 20px rgba(0,0,0,.25);flex-shrink:0">
             <img id="card-bg-img" style="position:absolute;inset:0;width:100%;height:100%">
-            <div id="cphoto" style="position:absolute;top:24.5%;left:12.5%;width:75%;height:37%;overflow:hidden;background:#fff;background:#d8d8d8;display:flex;align-items:center;justify-content:center">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <div id="cphoto" style="position:absolute;top:21%;left:12.5%;width:75%;height:34%;overflow:hidden;background:#e0e0e0;display:flex;align-items:center;justify-content:center">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </div>
-            <div style="position:absolute;top:62.5%;left:0;width:100%;text-align:center;padding:0 6px;box-sizing:border-box">
+            <div style="position:absolute;top:57.5%;left:0;width:100%;text-align:center;padding:0 6px;box-sizing:border-box">
               <div style="font-size:9pt;font-weight:900;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3" id="cnm">— Chọn —</div>
               <div style="font-size:6pt;color:#666;font-family:monospace;line-height:1.2" id="ceid"></div>
             </div>
-            <div style="position:absolute;top:69%;left:24.7%;width:75.3%;height:7.5%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-left:0.5px solid #bbb">
+            <div style="position:absolute;top:76.75%;left:24.7%;width:75.3%;height:4.15%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-top:0.8px solid #bbb;border-left:0.8px solid #bbb">
               <div style="font-size:6pt;font-weight:700;color:#111;text-align:center;padding:0 2px;line-height:1.2" id="cproc">—</div>
             </div>
-            <div style="position:absolute;top:76.5%;left:24.7%;width:75.3%;height:8%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-left:0.5px solid #bbb">
-              <div style="font-size:16pt;font-weight:900;color:#111;line-height:1" id="clv">—</div>
+            <div style="position:absolute;top:80.9%;left:24.7%;width:75.3%;height:4.15%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-top:0.8px solid #bbb;border-left:0.8px solid #bbb">
+              <div style="font-size:14pt;font-weight:900;color:#111;line-height:1" id="clv">—</div>
             </div>
-            <div style="position:absolute;top:84.5%;left:24.7%;width:75.3%;height:6%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-left:0.5px solid #bbb">
+            <div style="position:absolute;top:85.05%;left:24.7%;width:75.3%;height:4.15%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-top:0.8px solid #bbb;border-left:0.8px solid #bbb">
               <div style="font-size:7pt;font-weight:700;color:#111" id="cexp">—</div>
             </div>
           </div>
@@ -1502,70 +1502,75 @@ function buildEmpCard(emp){
   ).sort((a,b)=>a.pnm.localeCompare(b.pnm));
 
   const photo = emp.photo
-    ? '<img src="'+emp.photo+'" style="width:100%;height:100%;object-fit:contain;object-position:center center;display:block;background:#fff">'
-    : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#d8d8d8"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>';
+    ? '<img src="'+emp.photo+'" style="width:100%;height:100%;object-fit:contain;background:#fff;display:block">'
+    : '<div style="width:100%;height:100%;background:#e0e0e0;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>';
 
   const sc = certs.slice(0,4);
   const nC = sc.length||1;
   const lvN = lv => { const m=lv.match(/Level\s*(\d)/i); return m?'Lv'+m[1]:''; };
   const cW = (100/nC).toFixed(2)+'%';
-  const tdS = 'width:'+cW+';text-align:center;vertical-align:middle;border-left:0.5px solid #bbb;padding:0 1px;overflow:hidden;';
+
+  // Each column td — NO border-top (rows separated by container borders)
+  const mkTd = (inner) => '<td style="width:'+cW+';text-align:center;vertical-align:middle;border-left:0.5px solid #bbb;overflow:hidden;padding:0 1px">'+inner+'</td>';
 
   const pRow = sc.length
-    ? sc.map(c=>'<td style="'+tdS+'"><div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.25;word-break:break-word">'+c.pnm+'</div></td>').join('')
-    : '<td style="'+tdS+'color:#ccc;font-size:4pt;text-align:center">—</td>';
+    ? sc.map(c=>mkTd('<div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.3;word-break:break-word">'+c.pnm+'</div>')).join('')
+    : mkTd('<span style="color:#ccc;font-size:4pt">—</span>');
 
   const lRow = sc.length
-    ? sc.map(c=>'<td style="'+tdS+'"><div style="font-size:11pt;font-weight:900;color:#111;line-height:1">'+lvN(c.lv)+'</div></td>').join('')
-    : '<td style="'+tdS+'"></td>';
+    ? sc.map(c=>mkTd('<div style="font-size:10pt;font-weight:900;color:#111;line-height:1">'+lvN(c.lv)+'</div>')).join('')
+    : mkTd('');
 
   const eRow = sc.length
     ? sc.map(c=>{
         const st=cSt(c.exp);
         const col=st==='Expired'?'#C8102E':st==='Expiring Soon'?'#E67E22':'#111';
-        return '<td style="'+tdS+'"><div style="font-size:5pt;font-weight:700;color:'+col+'">'+fD(c.exp)+'</div></td>';
+        return mkTd('<div style="font-size:5pt;font-weight:700;color:'+col+'">'+fD(c.exp)+'</div>');
       }).join('')
-    : '<td style="'+tdS+'"></td>';
+    : mkTd('');
 
-  // Photo: 3:4 ratio, centered with white padding
-  // Card = 54mm wide. Photo width = 42mm (77.8%), centered → left = 11.1%
-  // Photo height = 42mm * 4/3 = 56mm... too tall for 90mm card
-  // Use 3:4 but constrained: max height = 39% of card
-  // photo_h = 39% of 90mm = 35.1mm → width = 35.1 * 3/4 = 26.3mm = 48.7% of 54mm
-  // Center: left = (100-48.7)/2 = 25.6%
-  // Actually match sample: photo ~75% wide, centered
-  // photo_w = 75% of 54mm = 40.5mm, photo_h = 40.5*4/3 = 54mm... still too tall
-  // In the sample the photo doesn't fill 3:4 strictly — it's more like 1:1.1
-  // Let's use: photo width=76%, height=38% of card, centered
-  // left = (100-76)/2 = 12%
-  // top = 19.5% (just inside white zone top)
+  // Pixel-measured positions (card=493x787, render=54mm×90mm):
+  // Photo zone:   18.2% to 68.1% (white area in template)
+  // Photo image:  top=21%, left=12.5%, width=75%, height=34% (with padding)
+  // Name+ID:      top=57%, centered
+  // Table outer:  68.1% to 89.2% (template border lines)
+  // Name box:     68.4% to 76.75% (first zone inside table)
+  // Process row:  76.75% to 80.9%
+  // Level row:    80.9% to 85.05%
+  // Expiry row:   85.05% to 89.2%
+  // Each row div has border-top to match template row lines
+
+  const rowStyle = (top,h) =>
+    'position:absolute;top:'+top+'%;left:24.7%;width:75.3%;height:'+h+'%;overflow:hidden;border-top:0.8px solid #bbb;box-sizing:border-box';
 
   return (
     '<div style="position:relative;width:54mm;height:90mm;overflow:hidden;page-break-inside:avoid;break-inside:avoid;font-family:Arial,sans-serif">' +
+
+    // Template background
     '<img src="'+CARD_TEMPLATE_B64+'" style="position:absolute;inset:0;width:100%;height:100%">' +
 
-    // Photo — 3:4 portrait, centered with white padding
-    '<div style="position:absolute;top:24.5%;left:12.5%;width:75%;height:37%;overflow:hidden;background:#fff">' + photo + '</div>' +
+    // Photo — centered with padding in white zone
+    '<div style="position:absolute;top:21%;left:12.5%;width:75%;height:34%;overflow:hidden;background:#fff">' + photo + '</div>' +
 
-    // Name + ID — below photo, full width centered  
-    '<div style="position:absolute;top:62.5%;left:0;width:100%;text-align:center;padding:0 2mm;box-sizing:border-box">' +
+    // Name + ID — below photo, above table
+    '<div style="position:absolute;top:57.5%;left:0;width:100%;text-align:center;padding:0 2mm;box-sizing:border-box">' +
       '<div style="font-size:6.5pt;font-weight:900;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3">' + emp.name + '</div>' +
-      '<div style="font-size:5pt;color:#666;font-family:monospace;line-height:1.2">' + emp.id + '</div>' +
+      '<div style="font-size:4.8pt;color:#666;font-family:monospace;line-height:1.3">' + emp.id + '</div>' +
     '</div>' +
 
-    // Process row — y=69%, data cols only (left=24.7%)
-    '<div style="position:absolute;top:69%;left:24.7%;width:75.3%;height:7.5%;overflow:hidden">' +
-      '<table style="width:100%;height:100%;border-collapse:collapse;table-layout:fixed"><tr>' + pRow + '</tr></table>' +
+    // Process row: 76.75% to 80.9% (4.15%)
+    '<div style="'+rowStyle(76.75, 4.15)+'">' +
+      '<table style="width:100%;height:100%;border-collapse:collapse;table-layout:fixed"><tr>'+pRow+'</tr></table>' +
     '</div>' +
 
-    // Level row — y=76.5%
-    '<div style="position:absolute;top:76.5%;left:24.7%;width:75.3%;height:8%;overflow:hidden">' +
-      '<table style="width:100%;height:100%;border-collapse:collapse;table-layout:fixed"><tr>' + lRow + '</tr></table>' +
+    // Level row: 80.9% to 85.05% (4.15%)
+    '<div style="'+rowStyle(80.9, 4.15)+'">' +
+      '<table style="width:100%;height:100%;border-collapse:collapse;table-layout:fixed"><tr>'+lRow+'</tr></table>' +
     '</div>' +
 
-    // Expiry row — y=84.5%
-    '<div style="position:absolute;top:84.5%;left:24.7%;width:75.3%;height:6%;overflow:hidden">' +
-      '<table style="width:100%;height:100%;border-collapse:collapse;table-layout:fixed"><tr>' + eRow + '</tr></table>' +
+    // Expiry row: 85.05% to 89.2% (4.15%)
+    '<div style="'+rowStyle(85.05, 4.15)+'">' +
+      '<table style="width:100%;height:100%;border-collapse:collapse;table-layout:fixed"><tr>'+eRow+'</tr></table>' +
     '</div>' +
     '</div>'
   );
