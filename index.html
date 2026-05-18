@@ -1515,32 +1515,33 @@ function buildEmpCard(emp){
     '<td style="width:'+cW+';text-align:center;vertical-align:middle;'+
     'overflow:hidden;padding:0 1px;word-break:break-word">'+inner+'</td>';
 
-  const pRow = sc.length
-    ? sc.map(c=>mkTd('<div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.3;word-break:break-word;white-space:normal;overflow:hidden;text-align:'+(sc.length===1?'left':'center')+';padding:'+(sc.length===1?'0 2px':'0 1px')+'">'+c.pnm+'</div>')).join('')
-    : mkTd('<span style="color:#ccc;font-size:4pt">—</span>');
+  // Khi 1 cert: td data (50%) + td trống (50%) để text wrap đúng cột trái
+  const mkRow1 = (inner) => sc.length===1
+    ? '<td style="width:50%;vertical-align:middle;overflow:hidden;padding:0 2px;word-break:break-word">'+inner+'</td>'+
+      '<td style="width:50%"></td>'
+    : sc.map(c=>mkTd(inner.replace('__PNM__',c.pnm).replace('__LVN__',lvN(c.lv)).replace('__EXP__',fD(c.exp)).replace('__COL__',cSt(c.exp)==='Expired'?'#C8102E':cSt(c.exp)==='Expiring Soon'?'#E67E22':'#111'))).join('');
+
+  const pRow = sc.length===1
+    ? mkRow1('<div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.3;word-break:break-word;white-space:normal">'+sc[0].pnm+'</div>')
+    : sc.map(c=>mkTd('<div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.3;word-break:break-word;white-space:normal;text-align:center;padding:0 1px">'+c.pnm+'</div>')).join('');
 
   const lvAlign = sc.length===1 ? 'left' : 'center';
   const lvPad   = sc.length===1 ? '0 2px' : '0 1px';
 
-  const lRow = sc.length
-    ? sc.map(c=>mkTd('<div style="font-size:10pt;font-weight:900;color:#111;line-height:1;text-align:'+lvAlign+';padding:'+lvPad+'">'+lvN(c.lv)+'</div>')).join('')
-    : mkTd('');
+  const lRow = sc.length===1
+    ? '<td style="width:50%;vertical-align:middle;overflow:hidden;padding:0 2px"><div style="font-size:10pt;font-weight:900;color:#111;line-height:1">'+lvN(sc[0].lv)+'</div></td><td style="width:50%"></td>'
+    : sc.map(c=>mkTd('<div style="font-size:10pt;font-weight:900;color:#111;line-height:1;text-align:center;padding:0 1px">'+lvN(c.lv)+'</div>')).join('');
 
-  const eRow = sc.length
-    ? sc.map(c=>{
-        const st=cSt(c.exp);
-        const col=st==='Expired'?'#C8102E':st==='Expiring Soon'?'#E67E22':'#111';
-        return mkTd('<div style="font-size:5pt;font-weight:700;color:'+col+';text-align:'+lvAlign+';padding:'+lvPad+'">'+fD(c.exp)+'</div>');
-      }).join('')
-    : mkTd('');
+  const eRow = sc.length===1
+    ? (()=>{const st=cSt(sc[0].exp);const col=st==='Expired'?'#C8102E':st==='Expiring Soon'?'#E67E22':'#111';return '<td style="width:50%;vertical-align:middle;overflow:hidden;padding:0 2px"><div style="font-size:5pt;font-weight:700;color:'+col+'">'+fD(sc[0].exp)+'</div></td><td style="width:50%"></td>';})()
+    : sc.map(c=>{const st=cSt(c.exp);const col=st==='Expired'?'#C8102E':st==='Expiring Soon'?'#E67E22':'#111';return mkTd('<div style="font-size:5pt;font-weight:700;color:'+col+';text-align:center;padding:0 1px">'+fD(c.exp)+'</div>');}).join('');
 
   // z-index:2 on all overlay divs to render above template image
   const Z = 'position:absolute;z-index:2;';
 
-  // Row div — khi 1 cert dùng nửa trái (cột 1 của template)
-  const rW = sc.length<=1 ? 50 : 75.3;
+  // Row div — luôn dùng full width 75.3%
   const rDiv = (top, h, table) =>
-    '<div style="'+Z+'top:'+top+'%;left:24.7%;width:'+rW+'%;height:'+h+'%;'+
+    '<div style="'+Z+'top:'+top+'%;left:24.7%;width:75.3%;height:'+h+'%;'+
     'overflow:hidden;box-sizing:border-box">'+
     '<table style="width:100%;height:100%;border-collapse:collapse;table-layout:fixed">'+
     '<tr>'+table+'</tr></table></div>';
