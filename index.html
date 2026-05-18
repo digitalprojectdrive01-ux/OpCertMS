@@ -488,13 +488,13 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
               <div style="font-size:9pt;font-weight:900;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3" id="cnm">— Chọn —</div>
               <div style="font-size:6pt;color:#666;font-family:monospace;line-height:1.2" id="ceid"></div>
             </div>
-            <div style="position:absolute;z-index:2;top:76.75%;left:24.7%;width:75.3%;height:6.99%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-top:0.5px solid #aaa;border-left:0.5px solid #aaa;background:#fff;box-sizing:border-box">
+            <div style="position:absolute;z-index:2;top:71.41%;left:24.7%;width:75.3%;height:5.34%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-top:0.5px solid #aaa;border-left:0.5px solid #aaa;background:#fff;box-sizing:border-box">
               <div style="font-size:6.5pt;font-weight:700;color:#111;text-align:center;padding:0 2px;line-height:1.2" id="cproc">—</div>
             </div>
-            <div style="position:absolute;z-index:2;top:83.74%;left:24.7%;width:75.3%;height:2.73%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-top:0.5px solid #aaa;border-left:0.5px solid #aaa;background:#fff;box-sizing:border-box">
-              <div style="font-size:13pt;font-weight:900;color:#111;line-height:1" id="clv">—</div>
+            <div style="position:absolute;z-index:2;top:76.75%;left:24.7%;width:75.3%;height:6.99%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-top:0.5px solid #aaa;border-left:0.5px solid #aaa;background:#fff;box-sizing:border-box">
+              <div style="font-size:14pt;font-weight:900;color:#111;line-height:1" id="clv">—</div>
             </div>
-            <div style="position:absolute;z-index:2;top:86.47%;left:24.7%;width:75.3%;height:2.73%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-top:0.5px solid #aaa;border-left:0.5px solid #aaa;background:#fff;box-sizing:border-box">
+            <div style="position:absolute;z-index:2;top:83.74%;left:24.7%;width:75.3%;height:5.46%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-top:0.5px solid #aaa;border-left:0.5px solid #aaa;background:#fff;box-sizing:border-box">
               <div style="font-size:7pt;font-weight:700;color:#111" id="cexp">—</div>
             </div>
           </div>
@@ -1513,10 +1513,10 @@ function buildEmpCard(emp){
   // z-index:2 ensures data overlays appear ABOVE template white cells
   const mkTd = (inner) =>
     '<td style="width:'+cW+';text-align:center;vertical-align:middle;'+
-    'border-left:0.5px solid #aaa;overflow:hidden;padding:0 1px;background:#fff">'+inner+'</td>';
+    'border-left:0.5px solid #aaa;overflow:hidden;padding:0 1px;background:#fff;word-break:break-word">'+inner+'</td>';
 
   const pRow = sc.length
-    ? sc.map(c=>mkTd('<div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.3;word-break:break-word">'+c.pnm+'</div>')).join('')
+    ? sc.map(c=>mkTd('<div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.25;overflow:hidden;max-height:100%;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical">'+(c.pnm.length>20?c.pnm.substring(0,19)+'…':c.pnm)+'</div>')).join('')
     : mkTd('<span style="color:#ccc;font-size:4pt">—</span>');
 
   const lRow = sc.length
@@ -1558,11 +1558,9 @@ function buildEmpCard(emp){
     '</div>' +
 
     // Process row: 76.75% to 83.74% (6.99%)
-    rDiv(76.75, 6.99, pRow) +
-    // Level row: 83.74% to 86.47% (2.73%)
-    rDiv(83.74, 2.73, lRow) +
-    // Expiry row: 86.47% to 89.20% (2.73%)
-    rDiv(86.47, 2.73, eRow) +
+    rDiv(71.41, 5.34, pRow) +
+    rDiv(76.75, 6.99, lRow) +
+    rDiv(83.74, 5.46, eRow) +
     '</div>'
   );
 }
