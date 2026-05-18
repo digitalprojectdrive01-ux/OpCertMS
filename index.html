@@ -1516,10 +1516,7 @@ function buildEmpCard(emp){
     'overflow:hidden;padding:0 1px;word-break:break-word">'+inner+'</td>';
 
   const pRow = sc.length
-    ? sc.map(c=>{
-        const fs = sc.length===1 ? (c.pnm.length>15 ? '3.8pt' : '4.5pt') : '4.5pt';
-        return mkTd('<div style="font-size:'+fs+';font-weight:700;color:#111;line-height:1.3;word-break:break-word;white-space:normal;overflow:hidden;text-align:'+(sc.length===1?'left':'center')+';padding:'+(sc.length===1?'0 2px':'0 1px')+'">'+c.pnm+'</div>');
-      }).join('')
+    ? sc.map(c=>mkTd('<div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.3;word-break:break-word;white-space:normal;overflow:hidden;text-align:'+(sc.length===1?'left':'center')+';padding:'+(sc.length===1?'0 2px':'0 1px')+'">'+c.pnm+'</div>')).join('')
     : mkTd('<span style="color:#ccc;font-size:4pt">—</span>');
 
   const lvAlign = sc.length===1 ? 'left' : 'center';
@@ -1564,10 +1561,10 @@ function buildEmpCard(emp){
       '<div style="font-size:4.8pt;color:#666;font-family:monospace;line-height:1.3">' + emp.id + '</div>' +
     '</div>' +
 
-    // Process row: 76.75% to 83.74% (6.99%)
-    rDiv(71.41, 5.34, pRow) +
-    rDiv(76.75, 6.99, lRow) +
-    rDiv(83.74, 5.46, eRow) +
+    // Process row — tăng height để wrap text
+    rDiv(68.71, 8, pRow) +
+    rDiv(76.71, 6.99, lRow) +
+    rDiv(83.70, 5.46, eRow) +
     '</div>'
   );
 }
