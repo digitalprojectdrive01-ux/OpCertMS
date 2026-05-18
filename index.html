@@ -256,7 +256,7 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
   .ch{background:#C0392B!important}
   .cf2{background:#1a1a1a!important}
   .cm2{background:#f7f7f7!important}
-  @page{size:A5 landscape;margin:0}
+  @page{size:54mm 90mm;margin:0}
 }
 </style>
 </head>
@@ -287,7 +287,7 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
       <button class="login-btn" onclick="doLogin()">ĐĂNG NHẬP</button>
     </div>
     <div class="login-footer">
-      <small>TTI Group - AES</small>
+      <small>TTI Group | AES</small>
       <div style="display:flex;gap:6px;flex-wrap:wrap">
         <span class="role-badge admin">👑 Admin</span>
         <span class="role-badge trainer">✏ Trainer</span>
@@ -297,7 +297,7 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
   </div>
 </div>
 <nav id="sidebar">
-  <div class="sb-logo"><h1>OpCertMS</h1><span>v2.0 — Excel + SharePoint</span></div>
+  <div class="sb-logo"><h1>OpCertMS</h1><span>TTI Group | AES — OpCertMS</span></div>
   <div class="sb-nav">
     <a class="nav-lnk active" data-p="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard</a>
     <div class="sb-sec">Quản lý</div>
@@ -480,10 +480,12 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
         </div>
         <div id="print-area">
           <div id="ccp" style="width:204px;border-radius:4px;overflow:hidden;border:0.5px solid #ccc;font-family:Arial,sans-serif;display:flex;flex-direction:column;background:#fff;box-shadow:0 4px 20px rgba(0,0,0,.15)">
-            <div style="background:#C8102E;padding:6px 10px 5px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
-              <div style="font-size:11pt;font-weight:900;color:#fff;font-style:italic;text-transform:uppercase;letter-spacing:.5px;line-height:1">Milwaukee</div>
-              <div style="font-size:7pt;font-weight:900;color:#fff;letter-spacing:1px;text-transform:uppercase;margin-top:2px;line-height:1">CERTIFICATE CARD</div>
-              <div style="font-size:5.5pt;color:rgba(255,255,255,.85);margin-top:1px">CHỨNG NHẬN THAO TÁC</div>
+            <div style="background:#C8102E;padding:5px 8px 4px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+              <svg viewBox="0 0 140 20" xmlns="http://www.w3.org/2000/svg" style="width:80px;height:14px;display:block;margin:0 auto 2px;overflow:visible">
+                <text x="70" y="16" text-anchor="middle" font-family="Arial Black,Arial" font-size="16" font-weight="900" font-style="italic" fill="white" letter-spacing="1">Milwaukee</text>
+              </svg>
+              <div style="font-size:7pt;font-weight:900;color:#fff;letter-spacing:1.2px;text-transform:uppercase;line-height:1.2">CERTIFICATE CARD</div>
+              <div style="font-size:5.5pt;color:rgba(255,255,255,.9)">CHỨNG NHẬN THAO TÁC</div>
             </div>
             <div id="cphoto" style="height:72px;background:#d0d0d0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:28px">👤</div>
             <div style="padding:4px 8px 3px;text-align:center;border-bottom:0.5px solid #eee;flex-shrink:0">
@@ -512,12 +514,17 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
                 </tr>
               </table>
             </div>
-            <div style="background:#1a1a1a;padding:4px 6px;flex-shrink:0;-webkit-print-color-adjust:exact;print-color-adjust:exact">
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <div style="font-size:4pt;color:#fff;font-weight:700;line-height:1.7">
+            <div style="background:#1a1a1a;padding:3px 6px;flex-shrink:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;display:flex;align-items:center;gap:5px">
+              <div style="width:20px;height:20px;border-radius:50%;background:#C8102E;border:1px solid #fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;-webkit-print-color-adjust:exact">
+                <div style="width:9px;height:9px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center">
+                  <div style="width:4px;height:4px;border-radius:50%;background:#C8102E"></div>
+                </div>
+              </div>
+              <div style="flex:1;display:flex;justify-content:space-between">
+                <div style="font-size:3.5pt;color:#fff;font-weight:800;line-height:1.7">
                   <div>SORT. SET IN ORDER.</div><div>SHINE. STANDARDIZE.</div><div>SUSTAIN. SAFETY.</div>
                 </div>
-                <div style="font-size:4pt;color:#ccc;line-height:1.7;text-align:right">
+                <div style="font-size:3.5pt;color:#ddd;line-height:1.7;text-align:right">
                   <div>SÀNG LỌC. SẮP XẾP.</div><div>SẠCH SẼ. SẴN SÓC.</div><div>SẴN SÀNG. AN TOÀN.</div>
                 </div>
               </div>
@@ -740,7 +747,7 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
       <div class="box-hdr"><h3 style="font-size:14px;font-weight:600">Cài đặt hệ thống</h3></div>
       <div class="box-body">
         <div class="fg" style="gap:12px">
-          <div class="fl"><label>Tên công ty</label><input type="text" id="sc" value="TTI Group - AES"></div>
+          <div class="fl"><label>Tên công ty</label><input type="text" id="sc" value="TTI Group | AES"></div>
           <div class="fl"><label>Cảnh báo hết hạn (ngày)</label><input type="text" id="sw" value="30"></div>
           <div class="fl s2"><label>Tiêu đề hệ thống</label><input type="text" id="st" value="Operation Certificate Management System"></div>
         </div>
@@ -856,7 +863,7 @@ const DB={
   depts:['Production','Quality Control','Maintenance','Engineering','Warehouse','HSE','Training','Administration'],
   ctr:0,
   sp:{url:"",nm:"id_dept_name",ext:"jpg",cp:""},
-  cfg:{company:"TTI Group - AES",warn:30},
+  cfg:{company:"TTI Group | AES",warn:30},
   src:null
 };
 
@@ -1516,7 +1523,7 @@ function updateBulkCount(){
   if(el) el.textContent = `${bulkSelected.size} nhân viên được chọn`;
 }
 
-// ─── CARD: Milwaukee style — 54×90mm portrait ────────────────────────────────
+// ─── CARD: Milwaukee style — pixel-perfect theo PDF template ────────────────
 function buildEmpCard(emp){
   const certs = DB.certs.filter(c =>
     c.eid === emp.id && (cSt(c.exp)==='Valid' || cSt(c.exp)==='Expiring Soon')
@@ -1524,114 +1531,106 @@ function buildEmpCard(emp){
 
   const photo = emp.photo
     ? `<img src="${emp.photo}" style="width:100%;height:100%;object-fit:cover;display:block">`
-    : `<div style="width:100%;height:100%;background:#d0d0d0;display:flex;align-items:center;justify-content:center">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5">
+    : `<div style="width:100%;height:100%;background:#c8c8c8;display:flex;align-items:center;justify-content:center">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.2">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
         </svg>
       </div>`;
 
-  // Table rows for processes — max 4 cols fit nicely
   const MAX_PROC = 4;
   const showCerts = certs.slice(0, MAX_PROC);
-  const colW = showCerts.length > 0 ? Math.floor(100/showCerts.length) : 100;
+  const hasData = showCerts.length > 0;
 
-  // Header cols
-  const procCols = showCerts.map(c=>`
-    <td style="border:0.3mm solid #ccc;padding:1.2mm 1mm;text-align:center;
-      font-size:5.5pt;font-weight:600;color:#111;line-height:1.3;
-      width:${colW}%">${c.pnm.length>18?c.pnm.substring(0,16)+'…':c.pnm}</td>`).join('');
+  const lvNum = lv => { const m=lv.match(/Level\s*(\d)/i); return m?m[1]:lv.substring(0,1); };
 
-  // Level row
-  const lvNum = lv => {
-    const m=lv.match(/Level\s*(\d)/i); return m?m[1]:lv.replace('Level ','').substring(0,1);
-  };
-  const levelCols = showCerts.map(c=>`
-    <td style="border:0.3mm solid #ccc;padding:1.5mm 1mm;text-align:center;
-      font-size:10pt;font-weight:900;color:#111">${lvNum(c.lv)}</td>`).join('');
+  // Process name cells — wrap long names
+  const procCells = hasData ? showCerts.map(c=>`
+    <td style="border:0.3mm solid #bbb;padding:1mm 0.8mm;text-align:center;
+      font-size:5pt;font-weight:600;color:#111;line-height:1.25;vertical-align:middle">
+      ${c.pnm.length>20?c.pnm.replace(/\s+/g,'\n').substring(0,22):c.pnm}
+    </td>`).join('') : '<td style="border:0.3mm solid #bbb;padding:1mm;color:#bbb;font-size:5pt;text-align:center">—</td>';
 
-  // Expiry row
-  const expiryCols = showCerts.map(c=>{
+  const levelCells = hasData ? showCerts.map(c=>`
+    <td style="border:0.3mm solid #bbb;padding:1.5mm 1mm;text-align:center;
+      font-size:12pt;font-weight:900;color:#111;vertical-align:middle">
+      ${lvNum(c.lv)}
+    </td>`).join('') : '<td style="border:0.3mm solid #bbb;padding:1mm;color:#bbb;font-size:5pt;text-align:center">—</td>';
+
+  const expiryCells = hasData ? showCerts.map(c=>{
     const st=cSt(c.exp);
-    const color=st==='Expired'?'#C0392B':st==='Expiring Soon'?'#E67E22':'#111';
-    return`<td style="border:0.3mm solid #ccc;padding:1.2mm 1mm;text-align:center;
-      font-size:5.5pt;font-weight:600;color:${color}">${fD(c.exp)}</td>`;
-  }).join('');
+    const col=st==='Expired'?'#C8102E':st==='Expiring Soon'?'#E67E22':'#111';
+    return`<td style="border:0.3mm solid #bbb;padding:1mm 0.8mm;text-align:center;
+      font-size:5.5pt;font-weight:700;color:${col};vertical-align:middle">
+      ${fD(c.exp)}
+    </td>`;
+  }).join('') : '<td style="border:0.3mm solid #bbb;padding:1mm;color:#bbb;font-size:5pt;text-align:center">—</td>';
 
-  const tableSection = showCerts.length === 0
-    ? `<div style="padding:2mm 3mm;font-size:6pt;color:#aaa;text-align:center;font-style:italic">Không có chứng chỉ hiệu lực</div>`
-    : `<table style="width:100%;border-collapse:collapse;font-size:5.5pt">
-        <tr>
-          <td style="border:0.3mm solid #ccc;padding:1.5mm 1.5mm;background:#f0f0f0;
-            font-size:5pt;font-weight:700;color:#333;line-height:1.5;white-space:nowrap">
-            <div style="font-weight:900">Process</div>
-            <div style="color:#777">Quy Trình</div>
-          </td>
-          ${procCols}
-        </tr>
-        <tr>
-          <td style="border:0.3mm solid #ccc;padding:1.5mm 1.5mm;background:#f0f0f0;
-            font-size:5pt;font-weight:700;color:#333;white-space:nowrap">
-            <div style="font-weight:900">Level</div>
-            <div style="color:#777">Cấp Bậc</div>
-          </td>
-          ${levelCols}
-        </tr>
-        <tr>
-          <td style="border:0.3mm solid #ccc;padding:1.5mm 1.5mm;background:#f0f0f0;
-            font-size:5pt;font-weight:700;color:#333;white-space:nowrap">
-            <div style="font-weight:900">Expiry Date</div>
-            <div style="color:#777">Ngày Hết Hạn</div>
-          </td>
-          ${expiryCols}
-        </tr>
-      </table>`;
+  const labelCell = (en,vn) => `<td style="border:0.3mm solid #bbb;padding:1.2mm 1.5mm;
+    background:#f2f2f2;vertical-align:top;white-space:nowrap">
+    <div style="font-size:5.5pt;font-weight:900;color:#111;line-height:1.3">${en}</div>
+    <div style="font-size:4.5pt;color:#666;line-height:1.2">${vn}</div>
+  </td>`;
 
   return `<div style="
-      width:54mm; height:90mm;
-      border-radius:1.5mm; overflow:hidden;
-      border:0.3mm solid #ccc;
+      width:54mm;height:90mm;
+      overflow:hidden;border:0.3mm solid #aaa;
       font-family:Arial,sans-serif;
-      page-break-inside:avoid; break-inside:avoid;
-      display:flex; flex-direction:column;
-      background:#fff;
+      page-break-inside:avoid;break-inside:avoid;
+      display:flex;flex-direction:column;background:#fff;
     ">
-    <!-- HEADER: Milwaukee red + logo text -->
-    <div style="background:#C8102E;padding:2mm 3mm 1.5mm;flex-shrink:0;
-      -webkit-print-color-adjust:exact;print-color-adjust:exact;
-      text-align:center;">
-      <!-- Milwaukee logo text style -->
-      <div style="font-size:9pt;font-weight:900;color:#fff;letter-spacing:0.5px;
-        font-style:italic;text-transform:uppercase;line-height:1">Milwaukee</div>
-      <div style="font-size:7.5pt;font-weight:900;color:#fff;letter-spacing:1px;
-        text-transform:uppercase;margin-top:0.8mm;line-height:1">CERTIFICATE CARD</div>
-      <div style="font-size:5.5pt;color:rgba(255,255,255,.85);letter-spacing:.5px;
-        margin-top:0.5mm">CHỨNG NHẬN THAO TÁC</div>
+    <!-- HEADER RED -->
+    <div style="background:#C8102E;padding:2mm 2mm 1.5mm;text-align:center;flex-shrink:0;
+      -webkit-print-color-adjust:exact;print-color-adjust:exact">
+      <!-- Milwaukee script logo SVG -->
+      <svg viewBox="0 0 140 20" xmlns="http://www.w3.org/2000/svg"
+        style="width:28mm;height:4mm;display:block;margin:0 auto 0.8mm;overflow:visible">
+        <text x="70" y="16" text-anchor="middle"
+          font-family="'Arial Black','Arial Bold',Arial" font-size="16"
+          font-weight="900" font-style="italic" fill="white" letter-spacing="1">Milwaukee</text>
+      </svg>
+      <div style="font-size:6.5pt;font-weight:900;color:#fff;letter-spacing:1.5px;
+        text-transform:uppercase;line-height:1.2">CERTIFICATE CARD</div>
+      <div style="font-size:5pt;color:rgba(255,255,255,.9);letter-spacing:.3px;margin-top:0.5mm">
+        CHỨNG NHẬN THAO TÁC</div>
     </div>
-    <!-- PHOTO: large square -->
-    <div style="flex-shrink:0;background:#e0e0e0;overflow:hidden;
-      height:26mm;width:100%">${photo}</div>
+    <!-- PHOTO: full width, large -->
+    <div style="flex-shrink:0;height:27mm;overflow:hidden;background:#c8c8c8">${photo}</div>
     <!-- NAME + ID -->
-    <div style="padding:1.5mm 3mm 1mm;flex-shrink:0;text-align:center;
-      border-bottom:0.3mm solid #eee">
-      <div style="font-size:8.5pt;font-weight:900;color:#111;line-height:1.2;
+    <div style="padding:1.5mm 2mm 1mm;text-align:center;flex-shrink:0;border-bottom:0.3mm solid #ddd">
+      <div style="font-size:8pt;font-weight:900;color:#111;line-height:1.2;
         white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${emp.name}</div>
-      <div style="font-size:6pt;color:#888;font-family:monospace">${emp.id}</div>
+      <div style="font-size:5.5pt;color:#888;font-family:monospace;margin-top:0.3mm">${emp.id}</div>
     </div>
     <!-- PROCESS TABLE -->
-    <div style="flex:1;overflow:hidden;padding:1mm 0">
-      ${tableSection}
+    <div style="flex:1;overflow:hidden">
+      <table style="width:100%;border-collapse:collapse;table-layout:fixed">
+        <tr>${labelCell('Process','Quy Trình')}${procCells}</tr>
+        <tr>${labelCell('Level','Cấp Bậc')}${levelCells}</tr>
+        <tr>${labelCell('Expiry Date','Ngày Hết Hạn')}${expiryCells}</tr>
+      </table>
     </div>
-    <!-- FOOTER: 5S slogan -->
+    <!-- FOOTER: black 5S bar with circle icon -->
     <div style="background:#1a1a1a;padding:1.5mm 2mm;flex-shrink:0;
-      -webkit-print-color-adjust:exact;print-color-adjust:exact;">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div style="font-size:4.2pt;color:#fff;font-weight:700;letter-spacing:.2px;line-height:1.6">
+      display:flex;align-items:center;gap:1.5mm;
+      -webkit-print-color-adjust:exact;print-color-adjust:exact">
+      <!-- Milwaukee circle icon -->
+      <div style="width:8mm;height:8mm;border-radius:50%;
+        background:#C8102E;border:0.4mm solid #fff;flex-shrink:0;
+        display:flex;align-items:center;justify-content:center;
+        -webkit-print-color-adjust:exact;print-color-adjust:exact">
+        <div style="width:3.5mm;height:3.5mm;border-radius:50%;
+          background:#1a1a1a;display:flex;align-items:center;justify-content:center">
+          <div style="width:1.5mm;height:1.5mm;border-radius:50%;background:#C8102E"></div>
+        </div>
+      </div>
+      <!-- 5S text -->
+      <div style="flex:1;display:flex;justify-content:space-between">
+        <div style="font-size:3.8pt;color:#fff;font-weight:800;line-height:1.7">
           <div>SORT. SET IN ORDER.</div>
           <div>SHINE. STANDARDIZE.</div>
           <div>SUSTAIN. SAFETY.</div>
         </div>
-        <div style="width:0.2mm;background:#555;height:6mm;margin:0 1.5mm"></div>
-        <div style="font-size:4.2pt;color:#ccc;font-weight:600;line-height:1.6;text-align:right">
+        <div style="font-size:3.8pt;color:#e0e0e0;font-weight:600;line-height:1.7;text-align:right">
           <div>SÀNG LỌC. SẮP XẾP.</div>
           <div>SẠCH SẼ. SẴN SÓC.</div>
           <div>SẴN SÀNG. AN TOÀN.</div>
@@ -1640,6 +1639,7 @@ function buildEmpCard(emp){
     </div>
   </div>`;
 }
+
 
 // Backward compat — single cert card (dùng cho tab đơn)
 function buildCardHtml(c, emp){
@@ -1653,7 +1653,7 @@ function buildCardHtml(c, emp){
   const qrData = encodeURIComponent(c.id+'|'+c.eid);
   return `<div style="width:54mm;height:90mm;border-radius:2.5mm;overflow:hidden;border:0.3mm solid #bbb;font-family:Arial,sans-serif;display:flex;flex-direction:column;background:#fff">
     <div style="background:#C0392B;padding:2.5mm 3mm;flex-shrink:0;-webkit-print-color-adjust:exact;print-color-adjust:exact">
-      <div style="font-size:5pt;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px">TTI Group - AES</div>
+      <div style="font-size:5pt;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px">TTI GROUP | AES</div>
       <div style="font-size:9pt;font-weight:900;color:#fff;line-height:1.2">OPERATION<br>CERTIFICATE</div>
     </div>
     <div style="background:#fff;padding:2mm 3mm;display:flex;gap:2mm;align-items:flex-start;flex-shrink:0">
