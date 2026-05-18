@@ -480,21 +480,21 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
         </div>
         <div id="print-area">
           <div id="ccp" style="position:relative;width:204px;height:340px;overflow:hidden;font-family:Arial,sans-serif;box-shadow:0 4px 20px rgba(0,0,0,.25);flex-shrink:0">
-            <img id="card-bg-img" style="position:absolute;inset:0;width:100%;height:100%">
-            <div id="cphoto" style="position:absolute;top:21%;left:12.5%;width:75%;height:34%;overflow:hidden;background:#e0e0e0;display:flex;align-items:center;justify-content:center">
+            <img id="card-bg-img" style="position:absolute;inset:0;width:100%;height:100%;z-index:1">
+            <div id="cphoto" style="position:absolute;z-index:2;top:21%;left:12.5%;width:75%;height:34%;overflow:hidden;background:#e0e0e0;display:flex;align-items:center;justify-content:center">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </div>
-            <div style="position:absolute;top:57%;left:0;width:100%;text-align:center;padding:0 6px;box-sizing:border-box">
+            <div style="position:absolute;z-index:2;top:57%;left:0;width:100%;text-align:center;padding:0 6px;box-sizing:border-box">
               <div style="font-size:9pt;font-weight:900;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3" id="cnm">— Chọn —</div>
               <div style="font-size:6pt;color:#666;font-family:monospace;line-height:1.2" id="ceid"></div>
             </div>
-            <div style="position:absolute;top:76.75%;left:24.7%;width:75.3%;height:6.99%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-top:0.5px solid #999;border-left:0.5px solid #999;box-sizing:border-box">
+            <div style="position:absolute;z-index:2;top:76.75%;left:24.7%;width:75.3%;height:6.99%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-top:0.5px solid #aaa;border-left:0.5px solid #aaa;background:#fff;box-sizing:border-box">
               <div style="font-size:6.5pt;font-weight:700;color:#111;text-align:center;padding:0 2px;line-height:1.2" id="cproc">—</div>
             </div>
-            <div style="position:absolute;top:83.74%;left:24.7%;width:75.3%;height:2.73%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-top:0.5px solid #999;border-left:0.5px solid #999;box-sizing:border-box">
+            <div style="position:absolute;z-index:2;top:83.74%;left:24.7%;width:75.3%;height:2.73%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-top:0.5px solid #aaa;border-left:0.5px solid #aaa;background:#fff;box-sizing:border-box">
               <div style="font-size:13pt;font-weight:900;color:#111;line-height:1" id="clv">—</div>
             </div>
-            <div style="position:absolute;top:86.47%;left:24.7%;width:75.3%;height:2.73%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-top:0.5px solid #999;border-left:0.5px solid #999;box-sizing:border-box">
+            <div style="position:absolute;z-index:2;top:86.47%;left:24.7%;width:75.3%;height:2.73%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-top:0.5px solid #aaa;border-left:0.5px solid #aaa;background:#fff;box-sizing:border-box">
               <div style="font-size:7pt;font-weight:700;color:#111" id="cexp">—</div>
             </div>
           </div>
@@ -1510,8 +1510,10 @@ function buildEmpCard(emp){
   const lvN = lv => { const m=lv.match(/Level\s*(\d)/i); return m?'Lv'+m[1]:''; };
   const cW = (100/nC).toFixed(2)+'%';
 
+  // z-index:2 ensures data overlays appear ABOVE template white cells
   const mkTd = (inner) =>
-    '<td style="width:'+cW+';text-align:center;vertical-align:middle;border-left:0.5px solid #999;overflow:hidden;padding:0 1px">'+inner+'</td>';
+    '<td style="width:'+cW+';text-align:center;vertical-align:middle;'+
+    'border-left:0.5px solid #aaa;overflow:hidden;padding:0 1px;background:#fff">'+inner+'</td>';
 
   const pRow = sc.length
     ? sc.map(c=>mkTd('<div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.3;word-break:break-word">'+c.pnm+'</div>')).join('')
@@ -1529,34 +1531,37 @@ function buildEmpCard(emp){
       }).join('')
     : mkTd('');
 
-  // Row container: border-top aligns with template row dividers
-  // box-sizing:border-box ensures border doesn't push content down
-  // Template rows (pixel-measured on 787px card → % of 90mm):
-  //   Name box:  68.36% → 76.75%  (don't overlay — has Employee Name from template)
-  //   Process:   76.75% → 83.74%  = 6.99%  
-  //   Level:     83.74% → 86.47%  = 2.73%  (split Level+Expiry zone equally)
-  //   Expiry:    86.47% → 89.20%  = 2.73%
+  // z-index:2 on all overlay divs to render above template image
+  const Z = 'position:absolute;z-index:2;';
 
+  // Row div with white bg to cover template cells, border-top for row line
   const rDiv = (top, h, table) =>
-    '<div style="position:absolute;top:'+top+'%;left:24.7%;width:75.3%;height:'+h+'%;'+
-    'overflow:hidden;box-sizing:border-box;'+
-    'border-top:0.5px solid #999;">'+
+    '<div style="'+Z+'top:'+top+'%;left:24.7%;width:75.3%;height:'+h+'%;'+
+    'overflow:hidden;box-sizing:border-box;border-top:0.5px solid #aaa;background:#fff">'+
     '<table style="width:100%;height:100%;border-collapse:collapse;table-layout:fixed">'+
     '<tr>'+table+'</tr></table></div>';
 
   return (
-    '<div style="position:relative;width:54mm;height:90mm;overflow:hidden;page-break-inside:avoid;break-inside:avoid;font-family:Arial,sans-serif">' +
-    '<img src="'+CARD_TEMPLATE_B64+'" style="position:absolute;inset:0;width:100%;height:100%">' +
-    // Photo
-    '<div style="position:absolute;top:21%;left:12.5%;width:75%;height:34%;overflow:hidden;background:#fff">' + photo + '</div>' +
-    // Name + ID
-    '<div style="position:absolute;top:57%;left:0;width:100%;text-align:center;padding:0 2mm;box-sizing:border-box">' +
+    '<div style="position:relative;width:54mm;height:90mm;overflow:hidden;'+
+    'page-break-inside:avoid;break-inside:avoid;font-family:Arial,sans-serif">' +
+
+    // Template background — z-index:1 (below overlays)
+    '<img src="'+CARD_TEMPLATE_B64+'" style="position:absolute;inset:0;width:100%;height:100%;z-index:1">' +
+
+    // Photo — z-index:2
+    '<div style="'+Z+'top:21%;left:12.5%;width:75%;height:34%;overflow:hidden;background:#fff">' + photo + '</div>' +
+
+    // Name + ID — z-index:2
+    '<div style="'+Z+'top:57%;left:0;width:100%;text-align:center;padding:0 2mm;box-sizing:border-box">' +
       '<div style="font-size:6.5pt;font-weight:900;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3">' + emp.name + '</div>' +
       '<div style="font-size:4.8pt;color:#666;font-family:monospace;line-height:1.3">' + emp.id + '</div>' +
     '</div>' +
-    // 3 data rows aligned to template label positions
+
+    // Process row: 76.75% to 83.74% (6.99%)
     rDiv(76.75, 6.99, pRow) +
+    // Level row: 83.74% to 86.47% (2.73%)
     rDiv(83.74, 2.73, lRow) +
+    // Expiry row: 86.47% to 89.20% (2.73%)
     rDiv(86.47, 2.73, eRow) +
     '</div>'
   );
