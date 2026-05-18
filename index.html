@@ -481,10 +481,10 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
         <div id="print-area">
           <div id="ccp" style="position:relative;width:204px;height:340px;overflow:hidden;font-family:Arial,sans-serif;box-shadow:0 4px 20px rgba(0,0,0,.25);flex-shrink:0">
             <img id="card-bg-img" style="position:absolute;inset:0;width:100%;height:100%">
-            <div id="cphoto" style="position:absolute;top:19.5%;left:20%;width:60%;height:40%;overflow:hidden;background:#d8d8d8;display:flex;align-items:center;justify-content:center">
+            <div id="cphoto" style="position:absolute;top:24.5%;left:12.5%;width:75%;height:37%;overflow:hidden;background:#d8d8d8;display:flex;align-items:center;justify-content:center">
               <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </div>
-            <div style="position:absolute;top:59%;left:0;width:100%;text-align:center;padding:0 6px;box-sizing:border-box">
+            <div style="position:absolute;top:62.5%;left:0;width:100%;text-align:center;padding:0 6px;box-sizing:border-box">
               <div style="font-size:9pt;font-weight:900;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3" id="cnm">— Chọn —</div>
               <div style="font-size:6pt;color:#666;font-family:monospace;line-height:1.2" id="ceid"></div>
             </div>
@@ -1545,10 +1545,10 @@ function buildEmpCard(emp){
     '<img src="'+CARD_TEMPLATE_B64+'" style="position:absolute;inset:0;width:100%;height:100%">' +
 
     // Photo — 3:4 portrait, centered with white padding
-    '<div style="position:absolute;top:19.5%;left:20%;width:60%;height:40%;overflow:hidden">' + photo + '</div>' +
+    '<div style="position:absolute;top:24.5%;left:12.5%;width:75%;height:37%;overflow:hidden">' + photo + '</div>' +
 
     // Name + ID — below photo, full width centered  
-    '<div style="position:absolute;top:59%;left:0;width:100%;text-align:center;padding:0 2mm;box-sizing:border-box">' +
+    '<div style="position:absolute;top:62.5%;left:0;width:100%;text-align:center;padding:0 2mm;box-sizing:border-box">' +
       '<div style="font-size:6.5pt;font-weight:900;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3">' + emp.name + '</div>' +
       '<div style="font-size:5pt;color:#666;font-family:monospace;line-height:1.2">' + emp.id + '</div>' +
     '</div>' +
