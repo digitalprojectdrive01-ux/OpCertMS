@@ -245,17 +245,27 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
   body{background:white;overflow:visible;height:auto;display:block;margin:0;padding:0}
   #main{display:block;overflow:visible;height:auto;width:100%}
   #content{padding:0;overflow:visible;display:block}
-  /* Single card print: hide everything except preview card */
+  /* Single card print */
   #page-card{display:block!important}
   #card-tab-bulk{display:none!important}
+  #card-tab-single{display:block!important}
   #card-tab-single > div > div:first-child{display:none!important}
   #card-tab-single > div > div:last-child{display:block!important;width:100%}
   .sh{display:none!important}
-  #print-area{display:flex!important;justify-content:center;padding:20mm 0 0}
-  .cc{box-shadow:none!important;width:340px;margin:0 auto;page-break-inside:avoid}
-  .ch{background:#C0392B!important}
-  .cf2{background:#1a1a1a!important}
-  .cm2{background:#f7f7f7!important}
+  #print-area{
+    display:flex!important;
+    justify-content:center;
+    align-items:flex-start;
+    padding:0;
+    margin:0;
+  }
+  #print-area > div{
+    transform:none!important;
+  }
+  #ccp > div{
+    page-break-inside:avoid;
+    break-inside:avoid;
+  }
   @page{size:54mm 90mm;margin:0}
 }
 </style>
@@ -1735,25 +1745,7 @@ function loadCard(id){
   }
 }
 function printCard(){
-  // Ẩn cột trái tạm thời khi in
-  const leftCol = document.querySelector('#page-card > div > div:first-child');
-  const rightCol = document.querySelector('#page-card > div > div:last-child');
-  const grid = document.querySelector('#page-card > div');
-  const origGridStyle = grid ? grid.style.cssText : '';
-  if(leftCol) leftCol.style.display = 'none';
-  if(grid) { grid.style.display = 'block'; grid.style.width = '100%'; }
-  if(rightCol) { rightCol.style.width = '100%'; }
-  // Ẩn nút In/Lưu HTML trong khi print
-  const btnRow = rightCol ? rightCol.querySelector('.sh') : null;
-  if(btnRow) btnRow.style.display = 'none';
   window.print();
-  // Khôi phục sau khi đóng hộp in
-  setTimeout(() => {
-    if(leftCol) leftCol.style.display = '';
-    if(grid) grid.style.cssText = origGridStyle;
-    if(rightCol) rightCol.style.width = '';
-    if(btnRow) btnRow.style.display = '';
-  }, 500);
 }
 
 function dlCard(){
