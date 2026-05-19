@@ -1506,14 +1506,16 @@ function buildEmpCard(emp){
     : '<div style="width:100%;height:100%;background:#e0e0e0;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>';
 
   const sc  = certs.slice(0,4);
-  const n   = sc.length || 1;
+  const n   = sc.length;  // 0,1,2,3,4 — không dùng ||1 để tránh lỗi sc[0] undefined
   const lvN = lv => { const m=lv.match(/Level\s*(\d)/i); return m?'Lv'+m[1]:''; };
-  const cW  = (100/n).toFixed(2)+'%';
+  const cW  = (100/Math.max(n,1)).toFixed(2)+'%';
   const Z   = 'position:absolute;z-index:2;';
 
   // ── Process row ──────────────────────────────────────────────
   let pRow;
-  if(n===1){
+  if(n===0){
+    pRow = '<td style="width:100%;vertical-align:middle;padding:0 2px"><div style="color:#ccc;font-size:4pt">—</div></td>';
+  } else if(n===1){
     // td không có overflow:hidden => text wrap tự nhiên
     pRow = '<td style="width:50%;vertical-align:top;padding:0 2px;white-space:normal;word-break:break-word">'
          + '<div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.35;white-space:normal;word-break:break-word">'+sc[0].pnm+'</div>'
@@ -1526,7 +1528,9 @@ function buildEmpCard(emp){
 
   // ── Level row ────────────────────────────────────────────────
   let lRow;
-  if(n===1){
+  if(n===0){
+    lRow = '<td style="width:100%"></td>';
+  } else if(n===1){
     lRow = '<td style="width:50%;vertical-align:middle;padding:0 2px">'
          + '<div style="font-size:10pt;font-weight:900;color:#111;line-height:1">'+lvN(sc[0].lv)+'</div>'
          + '</td><td style="width:50%"></td>';
@@ -1538,7 +1542,9 @@ function buildEmpCard(emp){
 
   // ── Expiry row ───────────────────────────────────────────────
   let eRow;
-  if(n===1){
+  if(n===0){
+    eRow = '<td style="width:100%"></td>';
+  } else if(n===1){
     const st0=cSt(sc[0].exp);
     const col0=st0==='Expired'?'#C8102E':st0==='Expiring Soon'?'#E67E22':'#111';
     eRow = '<td style="width:50%;vertical-align:middle;padding:0 2px">'
