@@ -1513,16 +1513,27 @@ function buildEmpCard(emp){
 
   // ── Process row ──────────────────────────────────────────────
   let pRow;
+  // Helper: wrap text tại space đầu tiên nếu dài
+  const wrapPnm = s => {
+    if(s.length <= 14) return s;
+    // Tìm space gần giữa nhất để break
+    const mid = Math.floor(s.length/2);
+    let best = -1, dist = 999;
+    for(let i=0;i<s.length;i++){
+      if(s[i]===' ' && Math.abs(i-mid)<dist){ best=i; dist=Math.abs(i-mid); }
+    }
+    return best>0 ? s.slice(0,best)+'<br>'+s.slice(best+1) : s;
+  };
+
   if(n===0){
     pRow = '<td style="width:100%;vertical-align:middle;padding:0 2px"><div style="color:#ccc;font-size:4pt">—</div></td>';
   } else if(n===1){
-    // td không có overflow:hidden => text wrap tự nhiên
-    pRow = '<td style="width:50%;vertical-align:top;padding:0 2px;white-space:normal;word-break:break-word">'
-         + '<div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.35;white-space:normal;word-break:break-word">'+sc[0].pnm+'</div>'
+    pRow = '<td style="width:50%;vertical-align:top;padding:0 2px;overflow:hidden">'
+         + '<div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.35;white-space:normal;word-break:break-word;overflow-wrap:break-word">'+wrapPnm(sc[0].pnm)+'</div>'
          + '</td><td style="width:50%"></td>';
   } else {
-    pRow = sc.map(c=>'<td style="width:'+cW+';vertical-align:middle;padding:0 1px;word-break:break-word;overflow:hidden">'
-      +'<div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.35;text-align:center;word-break:break-word;white-space:normal">'+c.pnm+'</div>'
+    pRow = sc.map(c=>'<td style="width:'+cW+';vertical-align:middle;padding:0 1px;overflow:hidden">'
+      +'<div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.35;text-align:center;white-space:normal;word-break:break-word;overflow-wrap:break-word">'+wrapPnm(c.pnm)+'</div>'
       +'</td>').join('');
   }
 
