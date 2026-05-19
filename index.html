@@ -1745,7 +1745,26 @@ function loadCard(id){
   }
 }
 function printCard(){
-  window.print();
+  const ccp = document.getElementById('ccp');
+  const cardDiv = ccp ? ccp.querySelector('div[style*="54mm"]') : null;
+  if(!cardDiv){ alert('Vui lòng chọn chứng chỉ trước!'); return; }
+  const win = window.open('','_blank','width=400,height=600');
+  win.document.write(`<!DOCTYPE html><html><head>
+    <meta charset="UTF-8">
+    <style>
+      *{margin:0;padding:0;box-sizing:border-box}
+      body{background:#f2f2f2;display:flex;align-items:center;justify-content:center;min-height:100vh}
+      @media print{
+        *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+        body{background:white;margin:0;padding:0;display:block}
+        @page{size:54mm 90mm;margin:0}
+      }
+    </style>
+  </head><body>
+    ${cardDiv.outerHTML}
+    <script>window.onload=function(){window.print();}<\/script>
+  </body></html>`);
+  win.document.close();
 }
 
 function dlCard(){
