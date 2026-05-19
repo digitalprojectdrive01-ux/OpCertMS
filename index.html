@@ -1528,9 +1528,9 @@ function buildEmpCard(emp){
   if(n===0){
     pRow = '<td style="width:100%;vertical-align:middle;padding:0 2px"><div style="color:#ccc;font-size:4pt">—</div></td>';
   } else if(n===1){
-    pRow = '<td style="width:50%;vertical-align:top;padding:0 2px;overflow:hidden">'
-         + '<div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.35;white-space:normal;word-break:break-word;overflow-wrap:break-word;text-align:center">'+wrapPnm(sc[0].pnm)+'</div>'
-         + '</td><td style="width:50%"></td>';
+    pRow = '<td style="width:100%;vertical-align:top;padding:0 2px;overflow:hidden;text-align:center">'
+         + '<div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.35;text-align:center">'+wrapPnm(sc[0].pnm)+'</div>'
+         + '</td>';
   } else {
     pRow = sc.map(c=>'<td style="width:'+cW+';vertical-align:middle;padding:0 1px;overflow:hidden">'
       +'<div style="font-size:4.5pt;font-weight:700;color:#111;line-height:1.35;text-align:center;white-space:normal;word-break:break-word;overflow-wrap:break-word">'+wrapPnm(c.pnm)+'</div>'
@@ -1542,9 +1542,9 @@ function buildEmpCard(emp){
   if(n===0){
     lRow = '<td style="width:100%"></td>';
   } else if(n===1){
-    lRow = '<td style="width:50%;vertical-align:middle;padding:0 2px;text-align:center">'
+    lRow = '<td style="width:100%;vertical-align:middle;padding:0 2px;text-align:center">'
          + '<div style="font-size:10pt;font-weight:900;color:#111;line-height:1;text-align:center">'+lvN(sc[0].lv)+'</div>'
-         + '</td><td style="width:50%"></td>';
+         + '</td>';
   } else {
     lRow = sc.map(c=>'<td style="width:'+cW+';vertical-align:middle;padding:0 1px;overflow:hidden;text-align:center">'
       +'<div style="font-size:10pt;font-weight:900;color:#111;line-height:1;text-align:center">'+lvN(c.lv)+'</div>'
@@ -1558,9 +1558,9 @@ function buildEmpCard(emp){
   } else if(n===1){
     const st0=cSt(sc[0].exp);
     const col0=st0==='Expired'?'#C8102E':st0==='Expiring Soon'?'#E67E22':'#111';
-    eRow = '<td style="width:50%;vertical-align:middle;padding:0 2px;text-align:center">'
+    eRow = '<td style="width:100%;vertical-align:middle;padding:0 2px;text-align:center">'
          + '<div style="font-size:5pt;font-weight:700;color:'+col0+';text-align:center">'+fD(sc[0].exp)+'</div>'
-         + '</td><td style="width:50%"></td>';
+         + '</td>';
   } else {
     eRow = sc.map(c=>{
       const st=cSt(c.exp);
