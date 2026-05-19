@@ -282,19 +282,19 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
     <div class="login-body">
       <!-- Login -->
       <div class="login-field">
-        <label>Tên đăng nhập</label>
+        <label>Username</label>
         <input type="text" id="l-user" placeholder="admin / trainer / viewer"
           autocomplete="username"
           onkeydown="if(event.key==='Enter')document.getElementById('l-pass').focus()">
       </div>
       <div class="login-field">
-        <label>Mật khẩu</label>
-        <input type="password" id="l-pass" placeholder="Nhập mật khẩu..."
+        <label>Password</label>
+        <input type="password" id="l-pass" placeholder="Enter password..."
           autocomplete="current-password"
           onkeydown="if(event.key==='Enter')doLogin()">
       </div>
-      <div class="login-err" id="l-err">Tên đăng nhập hoặc mật khẩu không đúng!</div>
-      <button class="login-btn" onclick="doLogin()">ĐĂNG NHẬP</button>
+      <div class="login-err" id="l-err">Username or password incorrect!</div>
+      <button class="login-btn" onclick="doLogin()">LOGIN</button>
     </div>
     <div class="login-footer">
       <small>TTI Group | AES</small>
@@ -310,20 +310,20 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
   <div class="sb-logo"><h1>OpCertMS</h1><span>TTI Group | AES — OpCertMS</span></div>
   <div class="sb-nav">
     <a class="nav-lnk active" data-p="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard</a>
-    <div class="sb-sec">Quản lý</div>
-    <a class="nav-lnk" data-p="employees"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Nhân viên</a>
-    <a class="nav-lnk" data-p="depts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Bộ phận</a>
-    <a class="nav-lnk" data-p="processes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg>Quy trình</a>
-    <a class="nav-lnk" data-p="certs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Chứng chỉ</a>
-    <a class="nav-lnk" data-p="renewal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Gia hạn</a>
-    <a class="nav-lnk" data-p="matrix"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>Ma trận kỹ năng</a>
+    <div class="sb-sec">Management</div>
+    <a class="nav-lnk" data-p="employees"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Employees</a>
+    <a class="nav-lnk" data-p="depts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Departments</a>
+    <a class="nav-lnk" data-p="processes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg>Processes</a>
+    <a class="nav-lnk" data-p="certs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Certificates</a>
+    <a class="nav-lnk" data-p="renewal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Renewal</a>
+    <a class="nav-lnk" data-p="matrix"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>Skill Matrix</a>
     <div class="sb-div"></div>
-    <a class="nav-lnk" data-p="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>In thẻ chứng chỉ</a>
-    <div class="sb-sec">Dữ liệu</div>
+    <a class="nav-lnk" data-p="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Print Cards</a>
+    <div class="sb-sec">Data</div>
     <a class="nav-lnk" data-p="import"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Import Excel</a>
-    <a class="nav-lnk" data-p="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Cài đặt & SharePoint</a>
+    <a class="nav-lnk" data-p="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings & SharePoint</a>
   </div>
-  <div class="sb-foot" id="sbf"><span class="dot warn"></span>Chưa kết nối Excel</div>
+  <div class="sb-foot" id="sbf"><span class="dot warn"></span>Not connected</div>
 </nav>
 
 <div id="main">
@@ -332,15 +332,15 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
     <div id="user-bar">
     <span class="uname" id="ub-name">—</span>
     <span class="urole" id="ub-role">—</span>
-    <button class="logout-btn" onclick="doLogout()">Đăng xuất</button>
+    <button class="logout-btn" onclick="doLogout()">Logout</button>
   </div>
   <div style="width:1px;height:24px;background:#eee"></div>
   <button class="tbtn green" onclick="nav('import')">📊 Import Excel</button>
     
     <div id="sync-status-dot" style="width:9px;height:9px;border-radius:50%;background:#aaa;flex-shrink:0"></div>
     <span id="sync-status-label" style="font-size:11.5px;color:#888;white-space:nowrap">○ Offline</span>
-    <button class="tbtn ghost" onclick="expData()">↓ Export JSON</button><button class="tbtn ghost" onclick="importJSON()" title="Khôi phục từ file JSON">↑ Import JSON</button>
-    <button class="tbtn red" id="mab" onclick="mAct()">+ Thêm mới</button>
+    <button class="tbtn ghost" onclick="expData()">↓ Export JSON</button><button class="tbtn ghost" onclick="importJSON()" title="Restore from JSON file">↑ Import JSON</button>
+    <button class="tbtn red" id="mab" onclick="mAct()">+ Add New</button>
   </div>
   <div id="content">
 
@@ -349,9 +349,9 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
   <div class="kpi-grid" id="kgrid"></div>
   <div id="src-banner" style="display:none;background:#f0fff4;border:1px solid #b7e4c7;border-radius:8px;padding:9px 14px;margin-bottom:16px;font-size:12.5px;display:flex;align-items:center;gap:9px"></div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-    <div><div class="sh"><h3>Cảnh báo hết hạn</h3></div><div id="alist"></div></div>
-    <div><div class="sh"><h3>Chứng chỉ gần đây</h3></div>
-      <div class="tw"><table><thead><tr><th>Mã CC</th><th>Nhân viên</th><th>Trạng thái</th></tr></thead><tbody id="rctb"></tbody></table></div>
+    <div><div class="sh"><h3>Expiry Alerts</h3></div><div id="alist"></div></div>
+    <div><div class="sh"><h3>Certificates gần đây</h3></div>
+      <div class="tw"><table><thead><tr><th>Cert ID</th><th>Employees</th><th>Status</th></tr></thead><tbody id="rctb"></tbody></table></div>
     </div>
   </div>
 </div>
@@ -360,11 +360,11 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
 <div id="page-employees" class="page">
   <div class="tw">
     <div class="tb">
-      <input type="text" placeholder="Tìm kiếm nhân viên..." id="esrch" oninput="rEmp()">
-      <select id="edept" onchange="rEmp()"><option value="">Tất cả bộ phận</option></select>
+      <input type="text" placeholder="Search employees..." id="esrch" oninput="rEmp()">
+      <select id="edept" onchange="rEmp()"><option value="">All Departments</option></select>
       <span style="margin-left:auto;font-size:11.5px;color:#bbb" id="ecnt"></span>
     </div>
-    <table><thead><tr><th>Ảnh</th><th>Mã NV</th><th>Họ tên</th><th>Bộ phận</th><th>Chức danh</th><th>Ngày vào</th><th>Trạng thái</th><th>Số CC</th><th></th></tr></thead>
+    <table><thead><tr><th>Ảnh</th><th>Emp ID</th><th>Full Name</th><th>Departments</th><th>Position</th><th>Join Date</th><th>Status</th><th># Certs</th><th></th></tr></thead>
     <tbody id="etb"></tbody></table>
   </div>
 </div>
@@ -376,21 +376,21 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
     <div class="box" style="margin-bottom:18px">
       <div class="box-hdr">
         <div style="width:30px;height:30px;border-radius:7px;background:#2980B9;display:flex;align-items:center;justify-content:center;font-size:16px">🏭</div>
-        <h3 style="font-size:14px;font-weight:600">Thêm bộ phận mới</h3>
+        <h3 style="font-size:14px;font-weight:600">Add New Department</h3>
       </div>
       <div class="box-body">
         <div style="display:flex;gap:10px;align-items:end">
           <div class="fl" style="flex:1">
-            <label>Tên bộ phận</label>
-            <input type="text" id="dept-name-inp" placeholder="VD: Production, Quality Control, R&D..."
+            <label>Department Name</label>
+            <input type="text" id="dept-name-inp" placeholder="E.g. Production, Quality Control, R&D..."
               onkeydown="if(event.key==='Enter')addDept()">
           </div>
           <div class="fl" style="width:140px">
-            <label>Mã (tùy chọn)</label>
-            <input type="text" id="dept-code-inp" placeholder="VD: PRD, QC..." maxlength="5"
+            <label>Code (optional)</label>
+            <input type="text" id="dept-code-inp" placeholder="E.g. PRD, QC..." maxlength="5"
               style="text-transform:uppercase">
           </div>
-          <button class="btn bp" onclick="addDept()" style="height:36px;white-space:nowrap">+ Thêm bộ phận</button>
+          <button class="btn bp" onclick="addDept()" style="height:36px;white-space:nowrap">+ Add Department</button>
         </div>
       </div>
     </div>
@@ -398,15 +398,15 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
     <!-- Dept list -->
     <div class="tw">
       <div class="tb">
-        <span style="font-size:12.5px;font-weight:600;color:#666">Danh sách bộ phận</span>
+        <span style="font-size:12.5px;font-weight:600;color:#666">Department List</span>
         <span id="dept-total-label" style="margin-left:auto;font-size:12px;color:#aaa"></span>
       </div>
       <table>
         <thead><tr>
           <th>Mã</th>
-          <th>Tên bộ phận</th>
-          <th>Số nhân viên</th>
-          <th>Số CC hiệu lực</th>
+          <th>Department Name</th>
+          <th>Employees</th>
+          <th># Certs hiệu lực</th>
           <th></th>
         </tr></thead>
         <tbody id="dept-tbody"></tbody>
@@ -418,8 +418,8 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
 <!-- PROCESSES -->
 <div id="page-processes" class="page">
   <div class="tw">
-    <div class="tb"><input type="text" placeholder="Tìm kiếm quy trình..." id="psrch" oninput="rProc()"></div>
-    <table><thead><tr><th>Mã QT</th><th>Tên quy trình</th><th>Danh mục</th><th>Hiệu lực</th><th>Mô tả</th><th>Trạng thái</th><th></th></tr></thead>
+    <div class="tb"><input type="text" placeholder="Search processes..." id="psrch" oninput="rProc()"></div>
+    <table><thead><tr><th>Proc ID</th><th>Process Name</th><th>Category</th><th>Validity</th><th>Description</th><th>Status</th><th></th></tr></thead>
     <tbody id="ptb"></tbody></table>
   </div>
 </div>
@@ -428,10 +428,10 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
 <div id="page-certs" class="page">
   <div class="tw">
     <div class="tb">
-      <input type="text" placeholder="Tìm kiếm chứng chỉ..." id="csrch" oninput="rCert()">
-      <select id="csflt" onchange="rCert()"><option value="">Tất cả trạng thái</option><option>Valid</option><option>Expiring Soon</option><option>Expired</option></select>
+      <input type="text" placeholder="Search certificates..." id="csrch" oninput="rCert()">
+      <select id="csflt" onchange="rCert()"><option value="">All Statuses</option><option>Valid</option><option>Expiring Soon</option><option>Expired</option></select>
     </div>
-    <table><thead><tr><th>Mã CC</th><th>Nhân viên</th><th>Quy trình</th><th>Cấp độ</th><th>Ngày cấp</th><th>Hết hạn</th><th>Trạng thái</th><th></th></tr></thead>
+    <table><thead><tr><th>Cert ID</th><th>Employees</th><th>Processes</th><th>Level</th><th>Issue Date</th><th>Expiry</th><th>Status</th><th></th></tr></thead>
     <tbody id="ctb"></tbody></table>
   </div>
 </div>
@@ -439,13 +439,13 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
 <!-- RENEWAL -->
 <div id="page-renewal" class="page">
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px">
-    <div class="kpi r" data-i="⚠"><div class="kpi-lbl">Đã hết hạn</div><div class="kpi-val" id="k-exp">0</div></div>
-    <div class="kpi o" data-i="⏰"><div class="kpi-lbl">Sắp hết hạn ≤30 ngày</div><div class="kpi-val" id="k-soon">0</div></div>
-    <div class="kpi g" data-i="✓"><div class="kpi-lbl">Còn hiệu lực</div><div class="kpi-val" id="k-valid">0</div></div>
+    <div class="kpi r" data-i="⚠"><div class="kpi-lbl">Expired</div><div class="kpi-val" id="k-exp">0</div></div>
+    <div class="kpi o" data-i="⏰"><div class="kpi-lbl">Expiring Soon ≤30 ngày</div><div class="kpi-val" id="k-soon">0</div></div>
+    <div class="kpi g" data-i="✓"><div class="kpi-lbl">Left: hiệu lực</div><div class="kpi-val" id="k-valid">0</div></div>
   </div>
   <div class="tw">
-    <div class="tb"><input type="text" placeholder="Tìm..." id="rsrch" oninput="rRen()"></div>
-    <table><thead><tr><th>Mã CC</th><th>Nhân viên</th><th>Quy trình</th><th>Hết hạn</th><th>Còn lại</th><th>Trạng thái</th><th></th></tr></thead>
+    <div class="tb"><input type="text" placeholder="Search..." id="rsrch" oninput="rRen()"></div>
+    <table><thead><tr><th>Cert ID</th><th>Employees</th><th>Processes</th><th>Expiry</th><th>Left: lại</th><th>Status</th><th></th></tr></thead>
     <tbody id="rtb"></tbody></table>
   </div>
 </div>
@@ -453,9 +453,9 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
 <!-- MATRIX -->
 <div id="page-matrix" class="page">
   <div style="margin-bottom:12px;display:flex;gap:9px;align-items:center;flex-wrap:wrap">
-    <span style="font-size:12.5px;color:#999">Cấp độ:</span>
-    <span class="badge bv">L1 Cơ bản</span><span class="badge" style="background:#a9c4a0;color:#1a6b3a">L2 Trung cấp</span>
-    <span class="badge" style="background:#7dad74;color:#0d3d1c">L3 Nâng cao</span><span class="badge" style="background:#27AE60;color:#fff">L4 Chuyên gia</span>
+    <span style="font-size:12.5px;color:#999">Level:</span>
+    <span class="badge bv">L1 Basic</span><span class="badge" style="background:#a9c4a0;color:#1a6b3a">L2 Intermediate</span>
+    <span class="badge" style="background:#7dad74;color:#0d3d1c">L3 Advanced</span><span class="badge" style="background:#27AE60;color:#fff">L4 Expert</span>
   </div>
   <div class="mxw"><table style="min-width:580px;width:100%;border-collapse:collapse;font-size:12px">
     <thead id="mxh"></thead><tbody id="mxb"></tbody>
@@ -466,31 +466,31 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
 <div id="page-card" class="page">
   <!-- Tabs -->
   <div style="display:flex;gap:2px;margin-bottom:16px;background:#ebebeb;border-radius:8px;padding:3px;width:fit-content">
-    <button class="card-tab-btn active" onclick="switchCardTab('single')" id="tab-single" style="padding:7px 18px;border:none;background:#fff;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:#111;box-shadow:0 1px 4px rgba(0,0,0,.1)">🪪 In đơn</button>
-    <button class="card-tab-btn" onclick="switchCardTab('bulk')" id="tab-bulk" style="padding:7px 18px;border:none;background:none;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;color:#888">🖨 In hàng loạt</button>
+    <button class="card-tab-btn active" onclick="switchCardTab('single')" id="tab-single" style="padding:7px 18px;border:none;background:#fff;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:#111;box-shadow:0 1px 4px rgba(0,0,0,.1)">🪪 Single Print</button>
+    <button class="card-tab-btn" onclick="switchCardTab('bulk')" id="tab-bulk" style="padding:7px 18px;border:none;background:none;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;color:#888">🖨 Bulk Print</button>
   </div>
 
   <!-- TAB: SINGLE -->
   <div id="card-tab-single">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start">
       <div>
-        <div class="sh"><h3>Chọn chứng chỉ</h3></div>
+        <div class="sh"><h3>Select Certificate</h3></div>
         <div class="tw">
-          <div class="tb"><input type="text" placeholder="Tìm..." id="cdsrch" oninput="rCardList()"></div>
-          <table style="font-size:12px"><thead><tr><th>Mã CC</th><th>Nhân viên</th><th>Quy trình</th><th></th></tr></thead>
+          <div class="tb"><input type="text" placeholder="Search..." id="cdsrch" oninput="rCardList()"></div>
+          <table style="font-size:12px"><thead><tr><th>Cert ID</th><th>Employees</th><th>Processes</th><th></th></tr></thead>
           <tbody id="cdtb"></tbody></table>
         </div>
       </div>
       <div>
-        <div class="sh"><h3>Xem trước thẻ</h3>
+        <div class="sh"><h3>Card Preview</h3>
           <div style="display:flex;gap:7px">
             <button class="btn bs" onclick="printCard()">🖨 In</button>
-            <button class="btn bp" onclick="dlCard()">↓ Lưu HTML</button>
+            <button class="btn bp" onclick="dlCard()">↓ Save HTML</button>
           </div>
         </div>
         <div id="print-area" style="transform-origin:top left">
           <div id="ccp" style="flex-shrink:0;display:inline-block">
-            <div style="color:#bbb;font-size:13px;padding:20px;text-align:center">← Chọn chứng chỉ để xem trước</div>
+            <div style="color:#bbb;font-size:13px;padding:20px;text-align:center">← Select Certificate để xem trước</div>
           </div>
         </div>
       </div>
@@ -502,48 +502,48 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
     <div style="display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:start">
       <!-- Filter panel -->
       <div>
-        <div class="sh"><h3>Bộ lọc</h3></div>
+        <div class="sh"><h3>Filters</h3></div>
         <div class="box" style="margin-bottom:0">
           <div class="box-body" style="display:flex;flex-direction:column;gap:12px">
             <div class="fl">
-              <label>Lọc theo bộ phận</label>
+              <label>Filter by Department</label>
               <select id="bulk-dept" onchange="rBulkList()" style="padding:7px 10px;border:1px solid #e0e0e0;border-radius:5px;font-size:13px;outline:none">
-                <option value="">Tất cả bộ phận</option>
+                <option value="">All Departments</option>
               </select>
             </div>
             <div class="fl">
-              <label>Lọc theo trạng thái</label>
+              <label>Filter by Status</label>
               <select id="bulk-status" onchange="rBulkList()" style="padding:7px 10px;border:1px solid #e0e0e0;border-radius:5px;font-size:13px;outline:none">
                 <option value="">Tất cả</option>
                 <option value="Valid">Valid</option>
-                <option value="Expiring Soon">Sắp hết hạn</option>
-                <option value="Expired">Đã hết hạn</option>
+                <option value="Expiring Soon">Expiring Soon</option>
+                <option value="Expired">Expired</option>
               </select>
             </div>
             <div class="fl">
-              <label>Lọc theo quy trình</label>
+              <label>Filter by Process</label>
               <select id="bulk-proc" onchange="rBulkList()" style="padding:7px 10px;border:1px solid #e0e0e0;border-radius:5px;font-size:13px;outline:none">
-                <option value="">Tất cả quy trình</option>
+                <option value="">All Processes</option>
               </select>
             </div>
             <div style="height:1px;background:#f0f0f0"></div>
             <div style="font-size:12px;color:#888" id="bulk-count-label">0 chứng chỉ được chọn</div>
-            <button class="btn bg" style="width:100%;justify-content:center" onclick="selectAllBulk()">☑ Chọn tất cả</button>
-            <button class="btn bs" style="width:100%;justify-content:center" onclick="clearBulkSel()">☐ Bỏ chọn tất cả</button>
+            <button class="btn bg" style="width:100%;justify-content:center" onclick="selectAllBulk()">☑ Select All</button>
+            <button class="btn bs" style="width:100%;justify-content:center" onclick="clearBulkSel()">☐ Deselect All</button>
             <div style="height:1px;background:#f0f0f0"></div>
             <button class="btn bp" style="width:100%;justify-content:center;font-size:14px;padding:11px" onclick="bulkPrint()">
-              🖨 In hàng loạt (9 thẻ/trang A4)
+              🖨 Bulk Print (9 thẻ/A4 pages)
             </button>
           </div>
         </div>
       </div>
       <!-- Cert list with checkboxes -->
       <div>
-        <div class="sh"><h3>Danh sách chứng chỉ</h3></div>
+        <div class="sh"><h3>Certificate List</h3></div>
         <div class="tw">
-          <div class="tb"><input type="text" placeholder="Tìm..." id="bulk-search" oninput="rBulkList()"></div>
+          <div class="tb"><input type="text" placeholder="Search..." id="bulk-search" oninput="rBulkList()"></div>
           <table style="font-size:12px">
-            <thead><tr><th style="width:32px"><input type="checkbox" id="bulk-chk-all" onchange="toggleAllBulk(this.checked)"></th><th>Mã NV</th><th>Nhân viên</th><th>Bộ phận</th><th>Quy trình (gộp)</th><th>Số CC</th></tr></thead>
+            <thead><tr><th style="width:32px"><input type="checkbox" id="bulk-chk-all" onchange="toggleAllBulk(this.checked)"></th><th>Emp ID</th><th>Employees</th><th>Departments</th><th>Processes (gộp)</th><th># Certs</th></tr></thead>
             <tbody id="bulk-tbody"></tbody>
           </table>
         </div>
@@ -556,19 +556,19 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
 <div id="page-import" class="page">
   <div style="max-width:720px">
     <div class="box">
-      <div class="box-hdr"><div class="step-num">1</div><h3 style="font-size:14px;font-weight:600">Upload file Excel nhân viên</h3></div>
+      <div class="box-hdr"><div class="step-num">1</div><h3 style="font-size:14px;font-weight:600">Upload file Excel employees</h3></div>
       <div class="box-body">
         <div class="dz" id="dz">
           <input type="file" id="xfile" accept=".xlsx,.xls,.csv" onchange="handleXL(event)">
           <div class="di">📊</div>
-          <p style="font-size:13.5px;color:#666;margin-bottom:3px">Kéo thả file Excel vào đây hoặc click để chọn</p>
-          <small style="font-size:11.5px;color:#bbb">Hỗ trợ .xlsx, .xls, .csv</small>
+          <p style="font-size:13.5px;color:#666;margin-bottom:3px">Drag & drop Excel file here or click to select</p>
+          <small style="font-size:11.5px;color:#bbb">Supports .xlsx, .xls, .csv</small>
         </div>
         <div id="xinfo" style="display:none;margin-top:10px;padding:11px;background:#f0fff4;border-radius:7px;border:1px solid #b7e4c7;font-size:12.5px"></div>
       </div>
     </div>
     <div id="s-sheet" style="display:none" class="box">
-      <div class="box-hdr"><div class="step-num">2</div><h3 style="font-size:14px;font-weight:600">Chọn sheet và xem trước</h3></div>
+      <div class="box-hdr"><div class="step-num">2</div><h3 style="font-size:14px;font-weight:600">Select Sheet & Preview</h3></div>
       <div class="box-body">
         <div style="display:flex;align-items:center;gap:11px;margin-bottom:12px">
           <label style="font-size:12.5px;font-weight:600;color:#666;white-space:nowrap">Sheet:</label>
@@ -581,19 +581,19 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
       </div>
     </div>
     <div id="s-map" style="display:none" class="box">
-      <div class="box-hdr"><div class="step-num">3</div><h3 style="font-size:14px;font-weight:600">Map cột Excel → trường hệ thống</h3></div>
+      <div class="box-hdr"><div class="step-num">3</div><h3 style="font-size:14px;font-weight:600">Map Excel Columns → System Fields</h3></div>
       <div class="box-body">
-        <div class="ib">Chọn cột tương ứng trong file Excel cho mỗi trường. Trường nào không có thì để "(Bỏ qua)".</div>
+        <div class="ib">Select the corresponding column for each field. Leave "(Skip)" if not available.</div>
         <div id="mapform"></div>
         <div style="margin-top:14px;padding-top:12px;border-top:1px solid #f0f0f0;display:flex;gap:9px;justify-content:flex-end">
-          <button class="btn bg" onclick="doImport()">✓ Nhập dữ liệu nhân viên</button>
+          <button class="btn bg" onclick="doImport()">✓ Import Employees</button>
         </div>
       </div>
     </div>
     <div id="imp-res" style="display:none" class="box"><div class="box-body"></div></div>
     <div style="background:#fff9f3;border-radius:9px;border:1px solid #fcd5a0;padding:14px 18px;display:flex;align-items:center;justify-content:space-between">
-      <div><div style="font-size:13px;font-weight:600;color:#b07000">Chưa có file Excel?</div><div style="font-size:11.5px;color:#999;margin-top:2px">Tải template mẫu với cấu trúc cột chuẩn</div></div>
-      <button class="btn bw" onclick="dlTpl()">↓ Tải template Excel</button>
+      <div><div style="font-size:13px;font-weight:600;color:#b07000">No Excel file?</div><div style="font-size:11.5px;color:#999;margin-top:2px">Download a template with the standard column structure</div></div>
+      <button class="btn bw" onclick="dlTpl()">↓ Download Excel Template</button>
     </div>
   </div>
 </div>
@@ -606,18 +606,18 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
       <div class="box-hdr">
         <div style="width:30px;height:30px;border-radius:7px;background:#27AE60;display:flex;align-items:center;justify-content:center;font-size:16px">☁</div>
         <div>
-          <h3 style="font-size:14px;font-weight:600">Đồng bộ dữ liệu (JSONBin.io)</h3>
-          <p style="font-size:11.5px;color:#999;margin-top:1px">Lưu & chia sẻ dữ liệu giữa các thiết bị — miễn phí</p>
+          <h3 style="font-size:14px;font-weight:600">Data Sync (JSONBin.io)</h3>
+          <p style="font-size:11.5px;color:#999;margin-top:1px">Save & share data across devices — free</p>
         </div>
       </div>
       <div class="box-body">
         <div class="ib s" style="margin-bottom:14px">
-          <strong>Cách lấy API Key + Bin ID (3 phút):</strong><br>
-          1. Vào <a href="https://jsonbin.io" target="_blank" style="color:#27AE60">jsonbin.io</a> → Sign Up miễn phí<br>
+          <strong>How to get API Key + Bin ID (3 minutes):</strong><br>
+          1. Go to <a href="https://jsonbin.io" target="_blank" style="color:#27AE60">jsonbin.io</a> → Sign Up free<br>
           2. Dashboard → <strong>API Keys</strong> → Copy <em>X-Master-Key</em><br>
-          3. Nhấn <strong>+ Create Bin</strong> → đặt tên "OpCertMS" → tạo với nội dung <code style="background:#f0f0f0;padding:1px 5px;border-radius:3px">{}</code><br>
+          3. Click <strong>+ Create Bin</strong> → name it "OpCertMS" → create with content <code style="background:#f0f0f0;padding:1px 5px;border-radius:3px">{}</code><br>
           4. Copy <strong>Bin ID</strong> từ URL (dạng: 64abc123...)<br>
-          5. Dán vào ô bên dưới → Lưu → Đẩy dữ liệu
+          5. Dán vào ô bên dưới → Save → Đẩy dữ liệu
         </div>
         <div class="fg" style="gap:12px">
           <div class="fl">
@@ -630,16 +630,16 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
           </div>
         </div>
         <div style="margin-top:14px;display:flex;gap:9px;align-items:center;flex-wrap:wrap">
-          <button class="btn bg" onclick="saveSyncConfig()">💾 Lưu cấu hình</button>
-          <button class="btn bsp" onclick="manualPush()">☁ Đẩy dữ liệu lên</button>
-          <button class="btn bs"  onclick="manualPull()">↓ Kéo dữ liệu về</button>
+          <button class="btn bg" onclick="saveSyncConfig()">💾 Save Config</button>
+          <button class="btn bsp" onclick="manualPush()">☁ Push Data</button>
+          <button class="btn bs"  onclick="manualPull()">↓ Pull Data</button>
           <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
             <div id="sync-status-dot2" style="width:8px;height:8px;border-radius:50%;background:#aaa"></div>
             <span id="sync-status-label2" style="font-size:12px;color:#888">—</span>
           </div>
         </div>
         <div class="ib w" style="margin-top:12px">
-          ⚡ <strong>Tự động sync:</strong> mọi thay đổi tự lưu cloud sau 3 giây. Khi mở app trên thiết bị khác → tự động kéo dữ liệu mới nhất.
+          ⚡ <strong>Auto sync:</strong> all changes auto-saved to cloud after 3 seconds. Opening on another device → auto-pulls latest data.
         </div>
       </div>
     </div>
@@ -648,40 +648,40 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
     <div class="box" id="user-mgmt-box">
       <div class="box-hdr">
         <div style="width:30px;height:30px;border-radius:7px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:15px">👑</div>
-        <div><h3 style="font-size:14px;font-weight:600">Quản lý tài khoản</h3><p style="font-size:11.5px;color:#999;margin-top:1px">Thêm / sửa tài khoản đăng nhập</p></div>
+        <div><h3 style="font-size:14px;font-weight:600">Management account</h3><p style="font-size:11.5px;color:#999;margin-top:1px">Add / edit login accounts</p></div>
       </div>
       <div class="box-body">
         <div style="margin-bottom:14px">
           <table style="width:100%;font-size:13px;border-collapse:collapse">
             <thead><tr style="background:#f8f8f8;border-bottom:2px solid #ebebeb">
               <th style="padding:8px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;color:#999">Username</th>
-              <th style="padding:8px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;color:#999">Mật khẩu</th>
-              <th style="padding:8px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;color:#999">Vai trò</th>
+              <th style="padding:8px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;color:#999">Password</th>
+              <th style="padding:8px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;color:#999">Role</th>
               <th style="padding:8px 12px"></th>
             </tr></thead>
             <tbody id="users-tbody"></tbody>
           </table>
         </div>
         <div style="background:#f8f9fa;border-radius:7px;padding:14px;border:1px solid #e8e8e8">
-          <div style="font-size:12px;font-weight:600;color:#555;margin-bottom:10px">+ Thêm / cập nhật tài khoản</div>
+          <div style="font-size:12px;font-weight:600;color:#555;margin-bottom:10px">+ Add / Update Account</div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end">
             <div class="fl"><label>Username</label><input type="text" id="nu-user" placeholder="username"></div>
-            <div class="fl"><label>Mật khẩu</label><input type="password" id="nu-pass" placeholder="password"></div>
-            <div class="fl"><label>Vai trò</label>
+            <div class="fl"><label>Password</label><input type="password" id="nu-pass" placeholder="password"></div>
+            <div class="fl"><label>Role</label>
               <select id="nu-role" style="padding:7px 10px;border:1px solid #e0e0e0;border-radius:5px;font-size:13px;outline:none">
                 <option value="admin">👑 Admin</option>
                 <option value="trainer">✏ Trainer</option>
                 <option value="viewer">👁 Viewer</option>
               </select>
             </div>
-            <button class="btn bp" onclick="saveUser()" style="height:36px">Lưu</button>
+            <button class="btn bp" onclick="saveUser()" style="height:36px">Save</button>
           </div>
         </div>
         <div class="ib w" style="margin-top:12px">
-          <strong>Phân quyền:</strong><br>
-          👑 <strong>Admin</strong> — Toàn quyền: xem, thêm, sửa, xóa tất cả<br>
-          ✏ <strong>Trainer</strong> — Xem + cấp chứng chỉ + gia hạn (không sửa nhân viên/quy trình)<br>
-          👁 <strong>Viewer</strong> — Chỉ xem, không thể thay đổi dữ liệu
+          <strong>Permissions:</strong><br>
+          👑 <strong>Admin</strong> — Full access: view, add, edit, delete all<br>
+          ✏ <strong>Trainer</strong> — View + cấp chứng chỉ + gia hạn (không sửa employees/quy trình)<br>
+          👁 <strong>Viewer</strong> — View only, cannot modify data
         </div>
       </div>
     </div>
@@ -690,32 +690,32 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
     <div class="box" id="dept-mgmt-box">
       <div class="box-hdr">
         <div style="width:30px;height:30px;border-radius:7px;background:#2980B9;display:flex;align-items:center;justify-content:center;font-size:16px">🏭</div>
-        <div><h3 style="font-size:14px;font-weight:600">Quản lý bộ phận</h3>
-          <p style="font-size:11.5px;color:#999;margin-top:1px">Thêm / xóa bộ phận trong công ty</p></div>
+        <div><h3 style="font-size:14px;font-weight:600">Management bộ phận</h3>
+          <p style="font-size:11.5px;color:#999;margin-top:1px">Add / remove company departments</p></div>
       </div>
       <div class="box-body">
         <div id="dept-list" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px"></div>
         <div style="display:flex;gap:9px;align-items:end">
           <div class="fl" style="flex:1">
-            <label>Tên bộ phận mới</label>
-            <input type="text" id="new-dept-name" placeholder="VD: R&D, Logistics, Sales..." onkeydown="if(event.key==='Enter')addDept()">
+            <label>Department Name mới</label>
+            <input type="text" id="new-dept-name" placeholder="E.g. R&D, Logistics, Sales..." onkeydown="if(event.key==='Enter')addDept()">
           </div>
-          <button class="btn bp" onclick="addDept()" style="height:36px">+ Thêm</button>
+          <button class="btn bp" onclick="addDept()" style="height:36px">+ Add</button>
         </div>
       </div>
     </div>
 
         <div class="box">
-      <div class="box-hdr"><h3 style="font-size:14px;font-weight:600">Cài đặt hệ thống</h3></div>
+      <div class="box-hdr"><h3 style="font-size:14px;font-weight:600">System Settings</h3></div>
       <div class="box-body">
         <div class="fg" style="gap:12px">
-          <div class="fl"><label>Tên công ty</label><input type="text" id="sc" value="TTI Group | AES"></div>
-          <div class="fl"><label>Cảnh báo hết hạn (ngày)</label><input type="text" id="sw" value="30"></div>
-          <div class="fl s2"><label>Tiêu đề hệ thống</label><input type="text" id="st" value="Operation Certificate Management System"></div>
+          <div class="fl"><label>Company Name</label><input type="text" id="sc" value="TTI Group | AES"></div>
+          <div class="fl"><label>Expiry Alerts (ngày)</label><input type="text" id="sw" value="30"></div>
+          <div class="fl s2"><label>System Title</label><input type="text" id="st" value="Operation Certificate Management System"></div>
         </div>
         <div style="margin-top:12px;display:flex;gap:9px;justify-content:flex-end">
-          <button class="btn bp" onclick="saveSet()">💾 Lưu</button>
-          <button class="btn bs" onclick="if(confirm('Reset về dữ liệu mẫu? Toàn bộ dữ liệu hiện tại sẽ bị xóa.')){indexedDB.deleteDatabase('opcertms_v2');localStorage.clear();location.reload()}">🗑 Reset</button>
+          <button class="btn bp" onclick="saveSet()">💾 Save</button>
+          <button class="btn bs" onclick="if(confirm('Reset to sample data? All current data will be deleted.')){indexedDB.deleteDatabase('opcertms_v2');localStorage.clear();location.reload()}">🗑 Reset</button>
         </div>
       </div>
     </div>
@@ -728,21 +728,21 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
 <!-- MODAL: EDIT DEPT -->
 <div class="mo" id="m-dept">
   <div class="md" style="width:420px">
-    <div class="mh"><h3>SỬA BỘ PHẬN</h3><button onclick="cM('m-dept')">✕</button></div>
+    <div class="mh"><h3>EDIT DEPARTMENT</h3><button onclick="cM('m-dept')">✕</button></div>
     <div class="mb">
       <div class="fl" style="margin-bottom:14px">
-        <label>Tên bộ phận *</label>
-        <input type="text" id="fd-name" placeholder="Tên bộ phận">
+        <label>Department Name *</label>
+        <input type="text" id="fd-name" placeholder="Department Name">
       </div>
       <div class="fl">
-        <label>Mã bộ phận (tùy chọn, tối đa 5 ký tự)</label>
+        <label>Dept Code (optional, max 5 chars)</label>
         <input type="text" id="fd-code" placeholder="VD: PRD" maxlength="5" style="text-transform:uppercase">
-        <small style="font-size:11px;color:#aaa;margin-top:3px">Để trống = tự sinh từ tên bộ phận</small>
+        <small style="font-size:11px;color:#aaa;margin-top:3px">Leave blank = auto-generated</small>
       </div>
     </div>
     <div class="mf">
-      <button class="btn bs" onclick="cM('m-dept')">Hủy</button>
-      <button class="btn bp" onclick="saveDeptEdit()">Lưu</button>
+      <button class="btn bs" onclick="cM('m-dept')">Cancel</button>
+      <button class="btn bp" onclick="saveDeptEdit()">Save</button>
     </div>
   </div>
 </div>
@@ -753,66 +753,66 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
 <!-- MODALS -->
 <div class="mo" id="m-emp">
   <div class="md">
-    <div class="mh"><h3 id="m-emp-t">THÊM NHÂN VIÊN</h3><button onclick="cM('m-emp')">✕</button></div>
+    <div class="mh"><h3 id="m-emp-t">ADD EMPLOYEE</h3><button onclick="cM('m-emp')">✕</button></div>
     <div class="mb"><div class="fg">
-      <div class="fl"><label>Mã nhân viên *</label><input type="text" id="fe-id"></div>
-      <div class="fl"><label>Họ tên *</label><input type="text" id="fe-nm"></div>
-      <div class="fl"><label>Bộ phận</label><select id="fe-dp"></select></div>
-      <div class="fl"><label>Chức danh</label><input type="text" id="fe-po"></div>
-      <div class="fl"><label>Ngày sinh</label><input type="date" id="fe-db"></div>
-      <div class="fl"><label>Ngày vào làm</label><input type="date" id="fe-jn"></div>
-      <div class="fl"><label>Số điện thoại</label><input type="text" id="fe-ph"></div>
-      <div class="fl"><label>Trạng thái</label><select id="fe-st"><option>Active</option><option>Inactive</option><option>On Leave</option></select></div>
+      <div class="fl"><label>Employee ID *</label><input type="text" id="fe-id"></div>
+      <div class="fl"><label>Full Name *</label><input type="text" id="fe-nm"></div>
+      <div class="fl"><label>Departments</label><select id="fe-dp"></select></div>
+      <div class="fl"><label>Position</label><input type="text" id="fe-po"></div>
+      <div class="fl"><label>Date of Birth</label><input type="date" id="fe-db"></div>
+      <div class="fl"><label>Join Date làm</label><input type="date" id="fe-jn"></div>
+      <div class="fl"><label>Phone</label><input type="text" id="fe-ph"></div>
+      <div class="fl"><label>Status</label><select id="fe-st"><option>Active</option><option>Inactive</option><option>On Leave</option></select></div>
     </div></div>
-    <div class="mf"><button class="btn bs" onclick="cM('m-emp')">Hủy</button><button class="btn bp" onclick="saveEmp()">Lưu</button></div>
+    <div class="mf"><button class="btn bs" onclick="cM('m-emp')">Cancel</button><button class="btn bp" onclick="saveEmp()">Save</button></div>
   </div>
 </div>
 
 <div class="mo" id="m-proc">
   <div class="md">
-    <div class="mh"><h3 id="m-proc-t">THÊM QUY TRÌNH</h3><button onclick="cM('m-proc')">✕</button></div>
+    <div class="mh"><h3 id="m-proc-t">ADD PROCESS</h3><button onclick="cM('m-proc')">✕</button></div>
     <div class="mb"><div class="fg">
-      <div class="fl"><label>Mã quy trình *</label><input type="text" id="fp-id"></div>
-      <div class="fl"><label>Tên quy trình *</label><input type="text" id="fp-nm"></div>
-      <div class="fl"><label>Danh mục</label><input type="text" id="fp-ct"></div>
-      <div class="fl"><label>Hiệu lực (tháng)</label><input type="text" id="fp-vl" value="12"></div>
-      <div class="fl s2"><label>Mô tả</label><input type="text" id="fp-ds"></div>
-      <div class="fl"><label>Trạng thái</label><select id="fp-st"><option>Active</option><option>Inactive</option></select></div>
+      <div class="fl"><label>Process ID *</label><input type="text" id="fp-id"></div>
+      <div class="fl"><label>Process Name *</label><input type="text" id="fp-nm"></div>
+      <div class="fl"><label>Category</label><input type="text" id="fp-ct"></div>
+      <div class="fl"><label>Validity (months)</label><input type="text" id="fp-vl" value="12"></div>
+      <div class="fl s2"><label>Description</label><input type="text" id="fp-ds"></div>
+      <div class="fl"><label>Status</label><select id="fp-st"><option>Active</option><option>Inactive</option></select></div>
     </div></div>
-    <div class="mf"><button class="btn bs" onclick="cM('m-proc')">Hủy</button><button class="btn bp" onclick="saveProc()">Lưu</button></div>
+    <div class="mf"><button class="btn bs" onclick="cM('m-proc')">Cancel</button><button class="btn bp" onclick="saveProc()">Save</button></div>
   </div>
 </div>
 
 <div class="mo" id="m-cert">
   <div class="md">
-    <div class="mh"><h3>CẤP CHỨNG CHỈ MỚI</h3><button onclick="cM('m-cert')">✕</button></div>
+    <div class="mh"><h3>ISSUE NEW CERTIFICATE</h3><button onclick="cM('m-cert')">✕</button></div>
     <div class="mb"><div class="fg">
-      <div class="fl s2"><label>Nhân viên *</label><select id="fc-em"><option value="">— Chọn nhân viên —</option></select></div>
-      <div class="fl s2"><label>Quy trình *</label><select id="fc-pr" onchange="updExp()"><option value="">— Chọn quy trình —</option></select></div>
-      <div class="fl"><label>Cấp độ *</label><select id="fc-lv"><option>Level 1 - Basic</option><option>Level 2 - Intermediate</option><option>Level 3 - Advanced</option><option>Level 4 - Expert</option></select></div>
-      <div class="fl"><label>Ngày cấp *</label><input type="date" id="fc-dt"></div>
+      <div class="fl s2"><label>Employees *</label><select id="fc-em"><option value="">— Select Employee —</option></select></div>
+      <div class="fl s2"><label>Processes *</label><select id="fc-pr" onchange="updExp()"><option value="">— Select Process —</option></select></div>
+      <div class="fl"><label>Level *</label><select id="fc-lv"><option>Level 1 - Basic</option><option>Level 2 - Intermediate</option><option>Level 3 - Advanced</option><option>Level 4 - Expert</option></select></div>
+      <div class="fl"><label>Issue Date *</label><input type="date" id="fc-dt"></div>
       <div class="fl s2" id="exp-prev" style="display:none;background:#f8f8f8;border-radius:5px;padding:9px">
-        <div style="font-size:10.5px;color:#999;margin-bottom:2px">NGÀY HẾT HẠN</div>
+        <div style="font-size:10.5px;color:#999;margin-bottom:2px">EXPIRY DATE</div>
         <div style="font-size:14.5px;font-weight:600" id="exp-v">—</div>
       </div>
     </div></div>
-    <div class="mf"><button class="btn bs" onclick="cM('m-cert')">Hủy</button><button class="btn bp" onclick="saveCert()">Cấp chứng chỉ</button></div>
+    <div class="mf"><button class="btn bs" onclick="cM('m-cert')">Cancel</button><button class="btn bp" onclick="saveCert()">Issue Certificate</button></div>
   </div>
 </div>
 
 <div class="mo" id="m-renew">
   <div class="md" style="width:400px">
-    <div class="mh"><h3>GIA HẠN CHỨNG CHỈ</h3><button onclick="cM('m-renew')">✕</button></div>
+    <div class="mh"><h3>RENEW CERTIFICATE</h3><button onclick="cM('m-renew')">✕</button></div>
     <div class="mb">
       <div style="background:#f8f8f8;border-radius:7px;padding:11px;margin-bottom:14px">
-        <div style="font-size:10.5px;color:#999">CHỨNG CHỈ</div>
+        <div style="font-size:10.5px;color:#999">CERTIFICATE</div>
         <div style="font-size:15.5px;font-weight:600;font-family:'JetBrains Mono',monospace" id="rno">—</div>
         <div style="font-size:12.5px;color:#777;margin-top:3px" id="rinf">—</div>
       </div>
-      <div class="fl"><label>Ngày gia hạn mới *</label><input type="date" id="fr-dt"></div>
+      <div class="fl"><label>New Renewal Date *</label><input type="date" id="fr-dt"></div>
       <div style="margin-top:9px;background:#fff3cd;border-radius:5px;padding:9px;font-size:11.5px;color:#856404" id="rnexp"></div>
     </div>
-    <div class="mf"><button class="btn bs" onclick="cM('m-renew')">Hủy</button><button class="btn bw" onclick="doRenew()">Gia hạn</button></div>
+    <div class="mf"><button class="btn bs" onclick="cM('m-renew')">Cancel</button><button class="btn bw" onclick="doRenew()">Renewal</button></div>
   </div>
 </div>
 
@@ -837,7 +837,7 @@ function aM(dt,m){const d=new Date(dt);d.setMonth(d.getMonth()+m);return d.toISO
 function fD(s){if(!s)return'—';return new Date(s).toLocaleDateString('vi-VN');}
 function sBadge(s){
   const m={Valid:'bv','Expiring Soon':'be',Expired:'bx',Active:'bv',Inactive:'bx','On Leave':'be'};
-  const l={Valid:'Hiệu lực','Expiring Soon':'Sắp hết hạn',Expired:'Hết hạn',Active:'Active',Inactive:'Inactive','On Leave':'On Leave'};
+  const l={Valid:'Validity','Expiring Soon':'Expiring Soon',Expired:'Expiry',Active:'Active',Inactive:'Inactive','On Leave':'On Leave'};
   return`<span class="badge ${m[s]||''}">${l[s]||s}</span>`;
 }
 function eCnt(id){return DB.certs.filter(c=>c.eid===id&&cSt(c.exp)==='Valid').length;}
@@ -855,7 +855,7 @@ function autoId(pfx,arr){
 }
 
 // ─── NAVIGATION ─────────────────────────────────────────────────────────────
-const ptitles={dashboard:'Dashboard',employees:'Quản lý nhân viên',depts:'Quản lý bộ phận',processes:'Quản lý quy trình',certs:'Chứng chỉ',renewal:'Theo dõi gia hạn',matrix:'Ma trận kỹ năng',card:'In thẻ chứng chỉ',import:'Import Excel',settings:'Cài đặt & SharePoint'};
+const ptitles={dashboard:'Dashboard',employees:'Management employees',depts:'Management bộ phận',processes:'Management quy trình',certs:'Certificates',renewal:'Renewal Tracking',matrix:'Skill Matrix',card:'Print Cards',import:'Import Excel',settings:'Settings & SharePoint'};
 const addPages={employees:true,depts:true,processes:true,certs:true};
 let curPage='dashboard';
 document.querySelectorAll('.nav-lnk').forEach(a=>a.addEventListener('click',()=>nav(a.dataset.p)));
@@ -936,7 +936,7 @@ function spUrl(e){
   // Return first variant as default URL (loadPic tries all)
   return`${base}/${encodeURIComponent(filenames[0])}`;
 }
-// Thử load 1 URL ảnh, trả về true nếu thành công
+// Thử load 1 URL photos, trả về true nếu thành công
 function tryLoadImg(e, url){
   return new Promise(r=>{
     const img=new Image();img.crossOrigin='anonymous';
@@ -973,22 +973,22 @@ async function loadAllPics(){
   let loaded=0, failed=0;
   for(let i=0;i<DB.emps.length;i++){
     const emp=DB.emps[i];
-    lbl.textContent=`Đang tải ${i+1}/${DB.emps.length}: ${emp.name}`;
+    lbl.textContent=`Loading ${i+1}/${DB.emps.length}: ${emp.name}`;
     fill.style.width=`${Math.round(i/DB.emps.length*100)}%`;
     const ok=await loadPic(emp);
     if(ok) loaded++; else failed++;
   }
   fill.style.width='100%';
-  lbl.innerHTML=`✓ Tải xong: <strong>${loaded}</strong> ảnh${failed>0?` | <span style="color:#E67E22">${failed} không tìm thấy</span>`:''}`;
+  lbl.innerHTML=`✓ Loaded: <strong>${loaded}</strong> photos${failed>0?` | <span style="color:#E67E22">${failed} not found</span>`:''}`;
   setTimeout(()=>{pp.style.display='none';},4000);
   rEmp();
 }
 async function testSP(){
   const url=document.getElementById('spurl').value.trim();
   const res=document.getElementById('sp-tr');
-  if(!url){res.innerHTML='<span class="tr">Vui lòng nhập URL</span>';return;}
-  res.innerHTML='<span style="color:#aaa">Đang kiểm tra...</span>';
-  // Lưu config tạm để dùng spFilenames()
+  if(!url){res.innerHTML='<span class="tr">Please enter URL</span>';return;}
+  res.innerHTML='<span style="color:#aaa">Checking...</span>';
+  // Save config tạm để dùng spFilenames()
   const origSP={...DB.sp};
   DB.sp={url,nm:document.getElementById('spnm').value,ext:document.getElementById('spext').value,cp:document.getElementById('spcp').value};
   const e=DB.emps[0];
@@ -1005,18 +1005,18 @@ async function testSP(){
       img.src=testUrl;
     });
     if(ok){
-      res.innerHTML=`<span class="tg">✓ Tìm thấy ảnh: <code style="font-size:11px;background:#f0fff4;padding:2px 6px;border-radius:3px">${fn}</code></span>`;
+      res.innerHTML=`<span class="tg">✓ Photo found: <code style="font-size:11px;background:#f0fff4;padding:2px 6px;border-radius:3px">${fn}</code></span>`;
       found=true;break;
     }
   }
   if(!found){
-    res.innerHTML=`<span class="tr">✕ Không tìm thấy. Đã thử: ${filenames.map(f=>`<code style="font-size:10px">${f}</code>`).join(', ')}</span>`;
+    res.innerHTML=`<span class="tr">✕ Not found. Tried: ${filenames.map(f=>`<code style="font-size:10px">${f}</code>`).join(', ')}</span>`;
   }
   DB.sp=origSP; // restore
 }
 function saveSP(){
   DB.sp={url:document.getElementById('spurl').value.trim(),nm:document.getElementById('spnm').value,ext:document.getElementById('spext').value,cp:document.getElementById('spcp').value};
-  saveDB();alert('Đã lưu cấu hình SharePoint!');updSbf();
+  saveDB();alert('Saved cấu hình SharePoint!');updSbf();
   updatePatternPreview();
 }
 function onNmChange(){
@@ -1028,13 +1028,13 @@ function updatePatternPreview(){
   const e=DB.emps[0];if(!e)return;
   const url=spUrl(e);
   const prev=document.getElementById('sp-preview');
-  if(prev && url) prev.textContent='Ví dụ: '+url.split('/').pop();
+  if(prev && url) prev.textContent='Example: '+url.split('/').pop();
 }
 const _spnm=document.getElementById('spnm');if(_spnm)_spnm.addEventListener('change', onNmChange);
 
 function handleManualPic(e){
   const f=e.target.files[0];if(!f)return;
-  const id=document.getElementById('mpe').value;if(!id){alert('Chọn nhân viên trước!');return;}
+  const id=document.getElementById('mpe').value;if(!id){alert('Chọn employees trước!');return;}
   const r=new FileReader();r.onload=ev=>{
     const em=DB.emps.find(e=>e.id===id);if(!em)return;
     em.photo=ev.target.result;
@@ -1057,14 +1057,14 @@ function rSet(){
   const sel=document.getElementById('mpe');
   sel.innerHTML='<option value="">— Chọn —</option>'+DB.emps.map(e=>`<option value="${e.id}">${e.id} — ${e.name}</option>`).join('');
 }
-function saveSet(){DB.cfg={company:document.getElementById('sc').value,warn:parseInt(document.getElementById('sw').value)||30};saveDB();alert('Đã lưu!');}
+function saveSet(){DB.cfg={company:document.getElementById('sc').value,warn:parseInt(document.getElementById('sw').value)||30};saveDB();alert('Saved!');}
 function updSbf(){
   const el=document.getElementById('sbf');
   const hX=!!DB.src,hS=!!DB.sp.url;
   if(hX&&hS)el.innerHTML='<span class="dot ok"></span>Excel + SharePoint';
-  else if(hX)el.innerHTML='<span class="dot ok"></span>Excel đã kết nối';
-  else if(hS)el.innerHTML='<span class="dot warn"></span>SharePoint cấu hình';
-  else el.innerHTML='<span class="dot err"></span>Chưa kết nối dữ liệu';
+  else if(hX)el.innerHTML='<span class="dot ok"></span>Excel connected';
+  else if(hS)el.innerHTML='<span class="dot warn"></span>SharePoint configured';
+  else el.innerHTML='<span class="dot err"></span>Not connected';
 }
 
 // ─── EXCEL IMPORT ───────────────────────────────────────────────────────────
@@ -1084,7 +1084,7 @@ function procXL(f){
       ss.innerHTML=xWB.SheetNames.map(s=>`<option>${s}</option>`).join('');
       document.getElementById('s-sheet').style.display='block';
       loadPreview();DB.src={name:f.name,size:f.size};updSbf();
-    }catch(err){xi.innerHTML=`<span class="tr">✕ Lỗi: ${err.message}</span>`;}
+    }catch(err){xi.innerHTML=`<span class="tr">✕ Error: ${err.message}</span>`;}
   };r.readAsArrayBuffer(f);
 }
 function loadPreview(){
@@ -1093,21 +1093,21 @@ function loadPreview(){
   const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
   if(!rows.length)return;
   xCols=rows[0].map(String);
-  document.getElementById('shcnt').textContent=`${rows.length-1} dòng`;
+  document.getElementById('shcnt').textContent=`${rows.length-1} rows`;
   const tbl=document.getElementById('pvtbl');
   tbl.innerHTML=`<thead><tr>${xCols.map(c=>`<th style="background:#f8f8f8;padding:5px 9px;border:1px solid #e8e8e8;font-size:10.5px;font-weight:600;color:#888">${c}</th>`).join('')}</tr></thead>
     <tbody>${rows.slice(1,6).map(r=>`<tr>${xCols.map((_,i)=>`<td style="padding:5px 9px;border:1px solid #f0f0f0;color:#555">${r[i]||''}</td>`).join('')}</tr>`).join('')}</tbody>`;
   document.getElementById('s-map').style.display='block';buildMap();
 }
 const FDEFS=[
-  {k:'id',l:'Mã nhân viên',req:true,h:['employee id','emp id','mã nv','mã nhân viên','id','employee_id']},
-  {k:'name',l:'Họ tên',req:true,h:['full name','họ tên','name','tên','fullname','ho ten']},
-  {k:'dept',l:'Bộ phận',req:false,h:['department','bộ phận','dept','bo phan']},
-  {k:'pos',l:'Chức danh',req:false,h:['position','chức danh','job title','title']},
-  {k:'dob',l:'Ngày sinh',req:false,h:['date of birth','dob','ngày sinh','ngay sinh','birthday']},
-  {k:'join',l:'Ngày vào làm',req:false,h:['join date','ngày vào','hire date','start date','ngay vao']},
-  {k:'phone',l:'Số điện thoại',req:false,h:['phone','số điện thoại','sdt','mobile','tel']},
-  {k:'status',l:'Trạng thái',req:false,h:['status','trạng thái','trang thai','active']},
+  {k:'id',l:'Mã employees',req:true,h:['employee id','emp id','mã nv','mã employees','id','employee_id']},
+  {k:'name',l:'Full Name',req:true,h:['full name','họ tên','name','tên','fullname','ho ten']},
+  {k:'dept',l:'Departments',req:false,h:['department','bộ phận','dept','bo phan']},
+  {k:'pos',l:'Position',req:false,h:['position','chức danh','job title','title']},
+  {k:'dob',l:'Date of Birth',req:false,h:['date of birth','dob','ngày sinh','ngay sinh','birthday']},
+  {k:'join',l:'Join Date làm',req:false,h:['join date','ngày vào','hire date','start date','ngay vao']},
+  {k:'phone',l:'Phone',req:false,h:['phone','số điện thoại','sdt','mobile','tel']},
+  {k:'status',l:'Status',req:false,h:['status','trạng thái','trang thai','active']},
   {k:'email',l:'Email',req:false,h:['email','e-mail','mail']},
 ];
 function autoMap(hints){
@@ -1131,7 +1131,7 @@ function doImport(){
   const ws=xWB.Sheets[document.getElementById('shsel').value];
   const rows=XLSX.utils.sheet_to_json(ws,{defval:''});
   const mp={};FDEFS.forEach(f=>{mp[f.k]=document.getElementById('mp-'+f.k).value;});
-  if(!mp.id||!mp.name){alert('Cần chọn cột Mã nhân viên và Họ tên!');return;}
+  if(!mp.id||!mp.name){alert('Cần chọn cột Mã employees và Full Name!');return;}
   let add=0,upd=0,skip=0;
   rows.forEach(row=>{
     const id=String(row[mp.id]||'').trim(),name=String(row[mp.name]||'').trim();
@@ -1142,9 +1142,9 @@ function doImport(){
   });
   const res=document.getElementById('imp-res');res.style.display='block';
   res.querySelector('.box-body').innerHTML=`<div class="ib s">
-    <strong>✓ Import hoàn tất!</strong><br>
-    Thêm mới: <strong>${add}</strong> nhân viên &nbsp;|&nbsp; Cập nhật: <strong>${upd}</strong> &nbsp;|&nbsp; Bỏ qua: <strong>${skip}</strong>
-    ${DB.sp.url?`<br><br><button class="btn bsp" style="margin-top:7px" onclick="loadAllPics();nav('settings')">🖼 Tải ảnh từ SharePoint ngay</button>`:'<br><br><button class="btn bs" onclick="nav(\'settings\')" style="margin-top:7px">⚙ Cấu hình SharePoint để tải ảnh</button>'}
+    <strong>✓ Import Complete!</strong><br>
+    Added: <strong>${add}</strong> employees &nbsp;|&nbsp; Updated: <strong>${upd}</strong> &nbsp;|&nbsp; Skipped: <strong>${skip}</strong>
+    ${DB.sp.url?`<br><br><button class="btn bsp" style="margin-top:7px" onclick="loadAllPics();nav('settings')">🖼 Load Photos from SharePoint</button>`:'<br><br><button class="btn bs" onclick="nav(\'settings\')" style="margin-top:7px">⚙ Configure SharePoint to load photos</button>'}
   </div>`;
   updSbf();rDash();saveDB();
 }
@@ -1160,24 +1160,24 @@ function rDash(){
   const ex=DB.certs.filter(c=>cSt(c.exp)==='Expiring Soon').length;
   const xp=DB.certs.filter(c=>cSt(c.exp)==='Expired').length;
   document.getElementById('kgrid').innerHTML=`
-    <div class="kpi" data-i="👷"><div class="kpi-lbl">Tổng nhân viên</div><div class="kpi-val">${DB.emps.length}</div><div class="kpi-sub">${DB.emps.filter(e=>e.status==='Active').length} đang hoạt động</div></div>
-    <div class="kpi g" data-i="✓"><div class="kpi-lbl">Chứng chỉ hiệu lực</div><div class="kpi-val">${vl}</div></div>
-    <div class="kpi o" data-i="⏰"><div class="kpi-lbl">Sắp hết hạn</div><div class="kpi-val">${ex}</div><div class="kpi-sub">trong 30 ngày</div></div>
-    <div class="kpi r" data-i="⚠"><div class="kpi-lbl">Đã hết hạn</div><div class="kpi-val">${xp}</div></div>`;
+    <div class="kpi" data-i="👷"><div class="kpi-lbl">Total Employees</div><div class="kpi-val">${DB.emps.length}</div><div class="kpi-sub">${DB.emps.filter(e=>e.status==='Active').length} active</div></div>
+    <div class="kpi g" data-i="✓"><div class="kpi-lbl">Certificates hiệu lực</div><div class="kpi-val">${vl}</div></div>
+    <div class="kpi o" data-i="⏰"><div class="kpi-lbl">Expiring Soon</div><div class="kpi-val">${ex}</div><div class="kpi-sub">within 30 days</div></div>
+    <div class="kpi r" data-i="⚠"><div class="kpi-lbl">Expired</div><div class="kpi-val">${xp}</div></div>`;
   const bn=document.getElementById('src-banner');
-  if(DB.src){bn.style.display='flex';bn.innerHTML=`<span class="tg">📊</span> <strong>${DB.src.name}</strong> — ${DB.emps.length} nhân viên${DB.sp.url?' | 🔷 SharePoint: '+DB.sp.url.substring(0,38)+'...':''}<button style="margin-left:auto;background:none;border:1px solid #b7e4c7;border-radius:4px;padding:2px 9px;font-size:11px;cursor:pointer;color:var(--green)" onclick="nav('import')">Cập nhật</button>`;}
+  if(DB.src){bn.style.display='flex';bn.innerHTML=`<span class="tg">📊</span> <strong>${DB.src.name}</strong> — ${DB.emps.length} employees${DB.sp.url?' | 🔷 SharePoint: '+DB.sp.url.substring(0,38)+'...':''}<button style="margin-left:auto;background:none;border:1px solid #b7e4c7;border-radius:4px;padding:2px 9px;font-size:11px;cursor:pointer;color:var(--green)" onclick="nav('import')">Update</button>`;}
   const alerts=DB.certs.filter(c=>cSt(c.exp)!=='Valid').sort((a,b)=>new Date(a.exp)-new Date(b.exp));
   const al=document.getElementById('alist');
   if(!DB.emps.length){
     al.innerHTML=`<div class="es" style="background:#fff;border-radius:7px;padding:24px;line-height:2">
-      Chưa có dữ liệu nhân viên.<br>
-      <button class="btn bp" onclick="nav('employees')" style="margin-top:8px">+ Thêm nhân viên</button>
+      No employee data.<br>
+      <button class="btn bp" onclick="nav('employees')" style="margin-top:8px">+ Add Employee</button>
       &nbsp;
       <button class="btn bs" onclick="nav('import')" style="margin-top:8px">📊 Import Excel</button>
     </div>`;
     return;
   }
-  if(!alerts.length){al.innerHTML='<div class="es" style="background:#fff;border-radius:7px;padding:24px">✓ Không có cảnh báo hết hạn</div>';return;}
+  if(!alerts.length){al.innerHTML='<div class="es" style="background:#fff;border-radius:7px;padding:24px">✓ No expiry alerts</div>';return;}
   al.innerHTML=alerts.slice(0,6).map(c=>{
     const s=cSt(c.exp),d=dL(c.exp);
     const em=DB.emps.find(e=>e.id===c.eid);
@@ -1185,10 +1185,10 @@ function rDash(){
       ${em?avH(em,34):''}
       <div style="flex:1"><strong style="font-size:12.5px">${c.enm}</strong><br><small style="font-size:11.5px;color:#aaa">${c.pnm} — ${c.id}</small></div>
       <div style="text-align:right;margin-right:8px">
-        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;background:#f0f0f0;border-radius:20px;padding:2px 9px">${d<0?'Quá '+Math.abs(d)+'ng':'Còn '+d+'ng'}</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;background:#f0f0f0;border-radius:20px;padding:2px 9px">${d<0?'Over '+Math.abs(d)+'ng':'Left: '+d+'ng'}</div>
         <div style="margin-top:3px">${sBadge(s)}</div>
       </div>
-      <button class="ab" onclick="oRenew('${c.id}')" style="background:var(--orange);color:#fff;border:none;font-weight:600;padding:5px 11px">Gia hạn</button>
+      <button class="ab" onclick="oRenew('${c.id}')" style="background:var(--orange);color:#fff;border:none;font-weight:600;padding:5px 11px">Renewal</button>
     </div>`;
   }).join('');
   document.getElementById('rctb').innerHTML=[...DB.certs].reverse().slice(0,8).map(c=>`<tr><td style="font-family:'JetBrains Mono',monospace;font-size:11px">${c.id}</td><td>${c.enm}</td><td>${sBadge(cSt(c.exp))}</td></tr>`).join('');
@@ -1198,7 +1198,7 @@ function rDash(){
 function rEmp(){
   const depts=[...new Set(DB.emps.map(e=>e.dept))];
   const sel=document.getElementById('edept'),cv=sel.value;
-  sel.innerHTML='<option value="">Tất cả bộ phận</option>'+depts.map(d=>`<option${d===cv?' selected':''}>${d}</option>`).join('');
+  sel.innerHTML='<option value="">All Departments</option>'+depts.map(d=>`<option${d===cv?' selected':''}>${d}</option>`).join('');
   const f=sel.value,s=document.getElementById('esrch').value.toLowerCase();
   let em=DB.emps;if(f)em=em.filter(e=>e.dept===f);if(s)em=em.filter(e=>(e.id+e.name+e.dept+e.pos).toLowerCase().includes(s));
   document.getElementById('ecnt').textContent=`${em.length}/${DB.emps.length}`;
@@ -1213,16 +1213,16 @@ function rEmp(){
       <td>${sBadge(e.status)}</td>
       <td><span class="badge bv">${eCnt(e.id)}</span></td>
       <td style="display:flex;gap:5px;white-space:nowrap">
-        <button class="ab" onclick="oEmp('${e.id}')">Sửa</button>
-        <button class="ab" onclick="changePhoto('${e.id}')" title="Đổi ảnh">📷</button>
-        ${e.photo?`<button class="ab dx" onclick="removePhoto('${e.id}')" title="Xóa ảnh">🗑</button>`:''}
-        <button class="ab dx" onclick="delEmp('${e.id}')">Xóa NV</button>
+        <button class="ab" onclick="oEmp('${e.id}')">Edit</button>
+        <button class="ab" onclick="changePhoto('${e.id}')" title="Đổi photos">📷</button>
+        ${e.photo?`<button class="ab dx" onclick="removePhoto('${e.id}')" title="Delete photos">🗑</button>`:''}
+        <button class="ab dx" onclick="delEmp('${e.id}')">Delete</button>
       </td>
-    </tr>`).join(''):'<tr><td colspan="9" class="es">Không có dữ liệu</td></tr>';
+    </tr>`).join(''):'<tr><td colspan="9" class="es">No data</td></tr>';
 }
 function oEmp(id){
   const e=id?DB.emps.find(e=>e.id===id):null;
-  document.getElementById('m-emp-t').textContent=e?'SỬA NHÂN VIÊN':'THÊM NHÂN VIÊN';
+  document.getElementById('m-emp-t').textContent=e?'EDIT EMPLOYEE':'ADD EMPLOYEE';
   document.getElementById('fe-id').value=e?.id||autoId('EMP',DB.emps);
   document.getElementById('fe-id').readOnly=!!e;
   document.getElementById('fe-nm').value=e?.name||'';
@@ -1240,12 +1240,12 @@ function oEmp(id){
 }
 function saveEmp(){
   const id=document.getElementById('fe-id').value.trim(),nm=document.getElementById('fe-nm').value.trim();
-  if(!id||!nm){alert('Mã và tên là bắt buộc!');return;}
+  if(!id||!nm){alert('ID and name are required!');return;}
   const obj={id,name:nm,dept:document.getElementById('fe-dp').value,pos:document.getElementById('fe-po').value,dob:document.getElementById('fe-db').value,join:document.getElementById('fe-jn').value,phone:document.getElementById('fe-ph').value,status:document.getElementById('fe-st').value,email:'',photo:''};
   const i=DB.emps.findIndex(e=>e.id===id);if(i>=0){obj.photo=DB.emps[i].photo;DB.emps[i]=obj;}else DB.emps.push(obj);
   cM('m-emp');rEmp();rDash();saveDB();
 }
-function delEmp(id){if(!confirm(`Xóa ${id}?`))return;DB.emps=DB.emps.filter(e=>e.id!==id);rEmp();rDash();saveDB();}
+function delEmp(id){if(!confirm(`Delete ${id}?`))return;DB.emps=DB.emps.filter(e=>e.id!==id);rEmp();rDash();saveDB();}
 
 // ─── PROCESSES ──────────────────────────────────────────────────────────────
 function rProc(){
@@ -1257,12 +1257,12 @@ function rProc(){
       <td><strong>${x.name}</strong></td><td><span class="pill">${x.cat}</span></td>
       <td style="text-align:center;font-weight:600;color:var(--red)">${x.vl}</td>
       <td style="color:#aaa;font-size:12px">${x.desc}</td><td>${sBadge(x.status)}</td>
-      <td style="display:flex;gap:5px"><button class="ab" onclick="oProc('${x.id}')">Sửa</button><button class="ab dx" onclick="delProc('${x.id}')">Xóa</button></td>
-    </tr>`).join(''):'<tr><td colspan="7" class="es">Không có dữ liệu</td></tr>';
+      <td style="display:flex;gap:5px"><button class="ab" onclick="oProc('${x.id}')">Edit</button><button class="ab dx" onclick="delProc('${x.id}')">Delete</button></td>
+    </tr>`).join(''):'<tr><td colspan="7" class="es">No data</td></tr>';
 }
 function oProc(id){
   const p=id?DB.procs.find(p=>p.id===id):null;
-  document.getElementById('m-proc-t').textContent=p?'SỬA QUY TRÌNH':'THÊM QUY TRÌNH';
+  document.getElementById('m-proc-t').textContent=p?'EDIT PROCESS':'ADD PROCESS';
   document.getElementById('fp-id').value=p?.id||autoId('PROC',DB.procs);
   document.getElementById('fp-id').readOnly=!!p;
   document.getElementById('fp-nm').value=p?.name||'';
@@ -1274,12 +1274,12 @@ function oProc(id){
 }
 function saveProc(){
   const id=document.getElementById('fp-id').value.trim(),nm=document.getElementById('fp-nm').value.trim();
-  if(!id||!nm){alert('Mã và tên là bắt buộc!');return;}
+  if(!id||!nm){alert('ID and name are required!');return;}
   const obj={id,name:nm,cat:document.getElementById('fp-ct').value,vl:parseInt(document.getElementById('fp-vl').value)||12,desc:document.getElementById('fp-ds').value,status:document.getElementById('fp-st').value};
   const i=DB.procs.findIndex(p=>p.id===id);if(i>=0)DB.procs[i]=obj;else DB.procs.push(obj);
   cM('m-proc');rProc();saveDB();
 }
-function delProc(id){if(!confirm(`Xóa ${id}?`))return;DB.procs=DB.procs.filter(p=>p.id!==id);rProc();saveDB();}
+function delProc(id){if(!confirm(`Delete ${id}?`))return;DB.procs=DB.procs.filter(p=>p.id!==id);rProc();saveDB();}
 
 // ─── CERTIFICATES ────────────────────────────────────────────────────────────
 function rCert(){
@@ -1295,14 +1295,14 @@ function rCert(){
     <td>${sBadge(st)}</td>
     <td style="display:flex;gap:5px;white-space:nowrap">
       <button class="ab" onclick="loadCard('${x.id}');nav('card')">🖨</button>
-      ${st!=='Valid'?`<button class="ab" onclick="oRenew('${x.id}')" style="border-color:var(--orange);color:var(--orange)">Gia hạn</button>`:''}
-      <button class="ab dx" onclick="delCert('${x.id}')">Xóa</button>
+      ${st!=='Valid'?`<button class="ab" onclick="oRenew('${x.id}')" style="border-color:var(--orange);color:var(--orange)">Renewal</button>`:''}
+      <button class="ab dx" onclick="delCert('${x.id}')">Delete</button>
     </td>
-  </tr>`;}).join(''):'<tr><td colspan="8" class="es">Không có dữ liệu</td></tr>';
+  </tr>`;}).join(''):'<tr><td colspan="8" class="es">No data</td></tr>';
 }
 function oCert(){
-  document.getElementById('fc-em').innerHTML='<option value="">— Chọn nhân viên —</option>'+DB.emps.map(e=>`<option value="${e.id}">${e.id} — ${e.name}</option>`).join('');
-  document.getElementById('fc-pr').innerHTML='<option value="">— Chọn quy trình —</option>'+DB.procs.filter(p=>p.status==='Active').map(p=>`<option value="${p.id}">${p.name} (${p.vl}th)</option>`).join('');
+  document.getElementById('fc-em').innerHTML='<option value="">— Select Employee —</option>'+DB.emps.map(e=>`<option value="${e.id}">${e.id} — ${e.name}</option>`).join('');
+  document.getElementById('fc-pr').innerHTML='<option value="">— Select Process —</option>'+DB.procs.filter(p=>p.status==='Active').map(p=>`<option value="${p.id}">${p.name} (${p.vl}th)</option>`).join('');
   document.getElementById('fc-dt').value=today();
   document.getElementById('exp-prev').style.display='none';
   document.getElementById('m-cert').classList.add('open');
@@ -1315,13 +1315,13 @@ const _fcpr=document.getElementById('fc-pr');if(_fcpr)_fcpr.addEventListener('ch
 const _fcdt=document.getElementById('fc-dt');if(_fcdt)_fcdt.addEventListener('change',updExp);
 function saveCert(){
   const eid=document.getElementById('fc-em').value,pid=document.getElementById('fc-pr').value,lv=document.getElementById('fc-lv').value,iss=document.getElementById('fc-dt').value;
-  if(!eid||!pid||!lv||!iss){alert('Vui lòng điền đầy đủ!');return;}
+  if(!eid||!pid||!lv||!iss){alert('Please fill in all fields!');return;}
   const em=DB.emps.find(e=>e.id===eid),pr=DB.procs.find(p=>p.id===pid);
   const c={id:nCId(),eid,enm:em.name,pid,pnm:pr.name,lv,iss,exp:aM(iss,pr.vl),by:'Admin'};
   DB.certs.push(c);cM('m-cert');rCert();rDash();saveDB();
-  alert(`Đã cấp ${c.id}\nHết hạn: ${fD(c.exp)}`);
+  alert(`Issued ${c.id}\nExpiry: ${fD(c.exp)}`);
 }
-function delCert(id){if(!confirm(`Xóa ${id}?`))return;DB.certs=DB.certs.filter(c=>c.id!==id);rCert();rDash();saveDB();}
+function delCert(id){if(!confirm(`Delete ${id}?`))return;DB.certs=DB.certs.filter(c=>c.id!==id);rCert();rDash();saveDB();}
 
 // ─── RENEWAL ────────────────────────────────────────────────────────────────
 function rRen(){
@@ -1337,10 +1337,10 @@ function rRen(){
       <td style="font-family:'JetBrains Mono',monospace;font-size:11.5px">${x.id}</td>
       <td><strong>${x.enm}</strong></td><td>${x.pnm}</td>
       <td style="font-size:12px;font-weight:500">${fD(x.exp)}</td>
-      <td><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:${d<0?'var(--red)':d<=30?'var(--orange)':'var(--green)'}">${d<0?'Quá '+Math.abs(d):'Còn '+d}ng</span></td>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:${d<0?'var(--red)':d<=30?'var(--orange)':'var(--green)'}">${d<0?'Over '+Math.abs(d):'Left: '+d}ng</span></td>
       <td>${sBadge(st)}</td>
-      <td>${st!=='Valid'?`<button class="ab" onclick="oRenew('${x.id}')" style="border-color:var(--orange);color:var(--orange);font-weight:600">Gia hạn</button>`:'<span style="color:#ddd;font-size:12px">—</span>'}</td>
-    </tr>`;}).join(''):'<tr><td colspan="7" class="es">Không có dữ liệu</td></tr>';
+      <td>${st!=='Valid'?`<button class="ab" onclick="oRenew('${x.id}')" style="border-color:var(--orange);color:var(--orange);font-weight:600">Renewal</button>`:'<span style="color:#ddd;font-size:12px">—</span>'}</td>
+    </tr>`;}).join(''):'<tr><td colspan="7" class="es">No data</td></tr>';
 }
 function oRenew(id){
   const c=DB.certs.find(c=>c.id===id);if(!c)return;
@@ -1348,21 +1348,21 @@ function oRenew(id){
   document.getElementById('rinf').textContent=`${c.enm} — ${c.pnm}`;
   document.getElementById('fr-dt').value=today();
   const p=DB.procs.find(p=>p.id===c.pid);
-  document.getElementById('rnexp').innerHTML=p?`Hết hạn mới: <strong>${fD(aM(today(),p.vl))}</strong> (+${p.vl} tháng)`:'';
+  document.getElementById('rnexp').innerHTML=p?`Expiry mới: <strong>${fD(aM(today(),p.vl))}</strong> (+${p.vl} months)`:'';
   document.getElementById('m-renew').dataset.cid=id;
   document.getElementById('m-renew').classList.add('open');
 }
 const _frdt=document.getElementById('fr-dt');if(_frdt)_frdt.addEventListener('input',function(){
   const c=DB.certs.find(c=>c.id===document.getElementById('m-renew').dataset.cid);if(!c)return;
   const p=DB.procs.find(p=>p.id===c.pid);
-  if(p&&this.value)document.getElementById('rnexp').innerHTML=`Hết hạn mới: <strong>${fD(aM(this.value,p.vl))}</strong> (+${p.vl} tháng)`;
+  if(p&&this.value)document.getElementById('rnexp').innerHTML=`Expiry mới: <strong>${fD(aM(this.value,p.vl))}</strong> (+${p.vl} months)`;
 });
 function doRenew(){
   const id=document.getElementById('m-renew').dataset.cid,dt=document.getElementById('fr-dt').value;
-  if(!dt){alert('Chọn ngày!');return;}
+  if(!dt){alert('Please select a date!');return;}
   const c=DB.certs.find(c=>c.id===id);if(!c)return;
   const p=DB.procs.find(p=>p.id===c.pid);if(p){c.iss=dt;c.exp=aM(dt,p.vl);}
-  cM('m-renew');rRen();rDash();rCert();saveDB();alert(`Đã gia hạn ${id}\nHết hạn mới: ${fD(c.exp)}`);
+  cM('m-renew');rRen();rDash();rCert();saveDB();alert(`Renewed ${id}\nExpiry mới: ${fD(c.exp)}`);
 }
 
 // ─── SKILL MATRIX ────────────────────────────────────────────────────────────
@@ -1373,7 +1373,7 @@ function rMatrix(){
   DB.certs.forEach(c=>{if(!mx[c.eid])mx[c.eid]={};const n=parseInt(c.lv.charAt(6))||0;if(!mx[c.eid][c.pid]||n>mx[c.eid][c.pid])mx[c.eid][c.pid]=n;});
   const lc=['lc0','lc1','lc2','lc3','lc4'],ll=['—','L1','L2','L3','L4'];
   document.getElementById('mxh').innerHTML=`<tr>
-    <th style="min-width:150px;background:#f8f8f8;padding:9px 13px;font-size:10.5px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;color:#999">Nhân viên</th>
+    <th style="min-width:150px;background:#f8f8f8;padding:9px 13px;font-size:10.5px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;color:#999">Employees</th>
     ${procs.map(p=>`<th style="background:#f8f8f8;padding:8px 5px;font-size:10px;text-align:center;line-height:1.3;max-width:80px;white-space:normal;font-weight:600;color:#999">${p.name}</th>`).join('')}
   </tr>`;
   document.getElementById('mxb').innerHTML=emps.map(e=>`
@@ -1409,13 +1409,13 @@ function rBulkList(){
   const depts = [...new Set(DB.emps.map(e=>e.dept))];
   const dSel = document.getElementById('bulk-dept');
   const curD = dSel.value;
-  dSel.innerHTML = '<option value="">Tất cả bộ phận</option>' +
+  dSel.innerHTML = '<option value="">All Departments</option>' +
     depts.map(d=>`<option value="${d}"${d===curD?' selected':''}>${deptCode(d)} — ${d}</option>`).join('');
 
   // Populate proc filter
   const pSel = document.getElementById('bulk-proc');
   const curP = pSel.value;
-  pSel.innerHTML = '<option value="">Tất cả quy trình</option>' +
+  pSel.innerHTML = '<option value="">All Processes</option>' +
     DB.procs.map(p=>`<option value="${p.id}"${p.id===curP?' selected':''}>${p.name}</option>`).join('');
 
   let certs = DB.certs;
@@ -1454,7 +1454,7 @@ function rBulkList(){
         ${expCnt?`<span class="badge be">${expCnt} expiring</span>`:''}
       </td>
     </tr>`;
-  }).join('') || '<tr><td colspan="6" class="es">Không có nhân viên</td></tr>';
+  }).join('') || '<tr><td colspan="6" class="es">Không có employees</td></tr>';
 
   updateBulkCount();
 }
@@ -1482,7 +1482,7 @@ function clearBulkSel(){
 }
 function updateBulkCount(){
   const el = document.getElementById('bulk-count-label');
-  if(el) el.textContent = `${bulkSelected.size} nhân viên được chọn`;
+  if(el) el.textContent = `${bulkSelected.size} employees selected`;
 }
 
 // ─── CARD: Milwaukee template overlay ────────────────────────────────────────
@@ -1593,7 +1593,7 @@ function buildEmpCard(emp){
 
 // Backward compat — single cert card (dùng cho tab đơn)
 function buildCardHtml(c, emp){
-  // Vẫn giữ để dlCard() hoạt động, nhưng bulkPrint dùng buildEmpCard
+  // Vẫn giữ để dlCard() hoạt động, nhưng bulkPrint use buildEmpCard
   const st = cSt(c.exp);
   const stColor = st==='Valid'?'#2ecc71':st==='Expiring Soon'?'#f1c40f':'#e74c3c';
   const stLabel = st==='Valid'?'✔ VALID':st==='Expiring Soon'?'⚠ EXPIRING':'✕ EXPIRED';
@@ -1611,13 +1611,13 @@ function buildCardHtml(c, emp){
       <div style="flex:1;overflow:hidden">
         <div style="font-size:7.5pt;font-weight:900;color:#111;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.enm}</div>
         <div style="font-size:5.5pt;color:#aaa;font-family:monospace">${c.eid}</div>
-        <div style="font-size:5.5pt;color:#bbb;text-transform:uppercase;letter-spacing:.3px;margin-top:1.5mm">Quy trình</div>
+        <div style="font-size:5.5pt;color:#bbb;text-transform:uppercase;letter-spacing:.3px;margin-top:1.5mm">Processes</div>
         <div style="font-size:7pt;font-weight:700;color:#222;line-height:1.2">${c.pnm}</div>
       </div>
     </div>
     <div style="background:#f8f8f8;padding:2mm 3mm;display:flex;justify-content:space-between;align-items:center;border-top:0.2mm solid #eee;border-bottom:0.2mm solid #eee;flex:1">
       <div>
-        <div style="font-size:5pt;color:#bbb;text-transform:uppercase">Cấp độ</div>
+        <div style="font-size:5pt;color:#bbb;text-transform:uppercase">Level</div>
         <div style="font-size:8pt;font-weight:900;color:#111">${c.lv.replace('Level ','L').replace(' - ',' ')}</div>
       </div>
       <div style="text-align:right;font-size:6pt;color:#aaa">
@@ -1634,15 +1634,15 @@ function buildCardHtml(c, emp){
 }
 
 function bulkPrint(){
-  if(bulkSelected.size===0){ alert('Vui lòng chọn ít nhất 1 nhân viên!'); return; }
-  // bulkSelected chứa empId (không phải certId)
+  if(bulkSelected.size===0){ alert('Vui lòng chọn ít nhất 1 employees!'); return; }
+  // bulkSelected contains empId (not certId)
   const emps = [...bulkSelected].map(eid=>DB.emps.find(e=>e.id===eid)).filter(Boolean);
 
   // Build 1 card per employee (shows all valid/expiring certs)
   const cards = emps.map(emp=>buildEmpCard(emp)).filter(Boolean);
-  if(cards.length===0){ alert('Không có thẻ nào để in! Kiểm tra lại chứng chỉ của nhân viên đã chọn.'); return; }
+  if(cards.length===0){ alert('Không có thẻ nào để in! Kiểm tra lại chứng chỉ của employees đã chọn.'); return; }
 
-  // A4 portrait: 3 cols × 3 rows = 9 thẻ/trang
+  // A4 portrait: 3 cols × 3 rows = 9 cards/page
   const PER_PAGE = 9;
   const pages = [];
   for(let i=0; i<cards.length; i+=PER_PAGE){
@@ -1656,7 +1656,7 @@ function bulkPrint(){
   const win = window.open('','_blank','width=960,height=760');
   win.document.write(`<!DOCTYPE html><html><head>
     <meta charset="UTF-8">
-    <title>In thẻ — ${total} nhân viên</title>
+    <title>In thẻ — ${total} employees</title>
     <style>
       *{margin:0;padding:0;box-sizing:border-box}
       body{background:#d8d8d8;font-family:Arial,sans-serif}
@@ -1700,12 +1700,12 @@ function bulkPrint(){
     </style>
   </head><body>
     <div class="info-bar">
-      <span>📋 ${total} nhân viên &nbsp;·&nbsp; ${pages.length} trang A4 &nbsp;·&nbsp; 3×3 = 9 thẻ/trang &nbsp;·&nbsp; 54×90mm</span>
-      <button onclick="window.print()">🖨 In ngay (Ctrl+P)</button>
+      <span>📋 ${total} employees &nbsp;·&nbsp; ${pages.length} A4 pages &nbsp;·&nbsp; 3×3 = 9 cards/page &nbsp;·&nbsp; 54×90mm</span>
+      <button onclick="window.print()">🖨 Print Now (Ctrl+P)</button>
     </div>
     ${pages.join('')}
     <div style="text-align:center;padding:16px;color:#999;font-size:12px">
-      Cài đặt in: Paper A4 · Margins: <strong>None</strong> · Scale: <strong>100%</strong>
+      Print settings: Paper A4 · Margins: <strong>None</strong> · Scale: <strong>100%</strong>
     </div>
     <scr`+`ipt>
       window.onload=function(){
@@ -1727,13 +1727,13 @@ function rCardList(){
       <td style="font-family:'JetBrains Mono',monospace;font-size:11px">${x.id}</td>
       <td>${x.enm}</td>
       <td style="font-size:11.5px;color:#aaa">${x.pnm}</td>
-      <td><button class="ab" onclick="loadCard('${x.id}')" style="background:var(--red);color:#fff;border:none;font-weight:600">Xem</button></td>
+      <td><button class="ab" onclick="loadCard('${x.id}')" style="background:var(--red);color:#fff;border:none;font-weight:600">View</button></td>
     </tr>`).join('');
 }
 function loadCard(id){
   const c=DB.certs.find(c=>c.id===id); if(!c)return;
   const emp=DB.emps.find(e=>e.id===c.eid); if(!emp)return;
-  // Render dùng buildEmpCard giống in hàng loạt
+  // Render use buildEmpCard giống in hàng loạt
   const html = buildEmpCard(emp);
   const ccp = document.getElementById('ccp');
   ccp.innerHTML = html;
@@ -1747,7 +1747,7 @@ function loadCard(id){
 function printCard(){
   const ccp = document.getElementById('ccp');
   const cardDiv = ccp ? ccp.querySelector('div[style*="54mm"]') : null;
-  if(!cardDiv){ alert('Vui lòng chọn chứng chỉ trước!'); return; }
+  if(!cardDiv){ alert('Please select a certificate first!'); return; }
   const win = window.open('','_blank','width=400,height=600');
   win.document.write(`<!DOCTYPE html><html><head>
     <meta charset="UTF-8">
@@ -1814,12 +1814,12 @@ function doLogin(){
   try{sessionStorage.setItem('opcertms_sess',JSON.stringify(currentUser));}catch(e){}
   applyRole();
   document.getElementById('login-screen').classList.add('hidden');
-  showToast(`Xin chào, ${user.label}!`,'#27AE60',3000);
+  showToast(`Welcome, ${user.label}!`,'#27AE60',3000);
   initSync();
 }
 
 function doLogout(){
-  if(!confirm('Đăng xuất?'))return;
+  if(!confirm('Logout?'))return;
   currentUser=null;
   try{sessionStorage.removeItem('opcertms_sess');}catch(e){}
   document.getElementById('l-user').value='';
@@ -1846,19 +1846,19 @@ function applyRole(){
 }
 
 function requireRole(...roles){
-  if(!currentUser){alert('Vui lòng đăng nhập!');return false;}
+  if(!currentUser){alert('Please log in!');return false;}
   if(!roles.includes(currentUser.role)){
-    alert(`Bạn không có quyền thực hiện thao tác này.\nYêu cầu: ${roles.join(' hoặc ')}`);
+    alert(`You do not have permission to perform this action.\nRequired: ${roles.join(' or ')}`);
     return false;
   }
   return true;
 }
 
 // ═══ JSONBIN SYNC ══════════════════════════════════════════════════════════════
-// Config — điền sau khi tạo tài khoản JSONBin.io (miễn phí)
+// Config — điền sau khi tạo account JSONBin.io (free)
 let SYNC_CFG = {
-  binId:  '',   // bin ID từ JSONBin.io  (VD: "64abc123...")
-  apiKey: '',   // X-Master-Key từ JSONBin.io
+  binId:  '',   // bin ID from JSONBin.io  (VD: "64abc123...")
+  apiKey: '',   // X-Master-Key from JSONBin.io
 };
 let _syncTimer = null;
 let _dirty = false;
@@ -1977,7 +1977,7 @@ function updateSyncStatus(state){
   const el=document.getElementById('sync-status-dot');
   const lb=document.getElementById('sync-status-label');
   if(!el)return;
-  const map={saved:['#27AE60','☁ Đã đồng bộ'],pulling:['#0078d4','⟳ Đang tải...'],pushing:['#0078d4','⟳ Đang lưu...'],error:['#E67E22','⚠ Lỗi sync'],offline:['#aaa','○ Offline (local)'],ok:['#27AE60','✓ Kết nối OK']};
+  const map={saved:['#27AE60','☁ Synced'],pulling:['#0078d4','⟳ Loading...'],pushing:['#0078d4','⟳ Saving...'],error:['#E67E22','⚠ Lỗi sync'],offline:['#aaa','○ Offline (local)'],ok:['#27AE60','✓ Kết nối OK']};
   const [color,label]=map[state]||['#aaa','—'];
   el.style.background=color; if(lb)lb.textContent=label;
 }
@@ -2001,7 +2001,7 @@ function idbDel(key){return new Promise((res,rej)=>{const tx=_idb.transaction(ID
 async function saveDB(){
   markDirty();
   saveLocal();
-  showToast('💾 Đã lưu','#27AE60',1500);
+  showToast('💾 Saved','#27AE60',1500);
 }
 async function deleteEmpPhoto(id){
   if(_idb) try{await idbDel('ph_'+id);}catch(e){}
@@ -2024,7 +2024,7 @@ function rDeptsPage(){
   const tbody=document.getElementById('dept-tbody');
   if(!tbody)return;
   if(!depts.length){
-    tbody.innerHTML='<tr><td colspan="5" class="es">Chưa có bộ phận nào. Thêm bộ phận ở trên.</td></tr>';
+    tbody.innerHTML='<tr><td colspan="5" class="es">No departments yet. Add one above.</td></tr>';
     return;
   }
   tbody.innerHTML=depts.map(d=>{
@@ -2036,10 +2036,10 @@ function rDeptsPage(){
         background:#e8f4fd;color:#1565c0;padding:3px 8px;border-radius:4px">${code}</span></td>
       <td><strong style="font-size:13px">${d}</strong></td>
       <td><span class="badge bv">${empCnt} NV</span></td>
-      <td><span class="badge" style="background:#e8f4fd;color:#1565c0">${ccCnt} CC</span></td>
+      <td><span class="badge" style="background:#e8f4fd;color:#1565c0">${ccCnt} certs</span></td>
       <td style="display:flex;gap:6px">
-        <button class="ab" onclick="oEditDept('${d}')">Sửa</button>
-        <button class="ab dx" onclick="removeDept('${d}')">Xóa</button>
+        <button class="ab" onclick="oEditDept('${d}')">Edit</button>
+        <button class="ab dx" onclick="removeDept('${d}')">Delete</button>
       </td>
     </tr>`;
   }).join('');
@@ -2057,7 +2057,7 @@ function renderDepts(){
           ${d}
           <button onclick="removeDept('${d}')" style="background:none;border:none;cursor:pointer;font-size:14px;color:#bbb;padding:0 0 0 4px;line-height:1">×</button>
         </div>`).join('')
-    : '<span style="font-size:12.5px;color:#bbb;font-style:italic">Chưa có bộ phận nào</span>';
+    : '<span style="font-size:12.5px;color:#bbb;font-style:italic">No departments yet</span>';
 }
 
 function addDept(){
@@ -2069,7 +2069,7 @@ function addDept(){
   const customCode=(codeInp?.value||'').trim().toUpperCase();
   if(!name){inp?.focus();return;}
   if(!DB.depts)DB.depts=[];
-  if(DB.depts.includes(name)){showToast('Bộ phận đã tồn tại','#E67E22');return;}
+  if(DB.depts.includes(name)){showToast('Departments đã tồn tại','#E67E22');return;}
   DB.depts.push(name);
   if(customCode) DEPT_CUSTOM_CODES[name]=customCode;
   if(inp)inp.value='';
@@ -2077,23 +2077,23 @@ function addDept(){
   renderDepts();
   rDeptsPage();
   saveDB();
-  showToast(`✓ Đã thêm bộ phận "${name}"`, '#27AE60');
+  showToast(`✓ Department "${name}"`, '#27AE60');
 }
 
 function removeDept(name){
   if(!requireRole('admin'))return;
   const empCnt=deptEmpCount(name);
   if(empCnt>0){
-    if(!confirm(`Bộ phận "${name}" đang có ${empCnt} nhân viên. Vẫn muốn xóa?`))return;
+    if(!confirm(`Departments "${name}" has ${empCnt} employees. Vẫn muốn xóa?`))return;
   } else {
-    if(!confirm(`Xóa bộ phận "${name}"?`))return;
+    if(!confirm(`Delete bộ phận "${name}"?`))return;
   }
   DB.depts=DB.depts.filter(d=>d!==name);
   delete DEPT_CUSTOM_CODES[name];
   renderDepts();
   rDeptsPage();
   saveDB();
-  showToast(`Đã xóa bộ phận "${name}"`, '#E67E22');
+  showToast(`Department "${name}"`, '#E67E22');
 }
 
 let _editDeptOrig='';
@@ -2107,9 +2107,9 @@ function oEditDept(name){
 function saveDeptEdit(){
   const newName=document.getElementById('fd-name').value.trim();
   const newCode=document.getElementById('fd-code').value.trim().toUpperCase();
-  if(!newName){alert('Tên bộ phận không được trống!');return;}
+  if(!newName){alert('Department Name không được trống!');return;}
   if(newName!==_editDeptOrig && DB.depts.includes(newName)){
-    showToast('Tên bộ phận đã tồn tại','#E67E22');return;
+    showToast('Department Name đã tồn tại','#E67E22');return;
   }
   // Update dept name in depts array
   const idx=DB.depts.indexOf(_editDeptOrig);
@@ -2124,7 +2124,7 @@ function saveDeptEdit(){
   rDeptsPage();
   rEmp();
   saveDB();
-  showToast(`✓ Đã cập nhật bộ phận "${newName}"`, '#27AE60');
+  showToast(`✓ Department "${newName}"`, '#27AE60');
 }
 
 // ─── CHANGE EMPLOYEE PHOTO ────────────────────────────────────────────────────
@@ -2140,7 +2140,7 @@ function handleChangePhoto(e){
   const file=e.target.files[0];
   if(!file||!_changePhotoEmpId)return;
   const emp=DB.emps.find(e=>e.id===_changePhotoEmpId);
-  if(!emp){showToast('Không tìm thấy nhân viên','#C0392B');return;}
+  if(!emp){showToast('Không tìm thấy employees','#C0392B');return;}
   const reader=new FileReader();
   reader.onload=ev=>{
     emp.photo=ev.target.result;
@@ -2148,7 +2148,7 @@ function handleChangePhoto(e){
     // Save photo to IndexedDB
     if(_idb) idbPut('ph_'+emp.id, emp.photo).catch(()=>{});
     saveDB();
-    showToast(`✓ Đã cập nhật ảnh: ${emp.name}`, '#27AE60', 2500);
+    showToast(`✓ Updated photos: ${emp.name}`, '#27AE60', 2500);
     _changePhotoEmpId=null;
     // Reset input
     document.getElementById('change-photo-input').value='';
@@ -2160,12 +2160,12 @@ function removePhoto(empId){
   if(!requireRole('admin'))return;
   const emp=DB.emps.find(e=>e.id===empId);
   if(!emp)return;
-  if(!confirm(`Xóa ảnh của ${emp.name}?`))return;
+  if(!confirm(`Delete photo of ${emp.name}?`))return;
   emp.photo='';
   if(_idb) idbDel('ph_'+empId).catch(()=>{});
   rEmp();
   saveDB();
-  showToast('Đã xóa ảnh nhân viên','#E67E22');
+  showToast('Đã xóa photos employees','#E67E22');
 }
 
 // ─── Role guard wrappers (applied once) ──────────────────────────────────────
@@ -2191,7 +2191,7 @@ function renderUsers(){
       <td style="padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600">${u}</td>
       <td style="padding:8px 12px;font-size:13px;color:#aaa">••••••••</td>
       <td style="padding:8px 12px"><span class="role-badge ${info.role}">${info.role==='admin'?'👑 Admin':info.role==='trainer'?'✏ Trainer':'👁 Viewer'}</span></td>
-      <td style="padding:8px 12px">${u!=='admin'?`<button class="ab dx" onclick="deleteUser('${u}')">Xóa</button>`:'<span style="font-size:11px;color:#ccc">mặc định</span>'}</td>
+      <td style="padding:8px 12px">${u!=='admin'?`<button class="ab dx" onclick="deleteUser('${u}')">Delete</button>`:'<span style="font-size:11px;color:#ccc">mặc định</span>'}</td>
     </tr>`).join('');
 }
 function saveUser(){
@@ -2199,18 +2199,18 @@ function saveUser(){
   const u=document.getElementById('nu-user').value.trim().toLowerCase();
   const p=document.getElementById('nu-pass').value;
   const r=document.getElementById('nu-role').value;
-  if(!u||!p){alert('Vui lòng nhập đầy đủ!');return;}
+  if(!u||!p){alert('Please fill in all fields!');return;}
   USERS[u]={pass:p,role:r,label:{admin:'Administrator',trainer:'Trainer',viewer:'Viewer'}[r]};
   try{localStorage.setItem('opcertms_users',JSON.stringify(USERS));}catch(e){}
   renderUsers();
   document.getElementById('nu-user').value='';
   document.getElementById('nu-pass').value='';
-  showToast('✓ Đã lưu tài khoản','#27AE60');
+  showToast('✓ Saved account','#27AE60');
 }
 function deleteUser(u){
   if(!requireRole('admin'))return;
-  if(u==='admin'){alert('Không thể xóa admin!');return;}
-  if(!confirm(`Xóa tài khoản "${u}"?`))return;
+  if(u==='admin'){alert('Cannot delete admin!');return;}
+  if(!confirm(`Delete account "${u}"?`))return;
   delete USERS[u];
   try{localStorage.setItem('opcertms_users',JSON.stringify(USERS));}catch(e){}
   renderUsers();
@@ -2246,21 +2246,21 @@ function saveSyncConfig(){
   SYNC_CFG.binId=document.getElementById('sync-bin-id').value.trim();
   SYNC_CFG.apiKey=document.getElementById('sync-api-key').value.trim();
   saveSyncCfg();
-  showToast('✓ Đã lưu cấu hình sync','#27AE60');
+  showToast('✓ Saved cấu hình sync','#27AE60');
   updateSyncStatus(isSyncConfigured()?'ok':'offline');
 }
 async function manualPull(){
   updateSyncStatus('pulling');
   const ok=await pullFromCloud();
-  if(ok){rDash();rEmp();updSbf();showToast('✓ Đã tải dữ liệu mới nhất','#0078d4',3000);updateSyncStatus('saved');}
-  else{showToast('✗ Không thể tải — kiểm tra cấu hình','#C0392B',3500);updateSyncStatus('error');}
+  if(ok){rDash();rEmp();updSbf();showToast('✓ Latest data loaded','#0078d4',3000);updateSyncStatus('saved');}
+  else{showToast('✗ Load failed — check config','#C0392B',3500);updateSyncStatus('error');}
 }
 async function manualPush(){
   updateSyncStatus('pushing');
   saveLocal();
   const ok=await pushToCloud();
-  if(ok){showToast('☁ Đã đẩy dữ liệu lên cloud','#0078d4',3000);updateSyncStatus('saved');}
-  else{showToast('✗ Không thể lưu — kiểm tra cấu hình','#C0392B',3500);updateSyncStatus('error');}
+  if(ok){showToast('☁ Data pushed to cloud','#0078d4',3000);updateSyncStatus('saved');}
+  else{showToast('✗ Save failed — check config','#C0392B',3500);updateSyncStatus('error');}
 }
 
 // ─── Export / Import JSON (offline backup) ───────────────────────────────────
@@ -2280,8 +2280,8 @@ function importJSON(){
         if(d.procs)DB.procs=d.procs;if(d.certs)DB.certs=d.certs;
         if(d.ctr!==undefined)DB.ctr=d.ctr;if(d.cfg)DB.cfg=d.cfg;if(d.src)DB.src=d.src;
         saveDB();rDash();updSbf();
-        alert(`✓ Đã import!\n${DB.emps.length} NV, ${DB.certs.length} CC`);
-      }catch(err){alert('Lỗi: '+err.message);}
+        alert(`✓ Đã import!\n${DB.emps.length} employees, ${DB.certs.length} certs`);
+      }catch(err){alert('Error: '+err.message);}
     };r.readAsText(f);
   };inp.click();
 }
@@ -2291,7 +2291,7 @@ async function initSync(){
   if(!isSyncConfigured())return;
   updateSyncStatus('pulling');
   const ok=await pullFromCloud();
-  if(ok){rDash();rEmp();updSbf();updateSyncStatus('saved');showToast('☁ Đồng bộ từ cloud thành công','#0078d4',3000);}
+  if(ok){rDash();rEmp();updSbf();updateSyncStatus('saved');showToast('☁ Synced from cloud successfully','#0078d4',3000);}
   else updateSyncStatus('offline');
 }
 
