@@ -1546,6 +1546,13 @@ function buildEmpCard(emp){
     '<table style="width:100%;height:100%;border-collapse:collapse;table-layout:fixed">'+
     '<tr>'+table+'</tr></table></div>';
 
+  // pDiv: overflow:visible để text dài wrap xuống dòng 2
+  const pDiv = (top, h, table) =>
+    '<div style="'+Z+'top:'+top+'%;left:24.7%;width:75.3%;height:'+h+'%;'+
+    'overflow:visible;box-sizing:border-box">'+
+    '<table style="width:100%;border-collapse:collapse;table-layout:fixed">'+
+    '<tr>'+table+'</tr></table></div>';
+
   return (
     '<div style="position:relative;width:54mm;height:90mm;overflow:hidden;'+
     'page-break-inside:avoid;break-inside:avoid;font-family:Arial,sans-serif">' +
@@ -1562,10 +1569,10 @@ function buildEmpCard(emp){
       '<div style="font-size:4.8pt;color:#666;font-family:monospace;line-height:1.3">' + emp.id + '</div>' +
     '</div>' +
 
-    // Process row — tăng height để wrap text
-    rDiv(68.71, 8, pRow) +
-    rDiv(76.71, 6.99, lRow) +
-    rDiv(83.70, 5.46, eRow) +
+    // Process / Level / Expiry rows — vị trí khớp template
+    pDiv(68.71, 5.34, pRow) +
+    rDiv(75.25, 6.99, lRow) +
+    rDiv(83.74, 5.46, eRow) +
     '</div>'
   );
 }
