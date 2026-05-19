@@ -478,25 +478,9 @@ body.role-trainer #page-employees #mab-emp{display:none!important}
             <button class="btn bp" onclick="dlCard()">↓ Lưu HTML</button>
           </div>
         </div>
-        <div id="print-area">
-          <div id="ccp" style="position:relative;width:204px;height:340px;overflow:hidden;font-family:Arial,sans-serif;box-shadow:0 4px 20px rgba(0,0,0,.25);flex-shrink:0">
-            <img id="card-bg-img" style="position:absolute;inset:0;width:100%;height:100%;z-index:1">
-            <div id="cphoto" style="position:absolute;z-index:2;top:21%;left:12.5%;width:75%;height:34%;overflow:hidden;background:#e0e0e0;display:flex;align-items:center;justify-content:center">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </div>
-            <div style="position:absolute;z-index:2;top:57%;left:0;width:100%;text-align:center;padding:0 6px;box-sizing:border-box">
-              <div style="font-size:9pt;font-weight:900;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3" id="cnm">— Chọn —</div>
-              <div style="font-size:6pt;color:#666;font-family:monospace;line-height:1.2" id="ceid"></div>
-            </div>
-            <div style="position:absolute;z-index:2;top:71.41%;left:24.7%;width:75.3%;height:5.34%;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff;box-sizing:border-box">
-              <div style="font-size:6.5pt;font-weight:700;color:#111;text-align:center;padding:0 2px;line-height:1.2" id="cproc">—</div>
-            </div>
-            <div style="position:absolute;z-index:2;top:76.75%;left:24.7%;width:75.3%;height:6.99%;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff;box-sizing:border-box">
-              <div style="font-size:14pt;font-weight:900;color:#111;line-height:1" id="clv">—</div>
-            </div>
-            <div style="position:absolute;z-index:2;top:83.74%;left:24.7%;width:75.3%;height:5.46%;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff;box-sizing:border-box">
-              <div style="font-size:7pt;font-weight:700;color:#111" id="cexp">—</div>
-            </div>
+        <div id="print-area" style="transform-origin:top left">
+          <div id="ccp" style="flex-shrink:0;display:inline-block">
+            <div style="color:#bbb;font-size:13px;padding:20px;text-align:center">← Chọn chứng chỉ để xem trước</div>
           </div>
         </div>
       </div>
@@ -1737,27 +1721,18 @@ function rCardList(){
     </tr>`).join('');
 }
 function loadCard(id){
-  const c=DB.certs.find(c=>c.id===id);if(!c)return;
-  const emp=DB.emps.find(e=>e.id===c.eid);
-  document.getElementById('cnm').textContent=c.enm;
-  document.getElementById('ceid').textContent=c.eid;
-  document.getElementById('cproc').textContent=c.pnm;
-  const lvM=c.lv.match(/Level\s*(\d)/i);
-  document.getElementById('clv').textContent=lvM?lvM[1]:c.lv;
-  const st=cSt(c.exp);
-  const expEl=document.getElementById('cexp');
-  expEl.textContent=fD(c.exp);
-  expEl.style.color=st==='Expired'?'#C8102E':st==='Expiring Soon'?'#E67E22':'#111';
-  const ph=document.getElementById('cphoto');
-  if(emp?.photo){
-    ph.innerHTML='<img src="'+emp.photo+'" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">';
-    ph.style.fontSize='0';
-  } else {
-    ph.innerHTML='👤'; ph.style.fontSize='28px';
+  const c=DB.certs.find(c=>c.id===id); if(!c)return;
+  const emp=DB.emps.find(e=>e.id===c.eid); if(!emp)return;
+  // Render dùng buildEmpCard giống in hàng loạt
+  const html = buildEmpCard(emp);
+  const ccp = document.getElementById('ccp');
+  ccp.innerHTML = html;
+  // Scale lên để preview rõ hơn (54mm → ~204px = scale 3.78)
+  const inner = ccp.firstElementChild;
+  if(inner){
+    inner.style.transform = 'scale(1)';
+    inner.style.transformOrigin = 'top left';
   }
-  // Ensure background is set
-  const bg=document.getElementById('card-bg-img');
-  if(bg && !bg.src) bg.src=CARD_TEMPLATE_B64;
 }
 function printCard(){
   // Ẩn cột trái tạm thời khi in
